@@ -2,8 +2,6 @@
 import React from 'react';
 import { FiMail, FiPhone, FiMapPin, FiMessageSquare, FiUser, FiChevronDown } from 'react-icons/fi';
 import Footer from '../components/Footer';
-import ReCAPTCHA from 'react-google-recaptcha';
-import ContactUsForm from "@/app/components/ContactUsForm";
 
 export const metadata = {
   title: 'Contact SmaTech Group | IT Solutions Experts in Zimbabwe & South Africa',
@@ -93,7 +91,6 @@ const ContactPage = () => {
           {/* Right Column - Form */}
           <div className="md:w-1/2">
             <div className="h-full p-8 bg-[#8DC440] rounded-lg shadow-md">
-              <ContactUsForm/>
             </div>
           </div>
         </div>
