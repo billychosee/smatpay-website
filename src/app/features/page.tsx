@@ -1,182 +1,216 @@
-// app/services/page.tsx
-import Image from 'next/image';
-import FeatureCard from '../components/FeatureCard';
-import { FaNetworkWired, FaServer, FaVoicemail, FaLaptopCode, FaShieldAlt, FaCogs } from 'react-icons/fa';
-import CustomButton from '../components/CustomButton';
-import CompanyProfile from '../components/CompanyProfile';
-import Footer from '../components/Footer';
+'use client'; // This directive must be at the top of the file
 
-export const metadata = {
-  title: 'IT Services & Solutions | Business Technology Experts',
-  description: 'Comprehensive IT services including cloud infrastructure, cybersecurity, managed IT, and VoIP solutions tailored to your business needs.',
-  keywords: 'IT services, cloud solutions, cybersecurity, managed IT, VoIP, business technology, IT consultancy',
-  openGraph: {
-    title: 'Professional IT Services for Your Business',
-    description: 'Matching technology to business needs with our expert IT services and solutions.',
-    url: "https://smatechgroup.netlify.app/services/ai-and-machine-learning",
-    type: 'website',
-  },
+import Head from 'next/head';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+
+// Import necessary icons for the Key Features section
+import {
+  FaCreditCard,
+  FaEnvelopeOpenText,
+  FaGlobe,
+  FaDollarSign,
+  FaDivide,
+} from 'react-icons/fa';
+
+const paymentLogos = [
+  { name: "Zimswitch", logo: "/zimswitch.png" },
+  { name: "Visa", logo: "/visa.png" },
+  { name: "Mastercard", logo: "/mastercard.png" },
+  { name: "EcoCash", logo: "/ecocash.png" },
+  { name: "Omari", logo: "/omari.png" },
+  { name: "Innbucks", logo: "/innbucks.png" },
+];
+
+// Define animation variants for a clean slide-in effect
+const fadeInVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
-export default function ServicesPage() {
-  
+// Define a new animation variant for a slide-in-from-the-bottom effect
+const slideInFromBottom = {
+  hidden: { opacity: 0, y: 100 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
+
+// Data for the new "Key Features" section, copied from the home page template
+const keyFeaturesItems = [
+  {
+    title: "Payment Options",
+    description: "Supports payments through InnBucks, Ecocash, Omari, Visa, and Zimswitch.",
+    icon: FaCreditCard
+  },
+  {
+    title: "Subscriptions",
+    description: "Automate recurring billing at specified intervals.",
+    icon: FaEnvelopeOpenText
+  },
+  {
+    title: "Tokenization",
+    description: "Enable recurring credit card transactions securely.",
+    icon: FaGlobe
+  },
+  {
+    title: "Payment Requests",
+    description: "Generate payment request links, or codes and buttons.",
+    icon: FaDollarSign
+  },
+  {
+    title: "Split Payments",
+    description: "Divide payments instantly with a third party.",
+    icon: FaDivide
+  },
+  {
+    title: "Onsite Payments",
+    description: "Facilitate a seamless checkout process on your site.",
+    icon: FaCreditCard
+  },
+];
+
+
+export default function FeaturesHero() {
   return (
-    <div className="bg-white">
-      {/* Hero Header with Background Image */}
-      <header className="relative max-h-screen px-6 py-32 text-left md:px-24 lg:px-24">
-        {/* Background Image */}
+    <>
+      <Head>
+        <title>Features | SmatPay</title>
+        <meta name="description" content="Discover the smart features of SmatPay designed to empower your financial choices and streamline payments." />
+      </Head>
+
+          <div className="bg-white min-h-screen">
+      <>
+        
+      {/* Hero Section with Centered Text and Background Image */}
+      <div className="relative w-full h-[500px] md:h-[600px] flex flex-col items-center justify-center text-center text-white overflow-hidden">
+        {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/services_bg.svg"
-            alt="IT services and technology solutions background"
-            fill
-            className="object-cover "
-            priority
+            src="/smatpay - lady on laptop.jpg" // Placeholder, replace with the actual image from your assets
+            alt="Helping You Make Smart Financial Choices"
+            layout="fill"
+            objectFit="cover"
+            quality={100}
+            priority // Prioritize loading for LCP
           />
-          {/* Dark overlay for better text readability */}
-          <div className="absolute inset-0 bg-black/80 md:bg-black/0"></div>
+          {/* Dark overlay for better text readability, matching the image */}
+          <div className="absolute inset-0 bg-blue-900 opacity-70"></div>
         </div>
-        
-        {/* Content */}
-<div className="relative z-10 max-w-3xl w-full md:w-2/3 lg:w-1/2 space-y-6 md:space-y-10 flex flex-col justify-center">
-  {/* Flex row for icon and title */}
-  <div className="flex items-center gap-3 md:gap-4">
-    <div className="relative w-8 h-8 md:w-10 md:h-10">
-      <Image
-        src="/services_icon.svg"
-        alt="IT services icon"
-        fill
-        className="object-contain"
-        priority
-      />
-    </div>
-    <h1 className="text-[#00b956] text-sm md:text-lg lg:text-2xl font-bold">
-      Our Services
-    </h1>
-  </div>
 
-  {/* Main heading and descriptive text */}
-  <h2 className="text-2xl font-bold text-white md:text-3xl lg:text-4xl xl:text-5xl">
-    Matching Technology <br className="hidden sm:inline" /> to Business Needs
-  </h2>
-  
-  <p className="text-sm md:text-base lg:text-sm xl:text-sm text-white">
-    We serve industries across the board and represent the security and compliance of countless companies. 
-    We do this through a focus on quality IT services and solutions.
-  </p>
-  
-  <p className="text-xs md:text-sm text-white">
-    Stop worrying about technology problems. Focus on your business. Let us provide the IT support you deserve.
-  </p>
-</div>
-      </header>
+        {/* Content - Heading and Subheading */}
+        <div className="relative z-10 max-w-3xl px-4 sm:px-6 lg:px-8">
+          <h1 className="mb-4 text-4xl font-bold leading-tight sm:text-5xl md:text-4xl">
+            Helping You Make Smart <br /> Financial Choices
+          </h1>
+          <p className="text-lg font-light sm:text-xl md:text-base">
+            Experience seamless, secure, and scalable payment solutions.
+          </p>
+        </div>
+      </div>
 
-      {/* Services Section */}
-      <section className='px-5 md:px-24'>
-        <div className="flex items-center justify-center px-6 pt-6 text-center text-black bg-white md:pt-20">
-          <div className="flex flex-col items-center max-w-4xl space-y-6">
-            <p className="!text-sm !font-bold !text-[#00b956] pt-20 md:pt-0">OUR AREAS OF EXPERTISE</p>
-            <h1 className="!text-[#03577A] !text-3xl xl:!text-[53px] !font-bold lg:!text-4xl">
-              Technology Services Built For Your Business
-            </h1>
-            <p className="max-w-2xl">
-              We understand and support all areas of your IT systems – from back-end infrastructure to front-end personal productivity.
-            </p>
+      {/* Merchant Account Card Section */}
+      <section className="relative z-20 w-full px-4 mx-auto -mt-20 md:-mt-24 lg:-mt-32 sm:px-6 lg:px-8 max-w-7xl">
+        <div className="flex flex-col items-center p-8 text-center bg-white rounded-lg shadow-xl md:p-12">
+          {/* Icon */}
+          <div className="p-4 mb-6 bg-purple-100 rounded-full">
+            {/* Using an inline SVG for the shop/store icon */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-10 h-10 text-purple-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+              />
+            </svg>
+          </div>
+          {/* Title */}
+          <h2 className="mb-2 text-2xl font-bold text-gray-800 md:text-3xl">
+            Merchant Account
+          </h2>
+          {/* Description */}
+          <p className="max-w-2xl mb-8 text-base text-gray-600 md:text-base">
+            Accept Payments Effortlessly, Boost your sales and simplify your checkout process
+          </p>
+          {/* Button */}
+          <button className="px-8 py-3 font-semibold text-white transition duration-300 ease-in-out bg-purple-600 rounded-full shadow-lg hover:bg-purple-700 cursor-pointer">
+            Open Account
+          </button>
+        </div>
+      </section>
+
+      {/* NEW KEY FEATURES SECTION - Copied from Home Page */}
+      <motion.section
+        className="relative py-20 overflow-hidden bg-white"
+        style={{ backgroundImage: "url('/shopping-cart.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundBlendMode: 'overlay', opacity: 0 }}
+        variants={fadeInVariants} // Using fadeInVariants for consistency
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.4 }}
+      >
+        <div className="absolute inset-0 bg-white" style={{ opacity: 0.0 }}></div>
+        <div className="container relative z-10 px-5 mx-auto text-center md:px-24">
+          <h2 className="mb-12 text-3xl font-bold text-white">Key Features</h2>
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {keyFeaturesItems.map((item, index) => (
+              <div key={index} className="flex flex-col items-center p-8 text-center transition-shadow duration-300 bg-white rounded-lg shadow-lg hover:shadow-xl">
+                <div className="flex items-center justify-center w-20 h-20 mb-4 bg-gray-100 rounded-full">
+                  <item.icon className="w-10 h-10 text-[#2f1991]" />
+                </div>
+                <h3 className="text-xl font-semibold text-[#2f1991] mb-2">{item.title}</h3>
+                <p className="text-gray-600">{item.description}</p>
+              </div>
+            ))}
+          </div>
+          {/* Link to all features - assuming you'll have a dedicated /features page */}
+          <div className="mt-12">
+            <a
+              href="/features" // Replace with the actual path to your full features page if different
+              className="inline-block px-10 py-4 font-bold text-[#2f1991] bg-white rounded-full hover:bg-gray-200 hover:text-[#2f1991] transition-colors duration-300 transform hover:scale-105"
+            >
+              See All
+            </a>
           </div>
         </div>
+      </motion.section>
 
-        <div className="grid grid-cols-1 gap-10 p-8 sm:grid-cols-2 md:grid-cols-3">
-          <FeatureCard
-            icon={FaNetworkWired}
-            title="Connectivity Voice & Data"
-            description="Powerful server infrastructure, advanced computers, and modern IP telephony that transform business communication."
-            href="/services/connectivity"
-          />
-          <FeatureCard
-            icon={FaServer}
-            title="Cloud Infrastructure"
-            description="Scalable, secure, and reliable cloud solutions that grow with your business, ensuring 24/7 uptime and performance."
-            href="/services/cloud-infrastructure"
-          />
-          <FeatureCard
-            icon={FaVoicemail}
-            title="Smart VoIP Solutions"
-            description="Modern platforms integrating CRM, AI, and analytics to empower teams and customers."
-            href="/services/voip"
-          />
-          <FeatureCard
-            icon={FaLaptopCode}
-            title="Managed IT Services"
-            description="Complete IT support and maintenance to keep your business running smoothly and securely."
-            href="/services/managed-it"
-          />
-          <FeatureCard
-            icon={FaShieldAlt}
-            title="Cybersecurity"
-            description="Advanced threat protection, monitoring, and response to safeguard your digital assets from evolving cyber risks."
-            href="/services/cybersecurity"
-          />
-          <FeatureCard
-            icon={FaCogs}
-            title="IT Consultancy"
-            description="Strategic guidance and technology planning to align your IT roadmap with your business goals and maximize ROI."
-            href="/services/consultancy"
-          />
-        </div>
-      </section>
-
-{/* start of lets get started */}
-
-<section>
-  <div className="bg-gradient-to-t from-[#E8F7FD] to-white min-h-fit lg:min-h-screen">
-    <div>
-      {/* pattern inline above headings */}
-      <img
-        src="/pattern_bg.png"
-        alt="wave pattern"
-        className="w-full"
-      />
+              {/* Payment Methods Section with Global-Map background */}
+              <motion.div
+                className="relative py-20 bg-gray-50"
+                style={{ backgroundImage: "url('/Global-Map.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}
+                variants={slideInFromBottom}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.4 }}
+              >
+                <div className="absolute inset-0 bg-gray-50 opacity-95"></div>
+                <div className="container relative z-10 px-5 mx-auto text-center md:px-24">
+                  <h2 className="text-3xl font-bold text-[#2f1991] mb-4">Accept All Major Payment Methods</h2>
+                  <p className="max-w-3xl mx-auto mb-12 text-lg text-gray-600">
+                    Integrate once and accept payments from all popular local and international methods your customers prefer.
+                  </p>
+                  <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-6 place-items-center">
+                    {paymentLogos.map((item) => (
+                      <div key={item.name} className="p-4 transition-transform duration-300 grayscale hover:grayscale-0 hover:scale-110">
+                        <Image
+                          src={item.logo}
+                          alt={item.name}
+                          width={120}
+                          height={60}
+                          className="object-contain"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+      </>
     </div>
 
-    <div className="flex flex-col items-center justify-center px-5 pb-10 text-center text-black md:px-24 md:pb-0 ">
-      <h2 className="text-[#00b956] text-sm lg:text-2xl font-bold xl:text-4xl mb-6 md:mb-10">
-        Let's get started
-      </h2>
-      <h1 className="text-black text-3xl xl:text-[70px] font-bold lg:text-4xl mb-6 md:mb-10">
-        Still have questions?
-      </h1>
-      <p className="mb-6 md:mb-10">
-        Don't stress over technical issues, concentrate on your <br />
-        business. We'll give you the help you need.
-      </p>
-      <div className="flex flex-col items-center justify-center w-full gap-4 md:flex-row">
-        <CustomButton variant="primary">Speak to an Expert</CustomButton>
-        <CustomButton variant="link">Learn more about services</CustomButton>
-      </div>
-      <div className="w-full h-1 mt-6 bg-black md:mt-20 md:h-2" />
-    </div>
-  </div>
-</section>
-
-{/* end of lets get started */}
-
-      <section>
-
-        {/* Stats Section */}
-        <div className="bg-[#E8F7FD] pb-14 md:pb-0">
-          <CompanyProfile
-            heading="Outreach by the Numbers"
-            subheading="The energy of a startup with well-established IT expertise"
-            stats={[
-              { end: 45, label: 'Certified Microsoft Professionals' },
-              { end: 68, label: 'Episerver Certified Developers' },
-              { end: 15, label: '$0 to $15M in revenue in under 3 years' },
-            ]}
-          />
-        </div>
-      </section>
-
-      <Footer />
-    </div>
+    </>
   );
 }

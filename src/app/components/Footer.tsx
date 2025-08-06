@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link'; // Assuming Next.js for Link, adjust if using React Router or plain <a>
+import Image from 'next/image'; // Import Next.js Image component
 import { FaFacebookF, FaInstagram, FaYoutube, FaWhatsapp } from 'react-icons/fa'; // Using react-icons for social media
 import { FaXTwitter } from 'react-icons/fa6';
 
@@ -12,7 +13,9 @@ export default function Footer() {
         {/* Top Section: Logo and Social Media */}
         <div className="flex flex-col items-center justify-between pb-8 mb-8 border-b border-gray-400 md:flex-row">
           <div className="mb-6 md:mb-0">
-            <h1 className="text-3xl font-bold">Logo</h1> {/* Your logo text */}
+          <Link href="/">
+          <Image src={"./smatpay_white_logo.svg"} alt={"SmatPay White Logo"} width={150} height={50} className="w-32 h-auto" />
+          </Link>
           </div>
           <div className="flex space-x-4">
             <Link href="#" className="bg-[#830bc9] hover:bg-[#6d09a8] text-white rounded-full p-3 transition duration-300 ease-in-out">

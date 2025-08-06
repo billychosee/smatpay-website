@@ -1,5 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect, useCallback } from "react";
+import Link from "next/link";
+import Image from "next/image";
 import { NAV_ITEMS } from "./config"; // Ensure NAV_ITEMS is exported from your config.ts
 import type { NavItem, DropdownItem } from "./types"; // Ensure NavItem and DropdownItem are exported from your types.ts
 
@@ -114,9 +116,9 @@ export default function MobileNav({
       >
         {/* Header with Logo and Close Button */}
         <div className="flex items-center justify-between pb-6 mb-6 border-b border-[#4a2baf]">
-          <a href="/" onClick={onToggle}>
-            <h1 className="text-3xl font-black text-white">LOGO</h1>
-          </a>
+          <Link href="/" onClick={onToggle}>
+            <Image src="/smatpay_white_logo.svg" alt="SmatPay White Logo" width={150} height={50} className="w-32 h-auto" />
+          </Link>
           <button
             onClick={onToggle}
             className="p-2 text-white rounded-full hover:bg-[#4a2baf] focus:outline-none transition-colors duration-200"

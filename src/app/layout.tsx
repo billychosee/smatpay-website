@@ -24,13 +24,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/smatech_t_logo.svg" type="image/svg+xml" />
+        <link rel="icon" href="/smatpay_p_logo.svg" type="image/svg+xml" />
       </head>
       <body
-        className={`${vietnamPro.variable} antialiased text-black font-sans`} >
+        className={`${vietnamPro.variable} antialiased text-black font-sans bg-white`} >
         <Navbar />
         {children}
-
+        <Footer />
       </body>
     </html>
   );
