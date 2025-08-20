@@ -27,8 +27,9 @@ export const NAV_ITEMS = [
   },
   {
     label: "Documentation",
-    href: "https://doc.smatpay.africa/?_gl=1*1is72aj*_ga*NjkxODQ3NjE0LjE3NDQ3MDYyMTg.*_ga_3Y6SLZW23Q*czE3NTU2MDcxNjAkbzMxJGcxJHQxNzU1NjA3MjA2JGoxNCRsMCRoMA..",
+    href: "https://doc.smatpay.africa",
     external: true,
+    target: "_blank",
   },
   {
     label: "Resources",
@@ -38,7 +39,7 @@ export const NAV_ITEMS = [
     dropdown: {
       items: [
         { label: "Intergrations", href: "/resources/integrations" },
-        { label: "Knowledge Base", href: "/resources/knowledge-base" },
+        { label: "Knowledge Base", href: "https://crm.smatpay.africa/knowledge-base", external: true, target: "_blank" },
         { label: "FAQs", href: "/resources/faqs" },
       ] as const
     }
