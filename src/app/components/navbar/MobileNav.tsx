@@ -2,8 +2,8 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { NAV_ITEMS } from "./config"; // Ensure NAV_ITEMS is exported from your config.ts
-import type { NavItem, DropdownItem } from "./types"; // Ensure NavItem and DropdownItem are exported from your types.ts
+import { NAV_ITEMS } from "./config";
+import type { NavItem, DropdownItem } from "./types";
 
 // Helper function to check if a navigation item has a dropdown
 function hasDropdown(item: NavItem): item is NavItem & { dropdown: { items: readonly DropdownItem[] } } {
@@ -42,7 +42,6 @@ export default function MobileNav({
   isOpen: boolean;
   onToggle: () => void;
 }) {
-  const [query, setQuery] = useState("");
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -111,7 +110,7 @@ export default function MobileNav({
       {/* Mobile Navigation Sidebar */}
       <div
         ref={menuRef}
-        className={`fixed right-0 top-0 bottom-0 z-50 flex flex-col w-3/4 max-w-sm p-6 bg-[#2f1991] shadow-2xl transform transition-transform duration-500 ease-in-out rounded-l-2xl
+        className={`fixed right-0 top-0 bottom-0 z-80 flex flex-col w-3/4 max-w-sm p-6 bg-[#2f1991] shadow-2xl transform transition-transform duration-500 ease-in-out rounded-l-2xl
           ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
         {/* Header with Logo and Close Button */}
@@ -147,6 +146,7 @@ export default function MobileNav({
                     }
                   >
                     <div className="flex items-center gap-3">
+                      {item.icon && <item.icon className={item.iconClass} />}
                       <span>{item.label}</span>
                     </div>
                     <span
@@ -189,36 +189,6 @@ export default function MobileNav({
             </li>
           ))}
         </ul>
-
-        {/* Search Form */}
-        <form className="mt-6 pt-4 border-t border-[#4a2baf]">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              className="w-full py-2.5 pl-10 pr-4 text-sm text-white bg-[#4a2baf] rounded-full focus:outline-none focus:ring-2 focus:ring-[#8DC440] focus:border-transparent transition-all duration-200 placeholder-gray-300"
-            />
-            {/* Search icon */}
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5 text-gray-300"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </div>
-          </div>
-        </form>
       </div>
 
       {/* Tailwind CSS Custom Animations (keep these if they are specific to MobileNav, otherwise move to global CSS) */}

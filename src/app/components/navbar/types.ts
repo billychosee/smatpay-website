@@ -8,7 +8,7 @@ export type DropdownItem = {
 export type NavItem = {
   readonly label: string;
   readonly href: string;
-  readonly icon: IconType;
+  readonly icon?: IconType; // This property is now optional
   readonly dropdown?: {
     readonly items: readonly DropdownItem[];
   };

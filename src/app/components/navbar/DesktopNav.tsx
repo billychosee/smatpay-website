@@ -13,23 +13,32 @@ export default function DesktopNav() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   const renderDropdown = (item: NavItem & { dropdown: { items: readonly DropdownItem[] } }) => (
-    <ul 
-      className={`absolute ${activeDropdown === item.href ? 'block' : 'hidden'} group-hover:block bg-white shadow-lg rounded-md text-black font-normal w-56 z-50 py-2 transition-all duration-200 ease-out border border-gray-100`}
-      onMouseEnter={() => setActiveDropdown(item.href)}
-      onMouseLeave={() => setActiveDropdown(null)}
-    >
-      {item.dropdown.items.map((subItem: DropdownItem) => (
-        <li key={subItem.href}>
-          <Link
-            href={subItem.href}
-            className="block px-4 py-2.5 hover:bg-gray-50 hover:text-[#8DC440] transition-colors text-sm"
-          >
-            {subItem.label}
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
+  <div
+    className={`absolute left-0 mt-0 ${
+      activeDropdown === item.href ? "block" : "hidden"
+    } group-hover:block`}
+    onMouseEnter={() => setActiveDropdown(item.href)}
+    onMouseLeave={() => setActiveDropdown(null)}
+  >
+    <div className="w-56 py-3 bg-white border border-gray-100 shadow-xl rounded-xl animate-fadeIn">
+      <ul className="flex flex-col">
+        {item.dropdown.items.map((subItem: DropdownItem, index) => (
+          <li key={subItem.href}>
+            <Link
+              href={subItem.href}
+              className="flex items-center px-5 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#4a2baf] rounded-md transition-colors duration-200"
+            >
+              {/* Optional bullet icon */}
+              <span className="mr-2 text-[#9f40c4]">•</span>
+              {subItem.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+);
+
 
   return (
     <div className="flex items-center">
@@ -42,13 +51,33 @@ export default function DesktopNav() {
               onMouseEnter={() => hasDropdown(item) && setActiveDropdown(item.href)}
               onMouseLeave={() => setActiveDropdown(null)}
             >
-              <Link 
-                href={item.href} 
-                className={`flex flex-col items-center text-xs xl:text-xs lg:text-[10px]  tracking-tight transition-colors ${activeDropdown === item.href ? 'text-white' : 'text-white hover:text-[#9f40c4]'}`}
-                target={item.href.startsWith('http') ? '_blank' : undefined}
-              >
-                <span>{item.label}</span>
-              </Link>
+              <div
+  className={`flex items-center gap-1 text-xs xl:text-xs lg:text-[10px] transition-colors cursor-pointer ${
+    activeDropdown === item.href ? 'text-white' : 'text-white hover:text-[#9f40c4]'
+  }`}
+>
+  <Link
+    href={item.href}
+    target={item.href.startsWith('http') ? '_blank' : undefined}
+    className="flex items-center gap-1"
+  >
+    <span>{item.label}</span>
+    {hasDropdown(item) && (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className={`w-3 h-3 transition-transform duration-300 ${
+          activeDropdown === item.href ? 'rotate-180' : 'rotate-0'
+        }`}
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    )}
+  </Link>
+</div>
+
               {hasDropdown(item) && renderDropdown(item)}
             </li>
           );
@@ -56,4 +85,6 @@ export default function DesktopNav() {
       </ul>
     </div>
   );
+
 }
+
