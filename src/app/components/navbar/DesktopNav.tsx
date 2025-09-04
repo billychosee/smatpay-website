@@ -1,90 +1,115 @@
+// src/components/navbar/desknav.tsx
 "use client";
-import { useState } from "react";
+
 import Link from "next/link";
-import { NAV_ITEMS } from "./config";
-import type { NavItem, DropdownItem } from "./types"; 
+import Image from "next/image";
+import React from "react";
+import { ChevronDown } from "lucide-react";
+import { BRAND, NAV_LINKS } from "./config";
 
-function hasDropdown(item: NavItem): item is NavItem & { dropdown: { items: readonly DropdownItem[] } } {
-  return !!item.dropdown;
-}
+type DeskNavProps = {
+  resourcesOpen: boolean;
+  onResourcesOpen: () => void;
+  onResourcesClose: () => void;
+};
 
-export default function DesktopNav() {
-  const [query, setQuery] = useState("");
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-
-  const renderDropdown = (item: NavItem & { dropdown: { items: readonly DropdownItem[] } }) => (
-  <div
-    className={`absolute left-0 mt-0 ${
-      activeDropdown === item.href ? "block" : "hidden"
-    } group-hover:block`}
-    onMouseEnter={() => setActiveDropdown(item.href)}
-    onMouseLeave={() => setActiveDropdown(null)}
-  >
-    <div className="w-56 py-3 bg-white border border-gray-100 shadow-xl rounded-xl animate-fadeIn">
-      <ul className="flex flex-col">
-        {item.dropdown.items.map((subItem: DropdownItem, index) => (
-          <li key={subItem.href}>
-            <Link
-              href={subItem.href}
-              className="flex items-center px-5 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#4a2baf] rounded-md transition-colors duration-200"
-            >
-              {/* Optional bullet icon */}
-              <span className="mr-2 text-[#9f40c4]">•</span>
-              {subItem.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </div>
-);
-
-
+export const DeskNav: React.FC<DeskNavProps> = ({
+  resourcesOpen,
+  onResourcesOpen,
+  onResourcesClose,
+}) => {
   return (
-    <div className="flex items-center">
-      <ul className="items-center justify-center flex-1 hidden gap-8 font-semibold text-black md:flex xl:gap-4 lg:gap-5">
-        {NAV_ITEMS.map((item) => {
-          return (
-            <li 
-              key={item.href} 
-              className={`relative ${hasDropdown(item) ? 'group' : ''}`}
-              onMouseEnter={() => hasDropdown(item) && setActiveDropdown(item.href)}
-              onMouseLeave={() => setActiveDropdown(null)}
-            >
+    <nav className="fixed top-0 left-0 right-0 z-50 hidden border-b shadow-sm md:flex bg-white/70 backdrop-blur border-white/20">
+      <div className="flex items-center justify-between w-full px-6 py-3 mx-auto max-w-7xl">
+        {/* Left: Logo */}
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src={BRAND.logo}
+            alt={BRAND.name}
+            width={96}
+            height={96}
+            className="rounded"
+          />
+        </Link>
+
+        {/* Center: Nav Links */}
+        <div className="flex items-center gap-6">
+          {NAV_LINKS.map((l) =>
+            l.label === "Resources" ? (
               <div
-  className={`flex items-center gap-1 text-xs xl:text-xs lg:text-[10px] transition-colors cursor-pointer ${
-    activeDropdown === item.href ? 'text-white' : 'text-white hover:text-[#9f40c4]'
-  }`}
->
-  <Link
-    href={item.href}
-    target={item.href.startsWith('http') ? '_blank' : undefined}
-    className="flex items-center gap-1"
-  >
-    <span>{item.label}</span>
-    {hasDropdown(item) && (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className={`w-3 h-3 transition-transform duration-300 ${
-          activeDropdown === item.href ? 'rotate-180' : 'rotate-0'
-        }`}
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-      </svg>
-    )}
-  </Link>
-</div>
+                key={l.label}
+                className="relative group"
+                onMouseEnter={onResourcesOpen}
+                onMouseLeave={onResourcesClose}
+              >
+                <button className="flex items-center gap-1 text-sm font-medium text-gray-700 hover:text-[#2f1991] transition">
+                  {l.label}
+                  <ChevronDown
+                    size={16}
+                    className={`transition-transform duration-300 ${
+                      resourcesOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
 
-              {hasDropdown(item) && renderDropdown(item)}
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+                {/* Dropdown */}
+                <div
+                  className={`absolute left-0 mt-0 w-56 rounded-xl border border-gray-100 bg-white shadow-lg transition-all duration-300 origin-top ${
+                    resourcesOpen
+                      ? "scale-100 opacity-100 translate-y-0"
+                      : "scale-95 opacity-0 -translate-y-2 pointer-events-none"
+                  }`}
+                >
+                  <div className="py-2">
+                    <Link
+                      href="https://smatpay.africa/integrations/"
+                      className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#2f1991] rounded-md transition"
+                    >
+                      Integrations
+                    </Link>
+                    <Link
+                      href="https://crm.smatpay.africa/knowledge-base"
+                      className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#2f1991] rounded-md transition"
+                    >
+                      Knowledge Base
+                    </Link>
+                    <Link
+                      href="/faqs"
+                      className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#2f1991] rounded-md transition"
+                    >
+                      FAQs
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <Link
+                key={l.label}
+                href={l.href ?? "#"}
+                className="text-sm font-medium text-gray-700 hover:text-[#2f1991] transition"
+              >
+                {l.label}
+              </Link>
+            )
+          )}
+        </div>
+
+        {/* Right: CTAs */}
+        <div className="flex items-center gap-3">
+          <Link
+            href="/login"
+            className="rounded-full border border-[#2f1991] px-5 py-2 text-sm font-semibold text-[#2f1991] transition hover:bg-[#2f1991] hover:text-white"
+          >
+            Sign in
+          </Link>
+          <Link
+            href="https://merchant.smatpay.africa/sign-up"
+            className="rounded-full bg-gradient-to-tr from-[#8141D5] to-[#5b35e5] px-5 py-2 text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-105"
+          >
+            Get Started
+          </Link>
+        </div>
+      </div>
+    </nav>
   );
-
-}
-
+};

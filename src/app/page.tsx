@@ -1,12 +1,14 @@
 "use client";
-import Head from "next/head";
-import { useState, useEffect } from "react";
-import Image from "next/image";
-import Link from 'next/link';
-import Testimonials from './components/Testimonials';
-import { motion } from 'framer-motion'; // Import Framer Motion
 
-// Import icons from react-icons/fa (Font Awesome)
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import Testimonials from "./components/Testimonials";
+import Footer from "@/app/components/Footer";
+
+// Icons (Font Awesome)
 import {
   FaCog,
   FaDollarSign,
@@ -21,16 +23,11 @@ import {
   FaGlobeAmericas,
   FaUserCheck,
   FaMobileAlt,
-  FaMapMarkerAlt,
-  FaEnvelope,
-  FaPhoneAlt,
-  FaFacebookF,
-  FaInstagram,
-  FaYoutube
-} from 'react-icons/fa';
-import Footer from '@/app/components/Footer'
+} from "react-icons/fa";
 
-// Logos for the supported payment methods section
+// -----------------------------
+// Data (kept as requested)
+// -----------------------------
 const paymentLogos = [
   { name: "Zimswitch", logo: "/zimswitch.png" },
   { name: "Visa", logo: "/visa.png" },
@@ -48,95 +45,102 @@ const popularPlatforms = [
   { name: "Woo_commerce", logo: "/woo_commerce.png" },
 ];
 
-// Data for the "Why Choose Us ?" section with React Icons
 const whyChooseUsItems = [
   {
     title: "Seamless Integrations",
-    description: "Provides seamless integration with e-commerce platforms, mobile apps, and other systems through comprehensive APIs and plugins.",
-    icon: FaCog
+    description:
+      "Provides seamless integration with e-commerce platforms, mobile apps, and other systems through comprehensive APIs and plugins.",
+    icon: FaCog,
   },
   {
     title: "Affordable",
-    description: "Enjoy favorable customized rates, transact from just $1, save more with our competitive pricing, and watch your profits grow with every transaction.",
-    icon: FaDollarSign
+    description:
+      "Enjoy favorable customized rates, transact from just $1, save more with our competitive pricing, and watch your profits grow with every transaction.",
+    icon: FaDollarSign,
   },
   {
     title: "Security",
-    description: "Utilizes International and advanced PCI standard encryption protocols to protect sensitive data during transactions.",
-    icon: FaLock
+    description:
+      "Utilizes International and advanced PCI standard encryption protocols to protect sensitive data during transactions.",
+    icon: FaLock,
   },
   {
     title: "Fraud Detection",
-    description: "Implements robust fraud detection and prevention mechanisms to safeguard against fraudulent activities.",
-    icon: FaExclamationCircle
+    description:
+      "Implements robust fraud detection and prevention mechanisms to safeguard against fraudulent activities.",
+    icon: FaExclamationCircle,
   },
   {
     title: "Multiple Payment Methods",
-    description: "Supports a wide range of payment options such as credit/debit cards, digital wallets, and local payment methods (e.g., InnBucks, OneMoney, EcoCash, Omari, Visa, ZimSwitch)",
-    icon: FaCreditCard
+    description:
+      "Supports a wide range of payment options such as credit/debit cards, digital wallets, and local payment methods (e.g., InnBucks, OneMoney, EcoCash, Omari, Visa, ZimSwitch)",
+    icon: FaCreditCard,
   },
   {
     title: "No \"system down\" frustrations",
-    description: "SMATPAY is built for scalability and uptime, ensuring that customers can always complete their purchases.",
-    icon: FaBriefcase
+    description:
+      "SMATPAY is built for scalability and uptime, ensuring that customers can always complete their purchases.",
+    icon: FaBriefcase,
   },
 ];
 
-// Data for the new "Key Features" section
 const keyFeaturesItems = [
   {
     title: "Payment Options",
-    description: "Supports payments through InnBucks, Ecocash, Omari, Visa, and Zimswitch.",
-    icon: FaCreditCard
+    description:
+      "Supports payments through InnBucks, Ecocash, Omari, Visa, and Zimswitch.",
+    icon: FaCreditCard,
   },
   {
     title: "Subscriptions",
     description: "Automate recurring billing at specified intervals.",
-    icon: FaEnvelopeOpenText
+    icon: FaEnvelopeOpenText,
   },
   {
     title: "Tokenization",
     description: "Enable recurring credit card transactions securely.",
-    icon: FaGlobe
+    icon: FaGlobe,
   },
   {
     title: "Payment Requests",
     description: "Generate payment request links, or codes and buttons.",
-    icon: FaDollarSign
+    icon: FaDollarSign,
   },
   {
     title: "Split Payments",
     description: "Divide payments instantly with a third party.",
-    icon: FaDivide
+    icon: FaDivide,
   },
   {
     title: "Onsite Payments",
     description: "Facilitate a seamless checkout process on your site.",
-    icon: FaCreditCard
+    icon: FaCreditCard,
   },
 ];
 
-// Data for the new "Benefits of Smatpay" section
 const benefitsOfSmatpayItems = [
   {
     title: "Increased Convenience and Choice",
     description: "A wider range of secure payment options",
-    icon: FaHandshake
+    icon: FaHandshake,
   },
   {
     title: "Expanded Market Reach",
-    description: "By accepting a variety of payment methods, businesses can attract a wider customer base, including those who may not have access to traditional credit cards.",
-    icon: FaGlobeAmericas
+    description:
+      "By accepting a variety of payment methods, businesses can attract a wider customer base, including those who may not have access to traditional credit cards.",
+    icon: FaGlobeAmericas,
   },
   {
     title: "Customers",
-    description: "Access to desired products and services on convenient debit order plans. Build credit history over time (future development)",
-    icon: FaUserCheck
+    description:
+      "Access to desired products and services on convenient debit order plans. Build credit history over time (future development)",
+    icon: FaUserCheck,
   },
   {
     title: "Faster Mobile and Web Checkout Process",
-    description: "Seamless integration with online stores allows for quick and easy checkouts, reducing cart abandonment rates",
-    icon: FaMobileAlt
+    description:
+      "Seamless integration with online stores allows for quick and easy checkouts, reducing cart abandonment rates",
+    icon: FaMobileAlt,
   },
 ];
 
@@ -146,40 +150,41 @@ const testimonialData = [
     logoAlt: "Smatutor Logo",
     name: "Tatenda Moyo",
     title: "CEO",
-    quote: "Fast, secure, and hassle-free payments with Smatpay. It has made learning accessible and convenient",
+    quote:
+      "Fast, secure, and hassle-free payments with Smatpay. It has made learning accessible and convenient",
   },
   {
     logoSrc: "/njere_logo.png",
     logoAlt: "NJERE Logo",
     name: "Ruth Madzikanda",
     title: "CEO",
-    quote: "Our school's transition to Smatpay has been a game-changer. Fee collection is now a breeze, and we have more time to focus on what truly matters: our students.",
+    quote:
+      "Our school's transition to Smatpay has been a game-changer. Fee collection is now a breeze, and we have more time to focus on what truly matters: our students.",
   },
   {
     logoSrc: "/smatpay_logo.png",
     logoAlt: "Smat Logo",
     name: "Anesu Mbano",
     title: "Headstore Manager",
-    quote: "We were looking for a payment gateway that could keep up with the demands of our growing access control business. Smatpay exceeded our expectations.",
+    quote:
+      "We were looking for a payment gateway that could keep up with the demands of our growing access control business. Smatpay exceeded our expectations.",
   },
 ];
 
-// Reusable variants for a simple slide-in-from-bottom effect
-const slideInFromBottom = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+// Motion helpers
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
+
+const stagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08 } },
 };
 
 export default function Home() {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoaded(true);
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, []);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   return (
     <>
@@ -191,339 +196,295 @@ export default function Home() {
         />
       </Head>
 
-      <main className="text-black bg-white">
-        {/* Hero Section */}
-        <div className="relative flex items-center justify-center min-h-screen px-5 py-24 overflow-hidden bg-[#2f1991] md:px-24">
-          <div className="absolute inset-0 z-0 bg-center bg-no-repeat bg-cover opacity-20" style={{ backgroundImage: "url('/bg1.png')" }} />
-          <div className="relative z-10 flex flex-col items-center justify-between w-full max-w-6xl mx-auto">
-            <div className="flex flex-col items-center justify-between w-full md:flex-row-reverse md:gap-8">
-              {/* Image with new animation */}
-              <motion.div
-                className="relative mb-12 md:w-1/2 md:mb-0"
-                initial={{ opacity: 0, x: 100 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 1, delay: 0.5 }}
-              >
-                <Image
-                  src="/smatpay-hero-art.png"
-                  alt="SmatPay interface on mobile and desktop showing easy payments"
-                  width={700}
-                  height={550}
-                  priority
-                  className="w-full max-w-lg mx-auto rounded-lg"
-                />
-              </motion.div>
+      {/* Page Wrapper */}
+      <main className="relative text-black bg-white">
+        {/* Decorative background */}
+        <div className="pointer-events-none absolute inset-0 -z-10 [background:radial-gradient(1200px_600px_at_50%_-200px,rgba(129,65,213,0.35),transparent_70%),radial-gradient(1200px_600px_at_50%_120%,rgba(47,25,145,0.25),transparent_70%)]" />
 
-              {/* Text content with new animation classes */}
-              <motion.div
-                className="text-center md:w-1/2 md:text-left"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-              >
-                <h1 className="mb-6 text-4xl font-bold text-white lg:text-5xl">
-                  Empowering Businesses with Next-Gen Payment Solutions
-                </h1>
-                <p className="mb-8 text-xl text-gray-200 lg:text-2xl">
+        {/* NAVBAR */}
+        {/* <nav className="fixed top-0 left-0 right-0 z-50 w-full px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+          <div className="mt-4 rounded-2xl border border-white/20 bg-white/60 backdrop-blur supports-[backdrop-filter]:bg-white/40 shadow-lg">
+            <div className="flex items-center justify-between px-4 py-3">
+              <Link href="/" className="flex items-center gap-3">
+                <Image src="/smatpay_logo.png" alt="SmatPay" width={36} height={36} className="rounded" />
+                <span className="text-lg font-extrabold tracking-tight text-[#2f1991]">SmatPay</span>
+              </Link>
+              <div className="items-center hidden gap-6 md:flex">
+                <Link href="#why" className="text-sm font-medium text-gray-700 hover:text-[#2f1991]">Why SmatPay</Link>
+                <Link href="#features" className="text-sm font-medium text-gray-700 hover:text-[#2f1991]">Features</Link>
+                <Link href="#integrations" className="text-sm font-medium text-gray-700 hover:text-[#2f1991]">Integrations</Link>
+                <Link href="#testimonials" className="text-sm font-medium text-gray-700 hover:text-[#2f1991]">Testimonials</Link>
+              </div>
+              <div className="flex items-center gap-3">
+                <Link
+                  href="/login"
+                  className="hidden rounded-full border border-[#2f1991] px-5 py-2 text-sm font-semibold text-[#2f1991] transition hover:bg-[#2f1991] hover:text-white md:inline-block"
+                >
+                  Sign in
+                </Link>
+                <Link
+                  href="/register"
+                  className="rounded-full bg-gradient-to-tr from-[#8141D5] to-[#5b35e5] px-5 py-2 text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-105"
+                >
+                  Get Started
+                </Link>
+              </div>
+            </div>
+          </div>
+        </nav> */}
+
+        {/* HERO */}
+        <section className="relative flex min-h-[92vh] items-center overflow-hidden pt-32">
+          {/* grid overlay */}
+          <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.04)_1px,transparent_1px)] bg-[size:28px_28px]" />
+
+          <div className="container px-6 mx-auto max-w-7xl">
+            <div className="grid items-center gap-12 lg:grid-cols-2">
+              <motion.div variants={stagger} initial="hidden" animate="show" className="text-center lg:text-left">
+                <motion.h1 variants={fadeUp} className="text-4xl font-extrabold tracking-tight text-[#1a133d] sm:text-5xl lg:text-6xl">
+                  Empowering Businesses with Next‑Gen Payment Solutions
+                </motion.h1>
+                <motion.p variants={fadeUp} className="mt-5 text-lg text-gray-600 sm:text-xl">
                   Redefining Payment Excellence
-                </p>
-                <div className="flex flex-col items-center gap-4 md:flex-row md:justify-start md:gap-6">
+                </motion.p>
+                <motion.div variants={fadeUp} className="flex flex-col items-center gap-4 mt-8 sm:flex-row sm:justify-start">
                   <Link
                     href="/register"
-                    className="inline-block px-10 py-4 font-bold text-white transition-all ease-in-out duration-700 delay-300 bg-[#8141D5] rounded-full hover:bg-white hover:text-[#8141D5] transform hover:scale-105 cursor-pointer"
+                    className="inline-flex items-center justify-center rounded-full bg-[#2f1991] px-8 py-3 text-sm font-bold text-white shadow-lg shadow-[#2f1991]/20 transition hover:scale-[1.02] hover:brightness-110"
                   >
                     Register
                   </Link>
                   <Link
                     href="#discover"
-                    className="inline-block px-10 py-4 font-bold text-white border-2 border-white rounded-full transition-all ease-in-out duration-700 delay-400 hover:bg-white hover:text-[#2f1991] transform hover:scale-105 cursor-pointer"
+                    className="inline-flex items-center justify-center rounded-full border border-gray-300 bg-white px-8 py-3 text-sm font-semibold text-[#2f1991] transition hover:border-[#2f1991] hover:bg-[#2f1991] hover:text-white"
                   >
                     Discover More
                   </Link>
+                </motion.div>
+
+              </motion.div>
+
+              <motion.div initial={{ opacity: 0, x: 60 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="relative">
+                <div className="relative w-full max-w-xl p-4 mx-auto border shadow-2xl rounded-3xl border-white/40 bg-white/60 backdrop-blur">
+                  <Image
+                    src="/smatpay-hero-art.png"
+                    alt="SmatPay interface on mobile and desktop showing easy payments"
+                    width={1000}
+                    height={700}
+                    className="object-contain w-full h-auto rounded-2xl"
+                    priority
+                  />
+                  {/* floating accent */}
+                  <div className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-2xl bg-gradient-to-tr from-[#8141D5] to-[#2f1991] opacity-70 blur-2xl" />
                 </div>
               </motion.div>
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Payment Methods Section with Global-Map background */}
-        <motion.div
-          className="relative py-20 bg-gray-50"
-          style={{ backgroundImage: "url('/Global-Map.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}
-          variants={slideInFromBottom}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.4 }}
-        >
-          <div className="absolute inset-0 bg-gray-50 opacity-95"></div>
-          <div className="container relative z-10 px-5 mx-auto text-center md:px-24">
-            <h2 className="text-3xl font-bold text-[#2f1991] mb-4">Accept All Major Payment Methods</h2>
-            <p className="max-w-3xl mx-auto mb-12 text-lg text-gray-600">
+        {/* ACCEPTED METHODS (Marquee) */}
+        <section className="relative py-16">
+          <div className="container px-6 mx-auto text-center max-w-7xl">
+            <h2 className="text-2xl font-bold text-[#2f1991] sm:text-3xl">Accept All Major Payment Methods</h2>
+            <p className="max-w-3xl mx-auto mt-3 text-gray-600">
               Integrate once and accept payments from all popular local and international methods your customers prefer.
             </p>
-            <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-6 place-items-center">
-              {paymentLogos.map((item) => (
-                <div key={item.name} className="p-4 transition-transform duration-300 grayscale hover:grayscale-0 hover:scale-110">
-                  <Image
-                    src={item.logo}
-                    alt={item.name}
-                    width={120}
-                    height={60}
-                    className="object-contain"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-<motion.div
-  className="container flex flex-col items-center gap-12 px-5 py-24 mx-auto md:flex-row md:px-24"
-  variants={slideInFromBottom}
-  initial="hidden"
-  whileInView="visible"
-  viewport={{ once: true, amount: 0.4 }}
->
-  <div className="space-y-4 md:w-1/2 z-10">
-    <h2 className="text-3xl font-bold lg:text-3xl text-[#2f1991]">The Ultimate Payment Gateway for Zimbabwe's Growth</h2>
-    <p className="text-base text-gray-700">
-      Zimbabwe's e-commerce market is on the verge of a significant expansion, projected to reach $1.9 billion USD by 2025. This reflects an impressive annual growth rate of 19.5%. However, one of the critical challenges hindering this growth is the transaction cost and the technological limitations of existing payment gateways, especially in the mobile space. SmatPay addresses this gap by offering a highly versatile and fully integrated payment gateway that caters to the unique needs of the Zimbabwean market.
-    </p>
-  </div>
-  <div className="relative w-full md:w-1/2 h-[32rem] flex items-center justify-center z-20">
-    <div className="relative w-full h-full">
-      <Image
-        src="/lady-on-phone.jpg"
-        alt="Lady on phone"
-        fill
-        className="object-contain"
-        sizes="(max-width: 768px) 100vw, 50vw"
-        priority
-      />
-    </div>
-  </div>
-</motion.div>
 
-        {/* Introduction Section 2 */}
-        <motion.div
-          className="bg-[#8141D5] h-screen flex items-center justify-center"
-          variants={slideInFromBottom}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.4 }}
-        >
-          <div className="container flex flex-col items-center gap-12 px-5 mx-auto md:flex-row-reverse md:px-24">
-            <div className="space-y-4 md:w-1/2 my-24">
-              <h2 className="text-3xl font-bold text-white lg:text-3xl">Secure, Simple, and Sophisticated</h2>
-              <p className="text-base text-gray-200">
-          SmatPay is a sophisticated payment gateway that serves as a pivotal intermediary between merchants and customers during online transactions. As a payment gateway, SmatPay facilitates a secure and efficient transfer of funds from customers to merchants, enabling seamless transactions across various digital platforms, from websites to mobile apps.
-              </p>
-              <div className="flex flex-col items-center gap-4 md:flex-row md:justify-start md:gap-6">
-          <Link
-            href="/register"
-            className="inline-block px-10 py-4  text-[#8141D5] transition-all ease-in-out duration-700 delay-300 bg-white rounded-full hover:bg-gray-200 hover:text-[#830bc9] transform hover:scale-105 cursor-pointer text-sm"
-          >
-            Create an Account Now
-          </Link>
+            <div className="mt-10 overflow-hidden border border-gray-200 rounded-2xl bg-gray-50">
+              <div className="flex animate-[marquee_30s_linear_infinite] gap-12 p-6 [--gap:3rem] hover:[animation-play-state:paused]">
+                {[...paymentLogos, ...paymentLogos].map((item, idx) => (
+                  <div key={`${item.name}-${idx}`} className="transition shrink-0">
+                    <Image src={item.logo} alt={item.name} width={120} height={60} className="object-contain w-auto h-12" />
+                  </div>
+                ))}
               </div>
             </div>
-            <div className="relative w-full md:w-1/2 h-[32rem] rounded-xl"> {/* Increased height */}
-              <Image
-          src="/lady-with-shopping-bag.jpg"
-          alt="Lady with purple background"
-          layout="fill"
-          className="object-contain"
-              />
+          </div>
+        </section>
+
+        {/* MARKET EXPLAINER */}
+        <section id="discover" className="relative py-20">
+          <div className="container grid items-center gap-12 px-6 mx-auto max-w-7xl lg:grid-cols-2">
+            <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} className="order-2 lg:order-1">
+              <h3 className="text-2xl font-bold text-[#2f1991] sm:text-3xl">The Ultimate Payment Gateway for Zimbabwe's Growth</h3>
+              <p className="mt-4 text-gray-700">
+                Zimbabwe's e-commerce market is on the verge of a significant expansion, projected to reach $1.9 billion USD by 2025. This reflects an impressive annual growth rate of 19.5%. However, one of the critical challenges hindering this growth is the transaction cost and the technological limitations of existing payment gateways, especially in the mobile space. SmatPay addresses this gap by offering a highly versatile and fully integrated payment gateway that caters to the unique needs of the Zimbabwean market.
+              </p>
+            </motion.div>
+
+            <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.6 }} className="order-1 lg:order-2">
+              <div className="relative mx-auto h-[28rem] w-full max-w-xl">
+                <Image src="/lady-on-phone.jpg" alt="Lady on phone" fill className="object-cover rounded-3xl" />
+                <div className="pointer-events-none absolute -bottom-6 -left-6 h-24 w-24 rounded-2xl bg-gradient-to-tr from-[#2f1991] to-[#8141D5] opacity-60 blur-2xl" />
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* SECURE / SIMPLE */}
+        <section className="relative py-24 overflow-hidden">
+          <div className="absolute inset-0 -z-10 bg-[url('/Global-Map.png')] bg-cover bg-center opacity-10" />
+          <div className="container items-center gap-12 px-6 mx-auto max-w-7xl lg:grid lg:grid-cols-2">
+            <div className="relative mx-auto h-[28rem] w-full max-w-xl">
+              <Image src="/lady-with-shopping-bag.jpg" alt="Lady with purple background" fill className="object-cover rounded-3xl" />
+            </div>
+            <div className="mt-10 lg:mt-0">
+              <h3 className="text-2xl font-bold text-[#2f1991] sm:text-3xl">Secure, Simple, and Sophisticated</h3>
+              <p className="mt-4 text-gray-700">
+                SmatPay is a sophisticated payment gateway that serves as a pivotal intermediary between merchants and customers during online transactions. As a payment gateway, SmatPay facilitates a secure and efficient transfer of funds from customers to merchants, enabling seamless transactions across various digital platforms, from websites to mobile apps.
+              </p>
+              <div className="mt-6">
+                <Link href="/register" className="inline-flex rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#8141D5] ring-1 ring-[#8141D5] transition hover:bg-[#8141D5] hover:text-white">
+                  Create an Account Now
+                </Link>
+              </div>
             </div>
           </div>
-        </motion.div>
+        </section>
 
-        {/* Integrate with Popular Platforms Section */}
-        <motion.div
-          className="py-20 bg-gray-50"
-          variants={slideInFromBottom}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.4 }}
-        >
-          <div className="container px-5 mx-auto text-center md:px-24">
-            <h2 className="text-3xl font-bold text-[#2f1991] mb-4">Integrate with Popular Platforms</h2>
-            <p className="max-w-3xl mx-auto mb-12 text-lg text-gray-600">
+        {/* INTEGRATIONS */}
+        <section id="integrations" className="relative py-20">
+          <div className="container px-6 mx-auto text-center max-w-7xl">
+            <h3 className="text-2xl font-bold text-[#2f1991] sm:text-3xl">Integrate with Popular Platforms</h3>
+            <p className="max-w-3xl mx-auto mt-3 text-gray-600">
               Easily integrate Smatpay into your online store. Our intuitive interface and detailed documentation guide you through the process, ensuring a smooth setup
             </p>
-            <div className="grid grid-cols-2 gap-5 md:grid-cols-4 lg:grid-cols-5 place-items-center">
+
+            <div className="grid grid-cols-2 gap-6 mt-10 place-items-center sm:grid-cols-3 lg:grid-cols-5">
               {popularPlatforms.map((item) => (
-                <div key={item.name} className="p-4 transition-transform duration-300 grayscale hover:grayscale-0 hover:scale-110">
-                  <Image
-                    src={item.logo}
-                    alt={item.name}
-                    width={120}
-                    height={60}
-                    className="object-contain"
-                  />
+                <div key={item.name} className="w-full p-5 transition bg-white border border-gray-200 shadow-sm rounded-2xl">
+                  <Image src={item.logo} alt={item.name} width={140} height={80} className="object-contain w-auto h-12 mx-auto" />
                 </div>
               ))}
             </div>
           </div>
-        </motion.div>
+        </section>
 
-        {/* WHY CHOOSE US SECTION - UPDATED WITH REACT ICONS AND PADDING */}
-        <motion.section
-          className="flex flex-col items-center py-20 space-y-12 text-center"
-          variants={slideInFromBottom}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.4 }}
-        >
-          <p className="pt-20 text-sm font-bold text-black md:pt-0">WHY SMATPAY</p>
-          <h1 className="text-[#2f1991] text-3xl xl:text-[53px] font-bold lg:text-4xl">
-            Why Choose Us ?
-          </h1>
-          <div className="grid grid-cols-1 gap-10 px-5 md:px-24 lg:grid-cols-2 lg:gap-x-12 lg:gap-y-8">
-            {whyChooseUsItems.map((item, index) => (
-              <div key={index} className="flex items-start gap-4 text-left">
-                <div className="flex items-center justify-center flex-shrink-0 w-16 h-16 bg-gray-100 rounded-full">
-                  <item.icon className="w-8 h-8 text-[#2f1991]" />
-                </div>
-                <div className="flex flex-col">
-                  <h3 className="mb-1 text-xl font-semibold text-black">
-                    {item.title}
-                  </h3>
-                  <p className="text-base text-gray-500">
-                    {item.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </motion.section>
+        {/* WHY SMATPAY */}
+        <section id="why" className="relative py-20">
+          <div className="container px-6 mx-auto max-w-7xl">
+            <p className="text-xs font-bold tracking-widest text-center text-gray-500">WHY SMATPAY</p>
+            <h3 className="mt-2 text-center text-3xl font-extrabold text-[#2f1991] xl:text-[44px]">Why Choose Us ?</h3>
 
-        {/* NEW KEY FEATURES SECTION - Background Image Opacity Fixed */}
-        <motion.section
-          className="relative py-20 bg-[#2f1991] overflow-hidden"
-          style={{ backgroundImage: "url('/shopping-cart.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundBlendMode: 'overlay', opacity: 1 }}
-          variants={slideInFromBottom}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.4 }}
-        >
-          <div className="absolute inset-0 bg-[#2f1991]" style={{ opacity: 0.7 }}></div>
-          <div className="container relative z-10 px-5 mx-auto text-center md:px-24">
-            <h2 className="mb-12 text-3xl font-bold text-white">Key Features</h2>
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {keyFeaturesItems.map((item, index) => (
-                <div key={index} className="flex flex-col items-center p-8 text-center transition-shadow duration-300 bg-white rounded-lg shadow-lg hover:shadow-xl">
-                  <div className="flex items-center justify-center w-20 h-20 mb-4 bg-gray-100 rounded-full">
-                    <item.icon className="w-10 h-10 text-[#2f1991]" />
+            <div className="grid gap-6 mt-12 lg:grid-cols-2">
+              {whyChooseUsItems.map((item, i) => (
+                <motion.div
+                  key={i}
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.2 }}
+                  className="flex items-start gap-4 p-6 transition bg-white border border-gray-200 shadow-sm rounded-2xl hover:shadow-md"
+                >
+                  <div className="flex items-center justify-center bg-gray-100 rounded-full h-14 w-14 shrink-0">
+                    <item.icon className="h-7 w-7 text-[#2f1991]" />
                   </div>
-                  <h3 className="text-xl font-semibold text-[#2f1991] mb-2">{item.title}</h3>
-                  <p className="text-gray-600">{item.description}</p>
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-900">{item.title}</h4>
+                    <p className="mt-1 text-gray-600">{item.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* KEY FEATURES */}
+        <section id="features" className="relative py-20 overflow-hidden">
+          <div className="absolute inset-0 -z-10 bg-[url('/shopping-cart.jpg')] bg-cover bg-center opacity-10" />
+          <div className="container px-6 mx-auto text-center max-w-7xl">
+            <h3 className="text-3xl font-extrabold text-[#2f1991]">Key Features</h3>
+            <div className="grid gap-6 mt-10 sm:grid-cols-2 lg:grid-cols-3">
+              {keyFeaturesItems.map((item, i) => (
+                <div key={i} className="relative p-8 overflow-hidden transition bg-white border border-gray-200 shadow-sm group rounded-2xl hover:-translate-y-1 hover:shadow-xl">
+                  <div className="inline-flex items-center justify-center w-16 h-16 mb-4 bg-gray-100 rounded-full">
+                    <item.icon className="h-8 w-8 text-[#2f1991]" />
+                  </div>
+                  <h4 className="text-lg font-semibold text-[#2f1991]">{item.title}</h4>
+                  <p className="mt-2 text-gray-600">{item.description}</p>
+                  <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-[#2f1991]/10 blur-2xl transition group-hover:opacity-80" />
                 </div>
               ))}
             </div>
-            <div className="mt-12">
-              <Link
-                href="/features"
-                className="inline-block px-10 py-4 font-bold text-[#2f1991] bg-white rounded-full hover:bg-gray-200 hover:text-[#2f1991] transition-colors duration-300 transform hover:scale-105"
-              >
+            <div className="mt-10">
+              <Link href="/features" className="inline-flex rounded-full bg-white px-8 py-3 text-sm font-bold text-[#2f1991] ring-1 ring-[#2f1991] transition hover:bg-[#2f1991] hover:text-white">
                 See All
               </Link>
             </div>
           </div>
-        </motion.section>
+        </section>
 
-        {/* BENEFITS OF SMATPAY SECTION */}
-        <motion.section
-          className="px-5 py-20 md:px-24"
-          variants={slideInFromBottom}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.4 }}
-        >
-          <h2 className="text-3xl font-bold text-center text-[#2f1991] mb-12">Benefits of Smatpay</h2>
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:gap-x-12 lg:gap-y-8 place-items-center">
-            <div className="md:col-span-1">
-              {benefitsOfSmatpayItems.map((item, index) => (
-          <div key={index} className="flex items-start gap-4 mb-8 text-left">
-            <div className="flex items-center justify-center flex-shrink-0 w-16 h-16 bg-gray-100 rounded-full">
-              <item.icon className="w-8 h-8 text-[#2f1991]" />
-            </div>
-            <div className="flex flex-col">
-              <h3 className="mb-1 text-xl font-semibold text-black">
-                {item.title}
-              </h3>
-              <p className="text-base text-gray-500">
-                {item.description}
-              </p>
-            </div>
-          </div>
+        {/* BENEFITS */}
+        <section className="relative py-20">
+          <div className="container grid items-center gap-12 px-6 mx-auto max-w-7xl lg:grid-cols-2">
+            <div>
+              {benefitsOfSmatpayItems.map((item, i) => (
+                <div key={i} className="flex items-start gap-4 mb-7">
+                  <div className="flex items-center justify-center bg-gray-100 rounded-full h-14 w-14 shrink-0">
+                    <item.icon className="h-7 w-7 text-[#2f1991]" />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-900">{item.title}</h4>
+                    <p className="mt-1 text-gray-600">{item.description}</p>
+                  </div>
+                </div>
               ))}
             </div>
-            {/* Right Column - Image with dot pattern to the right, image is larger */}
-            <div className="relative mt-10 md:mt-0 w-full flex items-center justify-center">
-              <div className="relative w-[28rem] h-[28rem] flex items-center justify-center"> {/* Increased size */}
-          <div
-            className="absolute right-[-40px] top-1/2 -translate-y-1/2 w-48 h-48 z-0"
-            style={{
-              backgroundImage: 'radial-gradient(#d1d5db 1px, transparent 1px)',
-              backgroundSize: '8px 8px'
-            }}
-          ></div>
-          <div className="relative z-10 overflow-hidden rounded-lg shadow-2xl w-full h-full flex items-center justify-center">
-            <Image
-              src="/smatpay-mobile-payment-options.png"
-              alt="SmatPay mobile payment options"
-              width={320}
-              height={320}
-              className="rounded-lg object-contain w-full h-full"
-            />
-          </div>
+
+            <div className="relative mx-auto h-[28rem] w-full max-w-md">
+              <div className="absolute -right-8 top-1/2 -translate-y-1/2 h-40 w-40 bg-[radial-gradient(#d1d5db_1px,transparent_1px)] [background-size:10px_10px]" />
+              <div className="relative z-10 w-full h-full overflow-hidden shadow-2xl rounded-3xl">
+                <Image
+                  src="/smatpay-mobile-payment-options.png"
+                  alt="SmatPay mobile payment options"
+                  fill
+                  className="object-contain"
+                />
               </div>
             </div>
           </div>
-        </motion.section>
+        </section>
 
-        {/* Testimonials Section */}
-        <motion.div
-          variants={slideInFromBottom}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.4 }}
-        >
-          <Testimonials
-            title="Testimonials"
-            subtitle="What they say"
-            testimonials={testimonialData}
-          />
-        </motion.div>
+        {/* TESTIMONIALS */}
+        <section id="testimonials" className="py-10">
+          <div className="container px-6 mx-auto max-w-7xl">
+            <Testimonials title="Testimonials" subtitle="What they say" testimonials={testimonialData} />
+          </div>
+        </section>
 
-        <motion.section
-          className="pb-10"
-          variants={slideInFromBottom}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.4 }}
-        >
-          <div className="relative py-20 mx-5 text-center text-white bg-center bg-cover shadow-lg md:py-32 rounded-xl md:mx-24"
-            style={{
-              backgroundImage: "url('/holding_payment_card.jpg')",
-            }}>
-            <div className="absolute inset-0 bg-[#8141D5] opacity-60 rounded-xl"></div>
-            <div className="relative z-10 max-w-4xl px-4 mx-auto">
-              <p className="mb-4 text-lg font-semibold md:text-xl">
-                Don't just take our word for it.
-              </p>
-              <h2 className="mb-8 text-3xl font-bold leading-tight md:text-5xl">
+        {/* CTA BANNER */}
+        <section className="pb-16">
+          <div
+            className="relative mx-6 overflow-hidden text-white bg-center bg-cover shadow-lg max-w-7xl rounded-3xl sm:mx-auto"
+            style={{ backgroundImage: "url('/holding_payment_card.jpg')" }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#8141D5]/80 to-[#2f1991]/70" />
+            <div className="relative z-10 max-w-3xl px-6 py-20 mx-auto text-center">
+              <p className="text-base font-semibold">Don't just take our word for it.</p>
+              <h3 className="mt-2 text-3xl font-extrabold leading-tight sm:text-4xl">
                 Experience the SmatPay difference for yourself!
-              </h2>
-              <button
-                className="bg-white hover:bg-[#8141D5] text-[#8141D5] font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out focus:outline-none focus:shadow-outline hover:text-white"
+              </h3>
+              <Link
+                href="/register"
+                className="mt-8 inline-flex rounded-full bg-white px-8 py-3 text-sm font-bold text-[#8141D5] shadow-lg ring-1 ring-white/40 transition hover:bg-[#f3f3f3]"
               >
                 Register Now
-              </button>
+              </Link>
             </div>
           </div>
-        </motion.section>
+        </section>
+
+        {/* FOOTER */}
+        <Footer />
       </main>
+
+      {/* Styles for marquee animation */}
+      <style jsx global>{`
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
     </>
   );
 }

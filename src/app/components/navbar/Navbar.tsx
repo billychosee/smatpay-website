@@ -1,36 +1,63 @@
+// src/components/navbar/navbar.tsx
 "use client";
-import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
-import DesktopNav from "./DesktopNav";
-import MobileNav from "./MobileNav";
-import useScrollHide from "./hooks/useScrollHide";
 
-export default function Navbar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const pathname = usePathname();
-  const navbarVisible = useScrollHide(mobileMenuOpen);
+import React, { useState } from "react";
+import { DeskNav } from "./DesktopNav";
+import { MobileMenu } from "./MobileMenu";
+import { NAV_LINKS } from "./config";
 
-  useEffect(() => {
-    setMobileMenuOpen(false);
-  }, [pathname]);
+const Navbar: React.FC = () => {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [resourcesOpen, setResourcesOpen] = useState(false);
+
+  const toggleResourcesDesktop = () => setResourcesOpen((v) => !v);
+  const toggleResourcesMobile = () => setResourcesOpen((v) => !v);
 
   return (
-    <nav className={`fixed w-full z-50 ${mobileMenuOpen ? 'bg-[#2f1991]' : 'bg-[#2f1991]/95'}  backdrop-blur-sm transition-transform duration-300 ${navbarVisible ? 'translate-y-0' : '-translate-y-full'}`}>
-      <div className="flex items-center justify-between px-6 py-4 md:px-24 xl:px-32 lg:px-12">
-        <div className="flex items-center flex-shrink-0 gap-2">
-          <Link href="/">
-          <Image src={"./smatpay_white_logo.svg"} alt={"SmatPay White Logo"} width={150} height={50} className="w-32 h-auto" />
-          </Link>
-        </div>
+    <>
+      {/* DESKTOP NAVBAR */}
+      // navbar.tsx
+<DeskNav
+  resourcesOpen={resourcesOpen}
+  onResourcesOpen={() => setResourcesOpen(true)}
+  onResourcesClose={() => setResourcesOpen(false)}
+/>
 
-        <DesktopNav />
-        <MobileNav
-          isOpen={mobileMenuOpen}
-          onToggle={() => setMobileMenuOpen(!mobileMenuOpen)}
-        />
-      </div>
-    </nav>
+
+      {/* MOBILE NAVBAR (Header with Menu button) */}
+      <nav className="fixed top-0 left-0 right-0 z-50 flex border-b shadow-sm md:hidden bg-white/70 backdrop-blur border-white/20">
+        <div className="flex items-center justify-between w-full px-4 py-3">
+          {/* Logo */}
+          <a href="/" className="flex items-center gap-2">
+            <img
+              src="/smatpay_logo.svg"
+              alt="Smatpay logo"
+              width={96}
+              height={96}
+              className="rounded"
+            />
+          </a>
+
+          {/* Menu Button */}
+          <button
+            aria-label="Toggle menu"
+            onClick={() => setMobileOpen((v) => !v)}
+            className="rounded-4xl border border-[#2f1991] px-4 py-1.5 text-sm font-semibold text-[#2f1991] transition hover:bg-[#2f1991] hover:text-white"
+          >
+            {mobileOpen ? "Close" : "Menu"}
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile Drawer (overlay + drawer) */}
+      <MobileMenu
+        open={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        resourcesOpen={resourcesOpen}
+        onToggleResources={toggleResourcesMobile}
+      />
+    </>
   );
-}
+};
+
+export default Navbar;

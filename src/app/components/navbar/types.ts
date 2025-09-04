@@ -1,15 +1,6 @@
-import { IconType } from 'react-icons';
+// src/components/navbar/types.ts
 
-export type DropdownItem = {
-  readonly label: string;
-  readonly href: string;
-};
-
-export type NavItem = {
-  readonly label: string;
-  readonly href: string;
-  readonly icon?: IconType; // This property is now optional
-  readonly dropdown?: {
-    readonly items: readonly DropdownItem[];
-  };
+export type NavLink = {
+  label: string;
+  href?: string;
 };

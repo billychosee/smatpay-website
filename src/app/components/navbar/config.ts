@@ -1,60 +1,23 @@
-import {
-  FiHome,
-  FiInfo,
-  FiGrid,
-  FiBox,
-  FiUsers,
-  FiMail,
-  FiSearch,
-  FiMenu,
-  FiX,
-  FiChevronDown,
-  FiChevronUp,
-} from 'react-icons/fi';
+// src/components/navbar/config.ts
 
-export const NAV_ITEMS = [
-  {
-    label: "Home",
-    href: "/",
-  },
-  {
-    label: "About Us",
-    href: "/about-us",
-  },
-  {
-    label: "Features",
-    href: "/features",
-  },
-  {
-    label: "Documentation",
-    href: "https://doc.smatpay.africa",
-    external: true,
-    target: "_blank",
-  },
-  {
-    label: "Resources",
-    href: "/resources",
-    icon: FiGrid,
-    iconClass: "text-current",
-    dropdown: {
-      items: [
-        { label: "Intergrations", href: "/resources/integrations" },
-        { label: "Knowledge Base", href: "https://crm.smatpay.africa/knowledge-base", external: true, target: "_blank" },
-        { label: "FAQs", href: "/resources/faqs" },
-      ] as const
-    }
-  },
-  {
-    label: "Contact Us",
-    href: "/contact-us",
-  }
-] as const;
+export const BRAND = {
+  name: "SmatPay",
+  logo: "/smatpay_logo.svg", // adjust to your actual path or import
+};
 
-export const ICONS = {
-  search: FiSearch,
-  bars: FiMenu,
-  times: FiX,
-  chevronDown: FiChevronDown,
-  chevronUp: FiChevronUp
-} as const;
+type NavLink = {
+  label: string;
+  href?: string;
+  // If a link should be rendered via an action (e.g., dropdown), we can flag it
+  // but for now we keep simple href-based links
+};
 
+export const NAV_LINKS: NavLink[] = [
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "/about-us" },
+  { label: "Features", href: "/features" },
+  { label: "Documentation", href: "/features" },
+  { label: "Resources" }, // triggers dropdown in desknav
+  { label: "Contact Us", href: "/contact-us" },
+  // add more as needed
+];
