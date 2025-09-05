@@ -10,7 +10,7 @@ import {
   FaPhoneAlt,
   FaFacebookF,
   FaInstagram,
-  FaYoutube,
+  FaLinkedin,
 } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
@@ -145,13 +145,13 @@ export default function Contact() {
                 </h3>
                 <div className="flex gap-4">
                   <Link
-                    href="#"
+                    href="https://www.facebook.com/people/Smatpay/61563697798654/?rdid=50bxiSV1lOzF5f2r&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F17FR9odziS%2F"
                     className="bg-[#2f1991] hover:bg-[#830bc9] text-white rounded-full p-2"
                   >
                     <FaFacebookF className="text-xl" />
                   </Link>
                   <Link
-                    href="#"
+                    href="https://www.instagram.com/smat_pay?igsh=NTc4MTIwNjQ2YQ=="
                     className="bg-[#2f1991] hover:bg-[#830bc9] text-white rounded-full p-2"
                   >
                     <FaInstagram className="text-xl" />
@@ -163,10 +163,10 @@ export default function Contact() {
                     <FaXTwitter className="text-xl" />
                   </Link>
                   <Link
-                    href="#"
+                    href="https://www.linkedin.com/company/smatpay-africa/"
                     className="bg-[#2f1991] hover:bg-[#830bc9] text-white rounded-full p-2"
                   >
-                    <FaYoutube className="text-xl" />
+                    <FaLinkedin className="text-xl" />
                   </Link>
                 </div>
               </div>

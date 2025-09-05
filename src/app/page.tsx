@@ -7,6 +7,11 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Testimonials from "./components/Testimonials";
 import Footer from "@/app/components/Footer";
+import WhyChooseCarousel from "@/app/components/WhyChooseCarousel";
+import FeaturesSection from "./components/FeaturesSection";
+import BenefitsSection from "./components/BenefitsSection";
+
+
 
 // Icons (Font Awesome)
 import {
@@ -201,86 +206,76 @@ export default function Home() {
         {/* Decorative background */}
         <div className="pointer-events-none absolute inset-0 -z-10 [background:radial-gradient(1200px_600px_at_50%_-200px,rgba(129,65,213,0.35),transparent_70%),radial-gradient(1200px_600px_at_50%_120%,rgba(47,25,145,0.25),transparent_70%)]" />
 
-        {/* NAVBAR */}
-        {/* <nav className="fixed top-0 left-0 right-0 z-50 w-full px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-          <div className="mt-4 rounded-2xl border border-white/20 bg-white/60 backdrop-blur supports-[backdrop-filter]:bg-white/40 shadow-lg">
-            <div className="flex items-center justify-between px-4 py-3">
-              <Link href="/" className="flex items-center gap-3">
-                <Image src="/smatpay_logo.png" alt="SmatPay" width={36} height={36} className="rounded" />
-                <span className="text-lg font-extrabold tracking-tight text-[#2f1991]">SmatPay</span>
-              </Link>
-              <div className="items-center hidden gap-6 md:flex">
-                <Link href="#why" className="text-sm font-medium text-gray-700 hover:text-[#2f1991]">Why SmatPay</Link>
-                <Link href="#features" className="text-sm font-medium text-gray-700 hover:text-[#2f1991]">Features</Link>
-                <Link href="#integrations" className="text-sm font-medium text-gray-700 hover:text-[#2f1991]">Integrations</Link>
-                <Link href="#testimonials" className="text-sm font-medium text-gray-700 hover:text-[#2f1991]">Testimonials</Link>
-              </div>
-              <div className="flex items-center gap-3">
-                <Link
-                  href="/login"
-                  className="hidden rounded-full border border-[#2f1991] px-5 py-2 text-sm font-semibold text-[#2f1991] transition hover:bg-[#2f1991] hover:text-white md:inline-block"
-                >
-                  Sign in
-                </Link>
-                <Link
-                  href="/register"
-                  className="rounded-full bg-gradient-to-tr from-[#8141D5] to-[#5b35e5] px-5 py-2 text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-105"
-                >
-                  Get Started
-                </Link>
-              </div>
-            </div>
-          </div>
-        </nav> */}
-
         {/* HERO */}
         <section className="relative flex min-h-[92vh] items-center overflow-hidden pt-32">
-          {/* grid overlay */}
-          <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.04)_1px,transparent_1px)] bg-[size:28px_28px]" />
+  {/* Animated blurred purple background elements (less intense) */}
+  <motion.div
+    className="absolute bg-purple-600 rounded-full top-1/4 left-1/4 w-72 h-72 opacity-15 blur-3xl"
+    animate={{ x: [0, 200, 0], y: [0, -100, 0] }}
+    transition={{ duration: 20, repeat: Infinity, repeatType: "loop", ease: "easeInOut" }}
+  />
+  <motion.div
+    className="absolute bg-purple-500 rounded-full bottom-1/4 right-1/4 w-96 h-96 opacity-10 blur-3xl"
+    animate={{ x: [-100, 100, -100], y: [0, 50, 0] }}
+    transition={{ duration: 25, repeat: Infinity, repeatType: "loop", ease: "easeInOut" }}
+  />
+  <motion.div
+    className="absolute w-64 h-64 bg-purple-700 rounded-full top-1/2 right-1/3 opacity-12 blur-2xl"
+    animate={{ x: [0, -150, 0], y: [0, 75, 0] }}
+    transition={{ duration: 22, repeat: Infinity, repeatType: "loop", ease: "easeInOut" }}
+  />
 
-          <div className="container px-6 mx-auto max-w-7xl">
-            <div className="grid items-center gap-12 lg:grid-cols-2">
-              <motion.div variants={stagger} initial="hidden" animate="show" className="text-center lg:text-left">
-                <motion.h1 variants={fadeUp} className="text-4xl font-extrabold tracking-tight text-[#1a133d] sm:text-5xl lg:text-6xl">
-                  Empowering Businesses with Next‑Gen Payment Solutions
-                </motion.h1>
-                <motion.p variants={fadeUp} className="mt-5 text-lg text-gray-600 sm:text-xl">
-                  Redefining Payment Excellence
-                </motion.p>
-                <motion.div variants={fadeUp} className="flex flex-col items-center gap-4 mt-8 sm:flex-row sm:justify-start">
-                  <Link
-                    href="/register"
-                    className="inline-flex items-center justify-center rounded-full bg-[#2f1991] px-8 py-3 text-sm font-bold text-white shadow-lg shadow-[#2f1991]/20 transition hover:scale-[1.02] hover:brightness-110"
-                  >
-                    Register
-                  </Link>
-                  <Link
-                    href="#discover"
-                    className="inline-flex items-center justify-center rounded-full border border-gray-300 bg-white px-8 py-3 text-sm font-semibold text-[#2f1991] transition hover:border-[#2f1991] hover:bg-[#2f1991] hover:text-white"
-                  >
-                    Discover More
-                  </Link>
-                </motion.div>
+  {/* Grid overlay */}
+  <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.04)_1px,transparent_1px)] bg-[size:28px_28px]" />
 
-              </motion.div>
+  <div className="container z-10 px-6 mx-auto max-w-7xl">
+    <div className="grid items-center gap-12 lg:grid-cols-2">
+      <motion.div variants={stagger} initial="hidden" animate="show" className="text-center lg:text-left">
+        <motion.h1
+          variants={fadeUp}
+          className="text-3xl font-extrabold tracking-tight text-[#1a133d] sm:text-4xl md:text-5xl lg:text-6xl"
+        >
+          Empowering Businesses with Next‑Gen Payment Solutions
+        </motion.h1>
+        <motion.p
+          variants={fadeUp}
+          className="mt-5 text-base text-gray-600 sm:text-lg md:text-xl"
+        >
+          Redefining Payment Excellence
+        </motion.p>
+        <motion.div variants={fadeUp} className="flex flex-col items-center gap-4 mt-8 sm:flex-row sm:justify-start">
+          <Link
+            href="https://merchant.smatpay.africa/sign-up"
+            className="inline-flex items-center justify-center rounded-full bg-[#2f1991] px-6 sm:px-8 py-3 text-sm sm:text-base font-bold text-white shadow-lg shadow-[#2f1991]/20 transition hover:scale-[1.02] hover:brightness-110"
+          >
+            Register
+          </Link>
+          <Link
+            href="#discover"
+            className="inline-flex items-center justify-center rounded-full border border-gray-300 bg-white px-6 sm:px-8 py-3 text-sm sm:text-base font-semibold text-[#2f1991] transition hover:border-[#2f1991] hover:bg-[#2f1991] hover:text-white"
+          >
+            Discover More
+          </Link>
+        </motion.div>
+      </motion.div>
 
-              <motion.div initial={{ opacity: 0, x: 60 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="relative">
-                <div className="relative w-full max-w-xl p-4 mx-auto border shadow-2xl rounded-3xl border-white/40 bg-white/60 backdrop-blur">
-                  <Image
-                    src="/smatpay-hero-art.png"
-                    alt="SmatPay interface on mobile and desktop showing easy payments"
-                    width={1000}
-                    height={700}
-                    className="object-contain w-full h-auto rounded-2xl"
-                    priority
-                  />
-                  {/* floating accent */}
-                  <div className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-2xl bg-gradient-to-tr from-[#8141D5] to-[#2f1991] opacity-70 blur-2xl" />
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
+      <motion.div initial={{ opacity: 0, x: 60 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="relative">
+        <div className="relative w-full max-w-xl p-4 mx-auto border shadow-2xl rounded-3xl border-white/40 bg-white/60 backdrop-blur">
+          <Image
+            src="/smatpay-hero-art.png"
+            alt="SmatPay interface on mobile and desktop showing easy payments"
+            width={1000}
+            height={700}
+            className="object-contain w-full h-auto rounded-2xl"
+            priority
+          />
+          <div className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-2xl bg-gradient-to-tr from-[#8141D5] to-[#2f1991] opacity-70 blur-2xl" />
+        </div>
+      </motion.div>
+    </div>
+  </div>
+</section>
+
 
         {/* ACCEPTED METHODS (Marquee) */}
         <section className="relative py-16">
@@ -290,7 +285,7 @@ export default function Home() {
               Integrate once and accept payments from all popular local and international methods your customers prefer.
             </p>
 
-            <div className="mt-10 overflow-hidden border border-gray-200 rounded-2xl bg-gray-50">
+            <div className="mt-10 overflow-hidden border border-gray-200 rounded-2xl bg-purple-50">
               <div className="flex animate-[marquee_30s_linear_infinite] gap-12 p-6 [--gap:3rem] hover:[animation-play-state:paused]">
                 {[...paymentLogos, ...paymentLogos].map((item, idx) => (
                   <div key={`${item.name}-${idx}`} className="transition shrink-0">
@@ -334,7 +329,7 @@ export default function Home() {
                 SmatPay is a sophisticated payment gateway that serves as a pivotal intermediary between merchants and customers during online transactions. As a payment gateway, SmatPay facilitates a secure and efficient transfer of funds from customers to merchants, enabling seamless transactions across various digital platforms, from websites to mobile apps.
               </p>
               <div className="mt-6">
-                <Link href="/register" className="inline-flex rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#8141D5] ring-1 ring-[#8141D5] transition hover:bg-[#8141D5] hover:text-white">
+                <Link href="https://merchant.smatpay.africa/sign-up" className="inline-flex rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#8141D5] ring-1 ring-[#8141D5] transition hover:bg-[#8141D5] hover:text-white">
                   Create an Account Now
                 </Link>
               </div>
@@ -343,7 +338,7 @@ export default function Home() {
         </section>
 
         {/* INTEGRATIONS */}
-        <section id="integrations" className="relative py-20">
+        <section id="integrations" className="relative py-20 bg-purple-50">
           <div className="container px-6 mx-auto text-center max-w-7xl">
             <h3 className="text-2xl font-bold text-[#2f1991] sm:text-3xl">Integrate with Popular Platforms</h3>
             <p className="max-w-3xl mx-auto mt-3 text-gray-600">
@@ -353,7 +348,7 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-6 mt-10 place-items-center sm:grid-cols-3 lg:grid-cols-5">
               {popularPlatforms.map((item) => (
                 <div key={item.name} className="w-full p-5 transition bg-white border border-gray-200 shadow-sm rounded-2xl">
-                  <Image src={item.logo} alt={item.name} width={140} height={80} className="object-contain w-auto h-12 mx-auto" />
+                  <Image src={item.logo} alt={item.name} width={140} height={80} className="object-contain w-auto mx-auto h-14" />
                 </div>
               ))}
             </div>
@@ -362,88 +357,21 @@ export default function Home() {
 
         {/* WHY SMATPAY */}
         <section id="why" className="relative py-20">
-          <div className="container px-6 mx-auto max-w-7xl">
-            <p className="text-xs font-bold tracking-widest text-center text-gray-500">WHY SMATPAY</p>
-            <h3 className="mt-2 text-center text-3xl font-extrabold text-[#2f1991] xl:text-[44px]">Why Choose Us ?</h3>
+        <div className="container px-6 mx-auto text-center max-w-7xl">
+          <p className="text-xs font-bold tracking-widest text-gray-500">WHY SMATPAY</p>
+          <h3 className="mt-2 text-3xl font-extrabold text-[#2f1991] xl:text-[44px]">Why Choose Us ?</h3>
 
-            <div className="grid gap-6 mt-12 lg:grid-cols-2">
-              {whyChooseUsItems.map((item, i) => (
-                <motion.div
-                  key={i}
-                  variants={fadeUp}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, amount: 0.2 }}
-                  className="flex items-start gap-4 p-6 transition bg-white border border-gray-200 shadow-sm rounded-2xl hover:shadow-md"
-                >
-                  <div className="flex items-center justify-center bg-gray-100 rounded-full h-14 w-14 shrink-0">
-                    <item.icon className="h-7 w-7 text-[#2f1991]" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-semibold text-gray-900">{item.title}</h4>
-                    <p className="mt-1 text-gray-600">{item.description}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
+          <WhyChooseCarousel />
+        </div>
+      </section>
+      
         {/* KEY FEATURES */}
-        <section id="features" className="relative py-20 overflow-hidden">
-          <div className="absolute inset-0 -z-10 bg-[url('/shopping-cart.jpg')] bg-cover bg-center opacity-10" />
-          <div className="container px-6 mx-auto text-center max-w-7xl">
-            <h3 className="text-3xl font-extrabold text-[#2f1991]">Key Features</h3>
-            <div className="grid gap-6 mt-10 sm:grid-cols-2 lg:grid-cols-3">
-              {keyFeaturesItems.map((item, i) => (
-                <div key={i} className="relative p-8 overflow-hidden transition bg-white border border-gray-200 shadow-sm group rounded-2xl hover:-translate-y-1 hover:shadow-xl">
-                  <div className="inline-flex items-center justify-center w-16 h-16 mb-4 bg-gray-100 rounded-full">
-                    <item.icon className="h-8 w-8 text-[#2f1991]" />
-                  </div>
-                  <h4 className="text-lg font-semibold text-[#2f1991]">{item.title}</h4>
-                  <p className="mt-2 text-gray-600">{item.description}</p>
-                  <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-[#2f1991]/10 blur-2xl transition group-hover:opacity-80" />
-                </div>
-              ))}
-            </div>
-            <div className="mt-10">
-              <Link href="/features" className="inline-flex rounded-full bg-white px-8 py-3 text-sm font-bold text-[#2f1991] ring-1 ring-[#2f1991] transition hover:bg-[#2f1991] hover:text-white">
-                See All
-              </Link>
-            </div>
-          </div>
-        </section>
+        <FeaturesSection keyFeaturesItems={keyFeaturesItems} />
 
         {/* BENEFITS */}
-        <section className="relative py-20">
-          <div className="container grid items-center gap-12 px-6 mx-auto max-w-7xl lg:grid-cols-2">
-            <div>
-              {benefitsOfSmatpayItems.map((item, i) => (
-                <div key={i} className="flex items-start gap-4 mb-7">
-                  <div className="flex items-center justify-center bg-gray-100 rounded-full h-14 w-14 shrink-0">
-                    <item.icon className="h-7 w-7 text-[#2f1991]" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-semibold text-gray-900">{item.title}</h4>
-                    <p className="mt-1 text-gray-600">{item.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+        <BenefitsSection />
 
-            <div className="relative mx-auto h-[28rem] w-full max-w-md">
-              <div className="absolute -right-8 top-1/2 -translate-y-1/2 h-40 w-40 bg-[radial-gradient(#d1d5db_1px,transparent_1px)] [background-size:10px_10px]" />
-              <div className="relative z-10 w-full h-full overflow-hidden shadow-2xl rounded-3xl">
-                <Image
-                  src="/smatpay-mobile-payment-options.png"
-                  alt="SmatPay mobile payment options"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
+
 
         {/* TESTIMONIALS */}
         <section id="testimonials" className="py-10">
@@ -465,7 +393,7 @@ export default function Home() {
                 Experience the SmatPay difference for yourself!
               </h3>
               <Link
-                href="/register"
+                href="https://merchant.smatpay.africa/sign-up"
                 className="mt-8 inline-flex rounded-full bg-white px-8 py-3 text-sm font-bold text-[#8141D5] shadow-lg ring-1 ring-white/40 transition hover:bg-[#f3f3f3]"
               >
                 Register Now
@@ -474,17 +402,9 @@ export default function Home() {
           </div>
         </section>
 
-        {/* FOOTER */}
-        <Footer />
       </main>
 
-      {/* Styles for marquee animation */}
-      <style jsx global>{`
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-      `}</style>
+      
     </>
   );
 }
