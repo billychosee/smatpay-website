@@ -36,7 +36,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
             open ? "translate-x-0" : "-translate-x-full"
           }`}
         >
-          <div className="flex flex-col gap-4 mt-6">
+          <div className="flex flex-col gap-4 mt-12">
             {NAV_LINKS.map((l) =>
               l.label === "Resources" ? (
                 <div key={l.label} className="flex flex-col gap-2">
@@ -89,17 +89,22 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
             )}
 
             <div className="flex flex-col gap-3 pt-4 mt-4 border-t">
-              <Link href="/login" className="text-sm font-semibold text-[#2f1991]" onClick={onClose}>
-                Sign in
-              </Link>
-              <Link
-                href="https://merchant.smatpay.africa/sign-up"
-                className="rounded-full bg-gradient-to-tr from-[#8141D5] to-[#5b35e5] px-4 py-2 text-sm font-semibold text-white shadow-md"
-                onClick={onClose}
-              >
-                Get Started
-              </Link>
-            </div>
+  <Link
+    href="/login"
+    className="rounded-full border border-[#8141D5] px-4 py-2 text-sm font-semibold text-[#2f1991] text-center shadow-sm transition hover:bg-[#f5f0ff]"
+    onClick={onClose}
+  >
+    Sign in
+  </Link>
+  <Link
+    href="https://merchant.smatpay.africa/sign-up"
+    className="rounded-full bg-gradient-to-tr from-[#8141D5] to-[#5b35e5] px-4 py-2 text-sm font-semibold text-white shadow-md text-center"
+    onClick={onClose}
+  >
+    Get Started
+  </Link>
+</div>
+
           </div>
         </div>
       </div>

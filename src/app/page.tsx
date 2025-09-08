@@ -410,170 +410,261 @@ export default function Home() {
           </motion.div>
         </section>
 
-        {/* MARKET EXPLAINER */}
         <section id="discover" className="relative py-20">
-          <div className="container grid items-center gap-12 px-6 mx-auto max-w-7xl lg:grid-cols-2">
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.3 }}
-              className="order-2 lg:order-1"
-            >
-              <motion.h3
-                className="text-2xl font-bold text-[#2f1991] sm:text-3xl"
-                whileHover={{
-                  color: ["#2f1991", "#8141D5", "#2f1991"],
-                  transition: { duration: 1, repeat: Infinity },
-                }}
-              >
-                The Ultimate Payment Gateway for Zimbabwe's Growth
-              </motion.h3>
-              <motion.p
-                className="mt-4 text-gray-700"
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true }}
-                variants={{
-                  hidden: { opacity: 0 },
-                  show: {
-                    opacity: 1,
-                    transition: {
-                      staggerChildren: 0.05,
-                    },
-                  },
-                }}
-              >
-                {`Zimbabwe's e-commerce market is on the verge of a significant expansion, projected to reach $1.9 billion USD by 2025. This reflects an impressive annual growth rate of 19.5%. However, one of the critical challenges hindering this growth is the transaction cost and the technological limitations of existing payment gateways, especially in the mobile space. SmatPay addresses this gap by offering a highly versatile and fully integrated payment gateway that caters to the unique needs of the Zimbabwean market.`.split(' ').map((word, i) => (
-                  <motion.span
-                    key={i}
-                    variants={{
-                      hidden: { opacity: 0, y: 10 },
-                      show: { opacity: 1, y: 0 },
-                    }}
-                    style={{ display: 'inline-block' }}
-                  >
-                    {word}&nbsp;
-                  </motion.span>
-                ))}
-              </motion.p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 24, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, type: "spring" }}
-              className="order-1 lg:order-2"
-              whileHover={{
-                rotate: 1,
-                transition: { duration: 0.3 },
-              }}
-            >
-              <div className="relative mx-auto h-[28rem] w-full max-w-xl">
-                <Image src="/lady-on-phone.jpg" alt="Lady on phone" fill className="object-cover rounded-3xl" />
-                <motion.div
-                  className="pointer-events-none absolute -bottom-6 -left-6 h-24 w-24 rounded-2xl bg-gradient-to-tr from-[#2f1991] to-[#8141D5] opacity-60 blur-2xl"
-                  animate={{
-                    scale: [1, 1.2, 1],
-                    rotate: [0, 90, 180, 270, 360],
-                  }}
-                  transition={{ duration: 8, repeat: Infinity }}
-                />
-                <motion.div
-                  className="pointer-events-none absolute -top-6 -right-6 h-16 w-16 rounded-2xl bg-gradient-to-tr from-[#8141D5] to-[#2f1991] opacity-40 blur-xl"
-                  animate={{
-                    scale: [1, 1.3, 1],
-                    rotate: [0, -90, -180, -270, -360],
-                  }}
-                  transition={{ duration: 10, repeat: Infinity, delay: 1 }}
-                />
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* SECURE / SIMPLE */}
-        <section className="relative py-24 overflow-hidden">
-          <motion.div
-            className="absolute inset-0 -z-10 bg-[url('/Global-Map.png')] bg-cover bg-center opacity-10"
-            animate={{
-              scale: [1, 1.05, 1],
+  <div className="container grid items-center gap-12 px-6 mx-auto max-w-7xl lg:grid-cols-2">
+    {/* This is the text block. We set it to order-1 on mobile and order-2 on desktop. */}
+    <motion.div
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.3 }}
+      className="order-1 lg:order-2"
+    >
+      <motion.h3
+        className="text-2xl font-bold text-[#2f1991] sm:text-3xl"
+        whileHover={{
+          color: ["#2f1991", "#8141D5", "#2f1991"],
+          transition: { duration: 1, repeat: Infinity },
+        }}
+      >
+        The Ultimate Payment Gateway for Zimbabwe's Growth
+      </motion.h3>
+      <motion.p
+        className="mt-4 text-gray-700"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        variants={{
+          hidden: { opacity: 0 },
+          show: {
+            opacity: 1,
+            transition: {
+              staggerChildren: 0.05,
+            },
+          },
+        }}
+      >
+        {`Zimbabwe's e-commerce market is on the verge of a significant expansion, projected to reach $1.9 billion USD by 2025. This reflects an impressive annual growth rate of 19.5%. However, one of the critical challenges hindering this growth is the transaction cost and the technological limitations of existing payment gateways, especially in the mobile space. SmatPay addresses this gap by offering a highly versatile and fully integrated payment gateway that caters to the unique needs of the Zimbabwean market.`.split(' ').map((word, i) => (
+          <motion.span
+            key={i}
+            variants={{
+              hidden: { opacity: 0, y: 10 },
+              show: { opacity: 1, y: 0 },
             }}
-            transition={{ duration: 20, repeat: Infinity }}
-          />
-          <div className="container items-center gap-12 px-6 mx-auto max-w-7xl lg:grid lg:grid-cols-2">
-            <motion.div
-              className="relative mx-auto h-[28rem] w-full max-w-xl"
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              variants={slideInLeft}
-              whileHover={{
-                y: -10,
-                transition: { duration: 0.3 },
-              }}
-            >
-              <Image src="/lady-with-shopping-bag.jpg" alt="Lady with purple background" fill className="object-cover rounded-3xl" />
-            </motion.div>
-            <motion.div
-              className="mt-10 lg:mt-0"
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              variants={slideInRight}
-            >
-              <motion.h3
-                className="text-2xl font-bold text-[#2f1991] sm:text-3xl"
-                whileHover={{
-                  scale: 1.02,
-                  x: 10,
-                  transition: { duration: 0.3 },
-                }}
-              >
-                Secure, Simple, and Sophisticated
-              </motion.h3>
-              <motion.p
-                className="mt-4 text-gray-700"
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true }}
-                variants={{
-                  hidden: { opacity: 0 },
-                  show: {
-                    opacity: 1,
-                    transition: {
-                      staggerChildren: 0.03,
-                    },
-                  },
-                }}
-              >
-                {`SmatPay is a sophisticated payment gateway that serves as a pivotal intermediary between merchants and customers during online transactions. As a payment gateway, SmatPay facilitates a secure and efficient transfer of funds from customers to merchants, enabling seamless transactions across various digital platforms, from websites to mobile apps.`.split(' ').map((word, i) => (
-                  <motion.span
-                    key={i}
-                    variants={{
-                      hidden: { opacity: 0, x: -5 },
-                      show: { opacity: 1, x: 0 },
-                    }}
-                    style={{ display: 'inline-block' }}
-                  >
-                    {word}&nbsp;
-                  </motion.span>
-                ))}
-              </motion.p>
-              <motion.div
-                className="mt-6"
-                whileHover="hover"
-                whileTap={{ scale: 0.95 }}
-                variants={pulse}
-              >
-                <Link href="https://merchant.smatpay.africa/sign-up" className="inline-flex rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#8141D5] ring-1 ring-[#8141D5] transition hover:bg-[#8141D5] hover:text-white">
-                  Create an Account Now
-                </Link>
-              </motion.div>
-            </motion.div>
-          </div>
-        </section>
+            style={{ display: 'inline-block' }}
+          >
+            {word}&nbsp;
+          </motion.span>
+        ))}
+      </motion.p>
+    </motion.div>
+
+    {/* This is the image block. We set it to order-2 on mobile and order-1 on desktop. */}
+    <motion.div
+      initial={{ opacity: 0, y: 24, scale: 0.9 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.6, type: "spring" }}
+      className="order-2 lg:order-1"
+      whileHover={{
+        rotate: 1,
+        transition: { duration: 0.3 },
+      }}
+    >
+      <div className="relative mx-auto h-[28rem] w-full max-w-xl">
+        <Image src="/lady-on-phone.jpg" alt="Lady on phone" fill className="object-cover rounded-3xl" />
+        <motion.div
+          className="pointer-events-none absolute -bottom-6 -left-6 h-24 w-24 rounded-2xl bg-gradient-to-tr from-[#2f1991] to-[#8141D5] opacity-60 blur-2xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            rotate: [0, 90, 180, 270, 360],
+          }}
+          transition={{ duration: 8, repeat: Infinity }}
+        />
+        <motion.div
+          className="pointer-events-none absolute -top-6 -right-6 h-16 w-16 rounded-2xl bg-gradient-to-tr from-[#8141D5] to-[#2f1991] opacity-40 blur-xl"
+          animate={{
+            scale: [1, 1.3, 1],
+            rotate: [0, -90, -180, -270, -360],
+          }}
+          transition={{ duration: 10, repeat: Infinity, delay: 1 }}
+        />
+      </div>
+    </motion.div>
+  </div>
+</section>
+
+        <section id="discover" className="relative py-20">
+  <div className="container grid items-center gap-12 px-6 mx-auto max-w-7xl lg:grid-cols-2">
+    {/* This is the text block. It has no order class on mobile and gets order-1 on lg screens. */}
+    <motion.div
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.3 }}
+      className="lg:order-1"
+    >
+      <motion.h3
+        className="text-2xl font-bold text-[#2f1991] sm:text-3xl"
+        whileHover={{
+          color: ["#2f1991", "#8141D5", "#2f1991"],
+          transition: { duration: 1, repeat: Infinity },
+        }}
+      >
+        The Ultimate Payment Gateway for Zimbabwe's Growth
+      </motion.h3>
+      <motion.p
+        className="mt-4 text-gray-700"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        variants={{
+          hidden: { opacity: 0 },
+          show: {
+            opacity: 1,
+            transition: {
+              staggerChildren: 0.05,
+            },
+          },
+        }}
+      >
+        {`Zimbabwe's e-commerce market is on the verge of a significant expansion, projected to reach $1.9 billion USD by 2025. This reflects an impressive annual growth rate of 19.5%. However, one of the critical challenges hindering this growth is the transaction cost and the technological limitations of existing payment gateways, especially in the mobile space. SmatPay addresses this gap by offering a highly versatile and fully integrated payment gateway that caters to the unique needs of the Zimbabwean market.`.split(' ').map((word, i) => (
+          <motion.span
+            key={i}
+            variants={{
+              hidden: { opacity: 0, y: 10 },
+              show: { opacity: 1, y: 0 },
+            }}
+            style={{ display: 'inline-block' }}
+          >
+            {word}&nbsp;
+          </motion.span>
+        ))}
+      </motion.p>
+    </motion.div>
+
+    {/* This is the image block. It has no order class on mobile and gets order-2 on lg screens. */}
+    <motion.div
+      initial={{ opacity: 0, y: 24, scale: 0.9 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.6, type: "spring" }}
+      className="lg:order-2"
+      whileHover={{
+        rotate: 1,
+        transition: { duration: 0.3 },
+      }}
+    >
+      <div className="relative mx-auto h-[28rem] w-full max-w-xl">
+        <Image src="/lady-on-phone.jpg" alt="Lady on phone" fill className="object-cover rounded-3xl" />
+        <motion.div
+          className="pointer-events-none absolute -bottom-6 -left-6 h-24 w-24 rounded-2xl bg-gradient-to-tr from-[#2f1991] to-[#8141D5] opacity-60 blur-2xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            rotate: [0, 90, 180, 270, 360],
+          }}
+          transition={{ duration: 8, repeat: Infinity }}
+        />
+        <motion.div
+          className="pointer-events-none absolute -top-6 -right-1 h-16 w-16 rounded-2xl bg-gradient-to-tr from-[#8141D5] to-[#2f1991] opacity-40 blur-xl"
+          animate={{
+            scale: [1, 1.3, 1],
+            rotate: [0, -90, -180, -270, -360],
+          }}
+          transition={{ duration: 10, repeat: Infinity, delay: 1 }}
+        />
+      </div>
+    </motion.div>
+  </div>
+</section>
+
+
+<section className="relative py-24 overflow-hidden">
+  <motion.div
+    className="absolute inset-0 -z-10 bg-[url('/Global-Map.png')] bg-cover bg-center opacity-10"
+    animate={{
+      scale: [1, 1.05, 1],
+    }}
+    transition={{ duration: 20, repeat: Infinity }}
+  />
+  <div className="container items-center gap-12 px-6 mx-auto max-w-7xl lg:grid lg:grid-cols-2">
+    {/* This is the text and button block. It has no order class on mobile and gets order-2 on lg screens. */}
+    <motion.div
+      className="mt-10 lg:mt-0 lg:order-2"
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true }}
+      variants={slideInRight}
+    >
+      <motion.h3
+        className="text-2xl font-bold text-[#2f1991] sm:text-3xl"
+        whileHover={{
+          scale: 1.02,
+          x: 10,
+          transition: { duration: 0.3 },
+        }}
+      >
+        Secure, Simple, and Sophisticated
+      </motion.h3>
+      <motion.p
+        className="mt-4 text-gray-700"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        variants={{
+          hidden: { opacity: 0 },
+          show: {
+            opacity: 1,
+            transition: {
+              staggerChildren: 0.03,
+            },
+          },
+        }}
+      >
+        {`SmatPay is a sophisticated payment gateway that serves as a pivotal intermediary between merchants and customers during online transactions. As a payment gateway, SmatPay facilitates a secure and efficient transfer of funds from customers to merchants, enabling seamless transactions across various digital platforms, from websites to mobile apps.`.split(' ').map((word, i) => (
+          <motion.span
+            key={i}
+            variants={{
+              hidden: { opacity: 0, x: -5 },
+              show: { opacity: 1, x: 0 },
+            }}
+            style={{ display: 'inline-block' }}
+          >
+            {word}&nbsp;
+          </motion.span>
+        ))}
+      </motion.p>
+      <motion.div
+        className="mt-6"
+        whileHover="hover"
+        whileTap={{ scale: 0.95 }}
+        variants={pulse}
+      >
+        <Link
+          href="[https://merchant.smatpay.africa/sign-up](https://merchant.smatpay.africa/sign-up)"
+          className="inline-flex rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#8141D5] ring-1 ring-[#8141D5] transition hover:bg-[#8141D5] hover:text-white"
+        >
+          Create an Account Now
+        </Link>
+      </motion.div>
+    </motion.div>
+    
+    {/* This is the image block. It has no order class on mobile and gets order-1 on lg screens. */}
+    <motion.div
+      className="relative mx-auto h-[28rem] w-full max-w-xl order-2 lg:order-1"
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true }}
+      variants={slideInLeft}
+      whileHover={{
+        y: -10,
+        transition: { duration: 0.3 },
+      }}
+    >
+      <Image src="/lady-with-shopping-bag.jpg" alt="Lady with purple background" fill className="object-cover rounded-3xl" />
+    </motion.div>
+  </div>
+</section>
 
         {/* INTEGRATIONS */}
         <section id="integrations" className="relative py-20 bg-purple-50">
