@@ -664,55 +664,66 @@ export default function Home() {
 
         {/* CTA BANNER */}
         <section className="pb-16">
-          <motion.div
-            className="relative mx-6 overflow-hidden text-white bg-center bg-cover shadow-lg max-w-7xl rounded-3xl sm:mx-auto"
-            style={{ backgroundImage: "url('/holding_payment_card.jpg')" }}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            variants={scaleUp}
-            whileHover={{
-              scale: 1.02,
-              transition: { duration: 0.5 },
-            }}
-          >
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-tr from-[#8141D5]/80 to-[#2f1991]/70"
-              animate={{
-                background: [
-                  "linear-gradient(to top right, rgba(129, 65, 213, 0.8), rgba(47, 25, 145, 0.7))",
-                  "linear-gradient(to top right, rgba(129, 65, 213, 0.9), rgba(47, 25, 145, 0.8))",
-                  "linear-gradient(to top right, rgba(129, 65, 213, 0.8), rgba(47, 25, 145, 0.7))",
-                ],
-              }}
-              transition={{ duration: 3, repeat: Infinity }}
-            />
-            <motion.div
-              className="relative z-10 max-w-3xl px-6 py-20 mx-auto text-center"
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              variants={stagger}
-            >
-              <motion.p
-                variants={fadeUp}
-                className="text-base font-semibold"
-              >
-                Don't just take our word for it.
-              </motion.p>
-              <motion.h3
-                variants={fadeUp}
-                className="mt-2 text-3xl font-extrabold leading-tight sm:text-4xl"
-              >
-                Experience the SmatPay difference for yourself!
-              </motion.h3>
-              <motion.div
-                variants={pulse}
-                initial="rest"
-              />
-            </motion.div>
-          </motion.div>
-        </section>
+  <motion.div
+    className="relative mx-6 overflow-hidden text-white bg-center bg-cover shadow-lg max-w-7xl rounded-3xl sm:mx-auto"
+    style={{ backgroundImage: "url('/holding_payment_card.jpg')" }}
+    initial="hidden"
+    whileInView="show"
+    viewport={{ once: true }}
+    variants={scaleUp}
+    whileHover={{
+      scale: 1.02,
+      transition: { duration: 0.5 },
+    }}
+  >
+    <motion.div
+      className="absolute inset-0 bg-gradient-to-tr from-[#8141D5]/80 to-[#2f1991]/70"
+      animate={{
+        background: [
+          "linear-gradient(to top right, rgba(129, 65, 213, 0.8), rgba(47, 25, 145, 0.7))",
+          "linear-gradient(to top right, rgba(129, 65, 213, 0.9), rgba(47, 25, 145, 0.8))",
+          "linear-gradient(to top right, rgba(129, 65, 213, 0.8), rgba(47, 25, 145, 0.7))",
+        ],
+      }}
+      transition={{ duration: 3, repeat: Infinity }}
+    />
+    <motion.div
+      className="relative z-10 max-w-3xl px-6 py-20 mx-auto text-center"
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true }}
+      variants={stagger}
+    >
+      <motion.p
+        variants={fadeUp}
+        className="text-base font-semibold"
+      >
+        Don't just take our word for it.
+      </motion.p>
+      <motion.h3
+        variants={fadeUp}
+        className="mt-2 text-3xl font-extrabold leading-tight sm:text-4xl"
+      >
+        Experience the SmatPay difference for yourself!
+      </motion.h3>
+      
+      {/* The new "Get Started" button has been added here */}
+      <motion.div variants={fadeUp}>
+        <Link
+          href="https://merchant.smatpay.africa/sign-up"
+          className="mt-8 inline-flex rounded-full bg-white px-8 py-3 text-sm font-bold text-[#8141D5] shadow-lg ring-1 ring-white/40 transition hover:bg-[#f3f3f3]"
+        >
+          Get Started
+        </Link>
+      </motion.div>
+      
+      <motion.div
+        variants={pulse}
+        initial="rest"
+      />
+    </motion.div>
+  </motion.div>
+</section>
 
         <Footer />
       </main>
