@@ -3,15 +3,14 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
+import { Variants } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import Testimonials from "./components/Testimonials";
 import Footer from "@/app/components/Footer";
 import WhyChooseCarousel from "@/app/components/WhyChooseCarousel";
 import FeaturesSection from "./components/FeaturesSection";
 import BenefitsSection from "./components/BenefitsSection";
-
-
 
 // Icons (Font Awesome)
 import {
@@ -30,9 +29,7 @@ import {
   FaMobileAlt,
 } from "react-icons/fa";
 
-// -----------------------------
-// Data (kept as requested)
-// -----------------------------
+// Data
 const paymentLogos = [
   { name: "Zimswitch", logo: "/zimswitch.png" },
   { name: "Visa", logo: "/visa.png" },
@@ -176,19 +173,97 @@ const testimonialData = [
   },
 ];
 
-// Motion helpers
-const fadeUp = {
+// Motion helpers (TypeScript safe)
+export const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
   show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
-const stagger = {
+export const fadeIn: Variants = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { duration: 0.8 } },
+};
+
+export const scaleUp: Variants = {
+  hidden: { opacity: 0, scale: 0.8 },
+  show: { opacity: 1, scale: 1, transition: { duration: 0.7 } },
+};
+
+export const slideInLeft: Variants = {
+  hidden: { opacity: 0, x: -100 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.8 } },
+};
+
+export const slideInRight: Variants = {
+  hidden: { opacity: 0, x: 100 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.8 } },
+};
+
+export const rotateIn: Variants = {
+  hidden: { opacity: 0, rotate: -15 },
+  show: { opacity: 1, rotate: 0, transition: { duration: 0.7 } },
+};
+
+export const stagger: Variants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.08 } },
 };
 
+export const pulse: Variants = {
+  rest: { scale: 1 },
+  hover: { 
+    scale: 1.05,
+    transition: { 
+      scale: { type: "spring", stiffness: 400, damping: 10 } // TS-safe spring
+    }
+  }
+};
+
+export const bounce: Variants = {
+  initial: { y: 0 },
+  animate: { 
+    y: [0, -10, 0],
+    transition: { 
+      duration: 1.5, 
+      repeat: Infinity,
+      repeatType: "reverse"
+    }
+  }
+};
+
+export const floating: Variants = {
+  initial: { y: 0 },
+  animate: { 
+    y: [0, -15, 0],
+    transition: { 
+      duration: 3, 
+      repeat: Infinity,
+      ease: "easeInOut"
+    }
+  }
+};
+
+export const shimmer: Variants = {
+  initial: { backgroundPosition: "-200% 0" },
+  animate: { 
+    backgroundPosition: "200% 0",
+    transition: { 
+      duration: 1.5, 
+      repeat: Infinity,
+      ease: "linear"
+    }
+  }
+};
+
 export default function Home() {
   const [mounted, setMounted] = useState(false);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  
+  const { scrollYProgress } = useScroll();
+  const scale = useTransform(scrollYProgress, [0, 1], [0.8, 1.2]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [1, 1, 1, 0]);
+  
   useEffect(() => setMounted(true), []);
 
   return (
@@ -208,109 +283,278 @@ export default function Home() {
 
         {/* HERO */}
         <section className="relative flex min-h-[92vh] items-center overflow-hidden pt-32">
-  {/* Animated blurred purple background elements (less intense) */}
-  <motion.div
-    className="absolute bg-purple-600 rounded-full top-1/4 left-1/4 w-72 h-72 opacity-15 blur-3xl"
-    animate={{ x: [0, 200, 0], y: [0, -100, 0] }}
-    transition={{ duration: 20, repeat: Infinity, repeatType: "loop", ease: "easeInOut" }}
-  />
-  <motion.div
-    className="absolute bg-purple-500 rounded-full bottom-1/4 right-1/4 w-96 h-96 opacity-10 blur-3xl"
-    animate={{ x: [-100, 100, -100], y: [0, 50, 0] }}
-    transition={{ duration: 25, repeat: Infinity, repeatType: "loop", ease: "easeInOut" }}
-  />
-  <motion.div
-    className="absolute w-64 h-64 bg-purple-700 rounded-full top-1/2 right-1/3 opacity-12 blur-2xl"
-    animate={{ x: [0, -150, 0], y: [0, 75, 0] }}
-    transition={{ duration: 22, repeat: Infinity, repeatType: "loop", ease: "easeInOut" }}
-  />
-
-  {/* Grid overlay */}
-  <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.04)_1px,transparent_1px)] bg-[size:28px_28px]" />
-
-  <div className="container z-10 px-6 mx-auto max-w-7xl">
-    <div className="grid items-center gap-12 lg:grid-cols-2">
-      <motion.div variants={stagger} initial="hidden" animate="show" className="text-center lg:text-left">
-        <motion.h1
-          variants={fadeUp}
-          className="text-3xl font-extrabold tracking-tight text-[#1a133d] sm:text-4xl md:text-5xl lg:text-6xl"
-        >
-          Empowering Businesses with Next‑Gen Payment Solutions
-        </motion.h1>
-        <motion.p
-          variants={fadeUp}
-          className="mt-5 text-base text-gray-600 sm:text-lg md:text-xl"
-        >
-          Redefining Payment Excellence
-        </motion.p>
-        <motion.div variants={fadeUp} className="flex flex-col items-center gap-4 mt-8 sm:flex-row sm:justify-start">
-          <Link
-            href="https://merchant.smatpay.africa/sign-up"
-            className="inline-flex items-center justify-center rounded-full bg-[#2f1991] px-6 sm:px-8 py-3 text-sm sm:text-base font-bold text-white shadow-lg shadow-[#2f1991]/20 transition hover:scale-[1.02] hover:brightness-110"
-          >
-            Register
-          </Link>
-          <Link
-            href="#discover"
-            className="inline-flex items-center justify-center rounded-full border border-gray-300 bg-white px-6 sm:px-8 py-3 text-sm sm:text-base font-semibold text-[#2f1991] transition hover:border-[#2f1991] hover:bg-[#2f1991] hover:text-white"
-          >
-            Discover More
-          </Link>
-        </motion.div>
-      </motion.div>
-
-      <motion.div initial={{ opacity: 0, x: 60 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="relative">
-        <div className="relative w-full max-w-xl p-4 mx-auto border shadow-2xl rounded-3xl border-white/40 bg-white/60 backdrop-blur">
-          <Image
-            src="/smatpay-hero-art.png"
-            alt="SmatPay interface on mobile and desktop showing easy payments"
-            width={1000}
-            height={700}
-            className="object-contain w-full h-auto rounded-2xl"
-            priority
+          {/* Animated blurred purple background elements */}
+          <motion.div
+            className="absolute bg-purple-600 rounded-full top-1/4 left-1/4 w-72 h-72 opacity-15 blur-3xl"
+            animate={{ 
+              x: [0, 200, 0], 
+              y: [0, -100, 0],
+              rotate: [0, 180, 360]
+            }}
+            transition={{ duration: 20, repeat: Infinity, repeatType: "loop", ease: "easeInOut" }}
           />
-          <div className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-2xl bg-gradient-to-tr from-[#8141D5] to-[#2f1991] opacity-70 blur-2xl" />
-        </div>
-      </motion.div>
-    </div>
-  </div>
-</section>
+          <motion.div
+            className="absolute bg-purple-500 rounded-full bottom-1/4 right-1/4 w-96 h-96 opacity-10 blur-3xl"
+            animate={{ 
+              x: [-100, 100, -100], 
+              y: [0, 50, 0],
+              scale: [1, 1.2, 1]
+            }}
+            transition={{ duration: 25, repeat: Infinity, repeatType: "loop", ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute w-64 h-64 bg-purple-700 rounded-full top-1/2 right-1/3 opacity-12 blur-2xl"
+            animate={{ 
+              x: [0, -150, 0], 
+              y: [0, 75, 0],
+              rotate: [0, -180, -360]
+            }}
+            transition={{ duration: 22, repeat: Infinity, repeatType: "loop", ease: "easeInOut" }}
+          />
 
+          {/* Additional animated elements */}
+          <motion.div
+            className="absolute w-40 h-40 bg-yellow-400 rounded-full top-1/3 right-1/4 opacity-20 blur-xl"
+            animate={{ 
+              x: [0, 100, 0], 
+              y: [0, -50, 0],
+              scale: [1, 1.5, 1]
+            }}
+            transition={{ duration: 15, repeat: Infinity, repeatType: "loop", ease: "easeInOut" }}
+          />
+          
+          <motion.div
+            className="absolute w-32 h-32 bg-blue-400 rounded-full bottom-1/3 left-1/4 opacity-20 blur-xl"
+            animate={{ 
+              x: [0, -80, 0], 
+              y: [0, 60, 0],
+              rotate: [0, 90, 180, 270, 360]
+            }}
+            transition={{ duration: 18, repeat: Infinity, repeatType: "loop", ease: "easeInOut" }}
+          />
 
-        {/* ACCEPTED METHODS (Marquee) */}
-        <section className="relative py-16">
-          <div className="container px-6 mx-auto text-center max-w-7xl">
-            <h2 className="text-2xl font-bold text-[#2f1991] sm:text-3xl">Accept All Major Payment Methods</h2>
-            <p className="max-w-3xl mx-auto mt-3 text-gray-600">
-              Integrate once and accept payments from all popular local and international methods your customers prefer.
-            </p>
+          {/* Grid overlay */}
+          <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.04)_1px,transparent_1px)] bg-[size:28px_28px]" />
 
-            <div className="mt-10 overflow-hidden border border-gray-200 rounded-2xl bg-purple-50">
-              <div className="flex animate-[marquee_30s_linear_infinite] gap-12 p-6 [--gap:3rem] hover:[animation-play-state:paused]">
-                {[...paymentLogos, ...paymentLogos].map((item, idx) => (
-                  <div key={`${item.name}-${idx}`} className="transition shrink-0">
-                    <Image src={item.logo} alt={item.name} width={120} height={60} className="object-contain w-auto h-12" />
-                  </div>
-                ))}
-              </div>
+          <div className="container z-10 px-6 mx-auto max-w-7xl">
+            <div className="grid items-center gap-12 lg:grid-cols-2">
+              <motion.div variants={stagger} initial="hidden" animate="show" className="text-center lg:text-left">
+                <motion.h1
+                  variants={fadeUp}
+                  className="text-3xl font-extrabold tracking-tight text-[#1a133d] sm:text-4xl md:text-5xl lg:text-6xl"
+                  whileHover={{ 
+                    scale: 1.02,
+                    transition: { duration: 0.3 }
+                  }}
+                >
+                  Empowering Businesses with Next‑Gen Payment Solutions
+                </motion.h1>
+                <motion.p
+                  variants={fadeUp}
+                  className="mt-5 text-base text-gray-600 sm:text-lg md:text-xl"
+                  animate={{
+                    color: ["#6B7280", "#4B5563", "#6B7280"],
+                  }}
+                  transition={{ duration: 5, repeat: Infinity }}
+                >
+                  Redefining Payment Excellence
+                </motion.p>
+                <motion.div variants={fadeUp} className="flex flex-col items-center gap-4 mt-8 sm:flex-row sm:justify-start">
+                  <motion.div
+                    whileHover="hover"
+                    whileTap={{ scale: 0.95 }}
+                    variants={pulse}
+                  >
+                    <Link
+                      href="https://merchant.smatpay.africa/sign-up"
+                      className="inline-flex items-center justify-center rounded-full bg-[#2f1991] px-6 sm:px-8 py-3 text-sm sm:text-base font-bold text-white shadow-lg shadow-[#2f1991]/20 transition hover:scale-[1.02] hover:brightness-110"
+                    >
+                      Register
+                    </Link>
+                  </motion.div>
+                  <motion.div
+                    whileHover="hover"
+                    whileTap={{ scale: 0.95 }}
+                    variants={pulse}
+                  >
+                    <Link
+                      href="#discover"
+                      className="inline-flex items-center justify-center rounded-full border border-gray-300 bg-white px-6 sm:px-8 py-3 text-sm sm:text-base font-semibold text-[#2f1991] transition hover:border-[#2f1991] hover:bg-[#2f1991] hover:text-white"
+                    >
+                      Discover More
+                    </Link>
+                  </motion.div>
+                </motion.div>
+              </motion.div>
+
+              <motion.div 
+                initial={{ opacity: 0, x: 60, rotate: 5 }} 
+                animate={{ opacity: 1, x: 0, rotate: 0 }} 
+                transition={{ duration: 0.8, delay: 0.2, type: "spring" }}
+                whileHover={{ 
+                  y: -10,
+                  transition: { duration: 0.3 }
+                }}
+                className="relative"
+              >
+                <div className="relative w-full max-w-xl p-4 mx-auto border shadow-2xl rounded-3xl border-white/40 bg-white/60 backdrop-blur">
+                  <Image
+                    src="/smatpay-hero-art.png"
+                    alt="SmatPay interface on mobile and desktop showing easy payments"
+                    width={1000}
+                    height={700}
+                    className="object-contain w-full h-auto rounded-2xl"
+                    priority
+                  />
+                  <motion.div 
+                    className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-2xl bg-gradient-to-tr from-[#8141D5] to-[#2f1991] opacity-70 blur-2xl"
+                    animate={{
+                      scale: [1, 1.2, 1],
+                      opacity: [0.7, 0.9, 0.7],
+                    }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  />
+                  <motion.div 
+                    className="pointer-events-none absolute -left-6 -bottom-6 h-16 w-16 rounded-2xl bg-gradient-to-tr from-[#8141D5] to-[#2f1991] opacity-50 blur-xl"
+                    animate={{
+                      scale: [1, 1.3, 1],
+                      opacity: [0.5, 0.7, 0.5],
+                    }}
+                    transition={{ duration: 4, repeat: Infinity, delay: 1 }}
+                  />
+                </div>
+              </motion.div>
             </div>
           </div>
+        </section>
+
+        {/* ACCEPTED METHODS (Marquee) */}
+        <section className="relative py-16" ref={ref}>
+          <motion.div 
+            initial="hidden"
+            animate={isInView ? "show" : "hidden"}
+            variants={stagger}
+            className="container px-6 mx-auto text-center max-w-7xl"
+          >
+            <motion.h2 
+              variants={fadeUp}
+              className="text-2xl font-bold text-[#2f1991] sm:text-3xl"
+              whileHover={{ scale: 1.02 }}
+            >
+              Accept All Major Payment Methods
+            </motion.h2>
+            <motion.p 
+              variants={fadeUp}
+              className="max-w-3xl mx-auto mt-3 text-gray-600"
+            >
+              Integrate once and accept payments from all popular local and international methods your customers prefer.
+            </motion.p>
+
+            <motion.div 
+              variants={fadeUp}
+              className="mt-10 overflow-hidden border border-gray-200 rounded-2xl bg-purple-50"
+              whileHover={{ scale: 1.01 }}
+            >
+              <motion.div 
+                className="flex animate-[marquee_30s_linear_infinite] gap-12 p-6 [--gap:3rem] hover:[animation-play-state:paused]"
+                whileHover={{ animationPlayState: "paused" }}
+              >
+                {[...paymentLogos, ...paymentLogos].map((item, idx) => (
+                  <motion.div 
+                    key={`${item.name}-${idx}`} 
+                    className="transition shrink-0"
+                    whileHover={{ 
+                      scale: 1.2,
+                      rotate: 5,
+                      transition: { duration: 0.3 }
+                    }}
+                  >
+                    <Image src={item.logo} alt={item.name} width={120} height={60} className="object-contain w-auto h-12" />
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.div>
+          </motion.div>
         </section>
 
         {/* MARKET EXPLAINER */}
         <section id="discover" className="relative py-20">
           <div className="container grid items-center gap-12 px-6 mx-auto max-w-7xl lg:grid-cols-2">
-            <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} className="order-2 lg:order-1">
-              <h3 className="text-2xl font-bold text-[#2f1991] sm:text-3xl">The Ultimate Payment Gateway for Zimbabwe's Growth</h3>
-              <p className="mt-4 text-gray-700">
-                Zimbabwe's e-commerce market is on the verge of a significant expansion, projected to reach $1.9 billion USD by 2025. This reflects an impressive annual growth rate of 19.5%. However, one of the critical challenges hindering this growth is the transaction cost and the technological limitations of existing payment gateways, especially in the mobile space. SmatPay addresses this gap by offering a highly versatile and fully integrated payment gateway that caters to the unique needs of the Zimbabwean market.
-              </p>
+            <motion.div 
+              variants={fadeUp} 
+              initial="hidden" 
+              whileInView="show" 
+              viewport={{ once: true, amount: 0.3 }} 
+              className="order-2 lg:order-1"
+            >
+              <motion.h3 
+                className="text-2xl font-bold text-[#2f1991] sm:text-3xl"
+                whileHover={{ 
+                  color: ["#2f1991", "#8141D5", "#2f1991"],
+                  transition: { duration: 1, repeat: Infinity }
+                }}
+              >
+                The Ultimate Payment Gateway for Zimbabwe's Growth
+              </motion.h3>
+              <motion.p 
+                className="mt-4 text-gray-700"
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true }}
+                variants={{
+                  hidden: { opacity: 0 },
+                  show: {
+                    opacity: 1,
+                    transition: {
+                      staggerChildren: 0.05
+                    }
+                  }
+                }}
+              >
+                {`Zimbabwe's e-commerce market is on the verge of a significant expansion, projected to reach $1.9 billion USD by 2025. This reflects an impressive annual growth rate of 19.5%. However, one of the critical challenges hindering this growth is the transaction cost and the technological limitations of existing payment gateways, especially in the mobile space. SmatPay addresses this gap by offering a highly versatile and fully integrated payment gateway that caters to the unique needs of the Zimbabwean market.`.split(' ').map((word, i) => (
+                  <motion.span
+                    key={i}
+                    variants={{
+                      hidden: { opacity: 0, y: 10 },
+                      show: { opacity: 1, y: 0 }
+                    }}
+                    style={{ display: 'inline-block' }}
+                  >
+                    {word}&nbsp;
+                  </motion.span>
+                ))}
+              </motion.p>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.6 }} className="order-1 lg:order-2">
+            <motion.div 
+              initial={{ opacity: 0, y: 24, scale: 0.9 }} 
+              whileInView={{ opacity: 1, y: 0, scale: 1 }} 
+              viewport={{ once: true, amount: 0.3 }} 
+              transition={{ duration: 0.6, type: "spring" }}
+              className="order-1 lg:order-2"
+              whileHover={{ 
+                rotate: 1,
+                transition: { duration: 0.3 }
+              }}
+            >
               <div className="relative mx-auto h-[28rem] w-full max-w-xl">
                 <Image src="/lady-on-phone.jpg" alt="Lady on phone" fill className="object-cover rounded-3xl" />
-                <div className="pointer-events-none absolute -bottom-6 -left-6 h-24 w-24 rounded-2xl bg-gradient-to-tr from-[#2f1991] to-[#8141D5] opacity-60 blur-2xl" />
+                <motion.div 
+                  className="pointer-events-none absolute -bottom-6 -left-6 h-24 w-24 rounded-2xl bg-gradient-to-tr from-[#2f1991] to-[#8141D5] opacity-60 blur-2xl"
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    rotate: [0, 90, 180, 270, 360],
+                  }}
+                  transition={{ duration: 8, repeat: Infinity }}
+                />
+                <motion.div 
+                  className="pointer-events-none absolute -top-6 -right-6 h-16 w-16 rounded-2xl bg-gradient-to-tr from-[#8141D5] to-[#2f1991] opacity-40 blur-xl"
+                  animate={{
+                    scale: [1, 1.3, 1],
+                    rotate: [0, -90, -180, -270, -360],
+                  }}
+                  transition={{ duration: 10, repeat: Infinity, delay: 1 }}
+                />
               </div>
             </motion.div>
           </div>
@@ -318,60 +562,165 @@ export default function Home() {
 
         {/* SECURE / SIMPLE */}
         <section className="relative py-24 overflow-hidden">
-          <div className="absolute inset-0 -z-10 bg-[url('/Global-Map.png')] bg-cover bg-center opacity-10" />
+          <motion.div 
+            className="absolute inset-0 -z-10 bg-[url('/Global-Map.png')] bg-cover bg-center opacity-10"
+            animate={{
+              scale: [1, 1.05, 1],
+            }}
+            transition={{ duration: 20, repeat: Infinity }}
+          />
           <div className="container items-center gap-12 px-6 mx-auto max-w-7xl lg:grid lg:grid-cols-2">
-            <div className="relative mx-auto h-[28rem] w-full max-w-xl">
+            <motion.div 
+              className="relative mx-auto h-[28rem] w-full max-w-xl"
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+              variants={slideInLeft}
+              whileHover={{ 
+                y: -10,
+                transition: { duration: 0.3 }
+              }}
+            >
               <Image src="/lady-with-shopping-bag.jpg" alt="Lady with purple background" fill className="object-cover rounded-3xl" />
-            </div>
-            <div className="mt-10 lg:mt-0">
-              <h3 className="text-2xl font-bold text-[#2f1991] sm:text-3xl">Secure, Simple, and Sophisticated</h3>
-              <p className="mt-4 text-gray-700">
-                SmatPay is a sophisticated payment gateway that serves as a pivotal intermediary between merchants and customers during online transactions. As a payment gateway, SmatPay facilitates a secure and efficient transfer of funds from customers to merchants, enabling seamless transactions across various digital platforms, from websites to mobile apps.
-              </p>
-              <div className="mt-6">
+            </motion.div>
+            <motion.div 
+              className="mt-10 lg:mt-0"
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+              variants={slideInRight}
+            >
+              <motion.h3 
+                className="text-2xl font-bold text-[#2f1991] sm:text-3xl"
+                whileHover={{ 
+                  scale: 1.02,
+                  x: 10,
+                  transition: { duration: 0.3 }
+                }}
+              >
+                Secure, Simple, and Sophisticated
+              </motion.h3>
+              <motion.p 
+                className="mt-4 text-gray-700"
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true }}
+                variants={{
+                  hidden: { opacity: 0 },
+                  show: {
+                    opacity: 1,
+                    transition: {
+                      staggerChildren: 0.03
+                    }
+                  }
+                }}
+              >
+                {`SmatPay is a sophisticated payment gateway that serves as a pivotal intermediary between merchants and customers during online transactions. As a payment gateway, SmatPay facilitates a secure and efficient transfer of funds from customers to merchants, enabling seamless transactions across various digital platforms, from websites to mobile apps.`.split(' ').map((word, i) => (
+                  <motion.span
+                    key={i}
+                    variants={{
+                      hidden: { opacity: 0, x: -5 },
+                      show: { opacity: 1, x: 0 }
+                    }}
+                    style={{ display: 'inline-block' }}
+                  >
+                    {word}&nbsp;
+                  </motion.span>
+                ))}
+              </motion.p>
+              <motion.div 
+                className="mt-6"
+                whileHover="hover"
+                whileTap={{ scale: 0.95 }}
+                variants={pulse}
+              >
                 <Link href="https://merchant.smatpay.africa/sign-up" className="inline-flex rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#8141D5] ring-1 ring-[#8141D5] transition hover:bg-[#8141D5] hover:text-white">
                   Create an Account Now
                 </Link>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
         </section>
 
         {/* INTEGRATIONS */}
         <section id="integrations" className="relative py-20 bg-purple-50">
-          <div className="container px-6 mx-auto text-center max-w-7xl">
-            <h3 className="text-2xl font-bold text-[#2f1991] sm:text-3xl">Integrate with Popular Platforms</h3>
-            <p className="max-w-3xl mx-auto mt-3 text-gray-600">
+          <motion.div 
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            variants={stagger}
+            className="container px-6 mx-auto text-center max-w-7xl"
+          >
+            <motion.h3 
+              variants={fadeUp}
+              className="text-2xl font-bold text-[#2f1991] sm:text-3xl"
+            >
+              Integrate with Popular Platforms
+            </motion.h3>
+            <motion.p 
+              variants={fadeUp}
+              className="max-w-3xl mx-auto mt-3 text-gray-600"
+            >
               Easily integrate Smatpay into your online store. Our intuitive interface and detailed documentation guide you through the process, ensuring a smooth setup
-            </p>
+            </motion.p>
 
-            <div className="grid grid-cols-2 gap-6 mt-10 place-items-center sm:grid-cols-3 lg:grid-cols-5">
-              {popularPlatforms.map((item) => (
-                <div key={item.name} className="w-full p-5 transition bg-white border border-gray-200 shadow-sm rounded-2xl">
+            <motion.div 
+              variants={fadeUp}
+              className="grid grid-cols-2 gap-6 mt-10 place-items-center sm:grid-cols-3 lg:grid-cols-5"
+            >
+              {popularPlatforms.map((item, index) => (
+                <motion.div 
+                  key={item.name} 
+                  className="w-full p-5 transition bg-white border border-gray-200 shadow-sm rounded-2xl"
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true }}
+                  variants={scaleUp}
+                  whileHover={{ 
+                    scale: 1.1, 
+                    rotate: 5,
+                    boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+                  }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                >
                   <Image src={item.logo} alt={item.name} width={140} height={80} className="object-contain w-auto mx-auto h-14" />
-                </div>
+                </motion.div>
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </section>
 
         {/* WHY SMATPAY */}
         <section id="why" className="relative py-20">
-        <div className="container px-6 mx-auto text-center max-w-7xl">
-          <p className="text-xs font-bold tracking-widest text-gray-500">WHY SMATPAY</p>
-          <h3 className="mt-2 text-3xl font-extrabold text-[#2f1991] xl:text-[44px]">Why Choose Us ?</h3>
+          <motion.div 
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            variants={stagger}
+            className="container px-6 mx-auto text-center max-w-7xl"
+          >
+            <motion.p 
+              variants={fadeUp}
+              className="text-xs font-bold tracking-widest text-gray-500"
+            >
+              WHY SMATPAY
+            </motion.p>
+            <motion.h3 
+              variants={fadeUp}
+              className="mt-2 text-3xl font-extrabold text-[#2f1991] xl:text-[44px]"
+            >
+              Why Choose Us ?
+            </motion.h3>
 
-          <WhyChooseCarousel />
-        </div>
-      </section>
+            <WhyChooseCarousel />
+          </motion.div>
+        </section>
       
         {/* KEY FEATURES */}
         <FeaturesSection keyFeaturesItems={keyFeaturesItems} />
 
         {/* BENEFITS */}
         <BenefitsSection />
-
-
 
         {/* TESTIMONIALS */}
         <section id="testimonials" className="py-10">
@@ -382,29 +731,116 @@ export default function Home() {
 
         {/* CTA BANNER */}
         <section className="pb-16">
-          <div
+          <motion.div
             className="relative mx-6 overflow-hidden text-white bg-center bg-cover shadow-lg max-w-7xl rounded-3xl sm:mx-auto"
             style={{ backgroundImage: "url('/holding_payment_card.jpg')" }}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            variants={scaleUp}
+            whileHover={{ 
+              scale: 1.02,
+              transition: { duration: 0.5 }
+            }}
           >
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#8141D5]/80 to-[#2f1991]/70" />
-            <div className="relative z-10 max-w-3xl px-6 py-20 mx-auto text-center">
-              <p className="text-base font-semibold">Don't just take our word for it.</p>
-              <h3 className="mt-2 text-3xl font-extrabold leading-tight sm:text-4xl">
-                Experience the SmatPay difference for yourself!
-              </h3>
-              <Link
-                href="https://merchant.smatpay.africa/sign-up"
-                className="mt-8 inline-flex rounded-full bg-white px-8 py-3 text-sm font-bold text-[#8141D5] shadow-lg ring-1 ring-white/40 transition hover:bg-[#f3f3f3]"
+            <motion.div 
+              className="absolute inset-0 bg-gradient-to-tr from-[#8141D5]/80 to-[#2f1991]/70"
+              animate={{
+                background: [
+                  "linear-gradient(to top right, rgba(129, 65, 213, 0.8), rgba(47, 25, 145, 0.7))",
+                  "linear-gradient(to top right, rgba(129, 65, 213, 0.9), rgba(47, 25, 145, 0.8))",
+                  "linear-gradient(to top right, rgba(129, 65, 213, 0.8), rgba(47, 25, 145, 0.7))",
+                ]
+              }}
+              transition={{ duration: 3, repeat: Infinity }}
+            />
+            <motion.div 
+              className="relative z-10 max-w-3xl px-6 py-20 mx-auto text-center"
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+              variants={stagger}
+            >
+              <motion.p 
+                variants={fadeUp}
+                className="text-base font-semibold"
               >
-                Register Now
-              </Link>
-            </div>
-          </div>
+                Don't just take our word for it.
+              </motion.p>
+              <motion.h3 
+                variants={fadeUp}
+                className="mt-2 text-3xl font-extrabold leading-tight sm:text-4xl"
+              >
+                Experience the SmatPay difference for yourself!
+              </motion.h3>
+              <motion.div
+  variants={pulse}
+  initial="rest"
+  whileHover="hover"
+  whileTap={{ scale: 0.95 }}
+>
+  <Link
+    href="https://merchant.smatpay.africa/sign-up"
+    className="mt-8 inline-flex rounded-full bg-white px-8 py-3 text-sm font-bold text-[#8141D5] shadow-lg ring-1 ring-white/40 transition hover:bg-[#f3f3f3]"
+  >
+    Register Now
+  </Link>
+</motion.div>
+
+            </motion.div>
+          </motion.div>
         </section>
 
-      </main>
+        {/* Floating action button */}
+        <motion.div
+          className="fixed z-50 bottom-6 right-6"
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 1, type: "spring" }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <Link
+            href="https://merchant.smatpay.africa/sign-up"
+            className="flex items-center justify-center w-16 h-16 rounded-full bg-[#2f1991] text-white shadow-lg"
+          >
+            <motion.div
+              animate={{ 
+                rotate: [0, 10, -10, 0],
+              }}
+              transition={{ duration: 1, repeat: Infinity, repeatDelay: 5 }}
+            >
+              <FaHandshake className="text-xl" />
+            </motion.div>
+          </Link>
+        </motion.div>
 
-      
+        {/* Animated background elements throughout the page */}
+        <motion.div
+          className="fixed w-4 h-4 bg-purple-400 rounded-full top-1/4 left-10 opacity-30"
+          animate={{
+            y: [0, -20, 0],
+            scale: [1, 1.5, 1],
+          }}
+          transition={{ duration: 5, repeat: Infinity }}
+        />
+        <motion.div
+          className="fixed w-6 h-6 bg-yellow-300 rounded-full top-3/4 right-20 opacity-20"
+          animate={{
+            y: [0, 30, 0],
+            x: [0, 10, 0],
+          }}
+          transition={{ duration: 7, repeat: Infinity, delay: 1 }}
+        />
+        <motion.div
+          className="fixed w-3 h-3 bg-blue-400 rounded-full opacity-25 bottom-1/3 left-20"
+          animate={{
+            y: [0, -15, 0],
+            scale: [1, 2, 1],
+          }}
+          transition={{ duration: 4, repeat: Infinity, delay: 2 }}
+        />
+      </main>
     </>
   );
 }

@@ -265,7 +265,7 @@ export default function FAQ() {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/smatpay - lady on laptop.jpg"
+            src="/faq-hero.jpg"
             alt="FAQ Hero"
             fill
             className="object-cover"

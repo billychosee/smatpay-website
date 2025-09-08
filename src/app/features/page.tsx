@@ -2,6 +2,7 @@
 
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 // Import necessary icons for the Key Features section
@@ -77,7 +78,7 @@ export default function FeaturesHero() {
         <meta name="description" content="Discover the smart features of SmatPay designed to empower your financial choices and streamline payments." />
       </Head>
 
-          <div className="bg-white min-h-screen">
+          <div className="min-h-screen bg-white">
       <>
         
       {/* Hero Section with Centered Text and Background Image */}
@@ -85,8 +86,8 @@ export default function FeaturesHero() {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/smatpay - lady on laptop.jpg" // Placeholder, replace with the actual image from your assets
-            alt="Helping You Make Smart Financial Choices"
+            src="/features-bg.jpg" // Placeholder, replace with the actual image from your assets
+            alt="Features Background"
             layout="fill"
             objectFit="cover"
             quality={100}
@@ -137,9 +138,11 @@ export default function FeaturesHero() {
             Accept Payments Effortlessly, Boost your sales and simplify your checkout process
           </p>
           {/* Button */}
-          <button className="px-8 py-3 font-semibold text-white transition duration-300 ease-in-out bg-purple-600 rounded-full shadow-lg hover:bg-purple-700 cursor-pointer">
+          <Link href="https://merchant.smatpay.africa/sign-up">
+          <button className="px-8 py-3 font-semibold text-white transition duration-300 ease-in-out bg-purple-600 rounded-full shadow-lg cursor-pointer hover:bg-purple-700">
             Open Account
           </button>
+          </Link>
         </div>
       </section>
 
@@ -167,46 +170,44 @@ export default function FeaturesHero() {
             ))}
           </div>
           {/* Link to all features - assuming you'll have a dedicated /features page */}
-          <div className="mt-12">
+          {/* <div className="mt-12">
             <a
               href="/features" // Replace with the actual path to your full features page if different
               className="inline-block px-10 py-4 font-bold text-[#2f1991] bg-white rounded-full hover:bg-gray-200 hover:text-[#2f1991] transition-colors duration-300 transform hover:scale-105"
             >
               See All
             </a>
-          </div>
+          </div> */}
         </div>
       </motion.section>
 
               {/* Payment Methods Section with Global-Map background */}
               <motion.div
-                className="relative py-20 bg-gray-50"
-                style={{ backgroundImage: "url('/Global-Map.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}
+                className="relative bg-white py-14"
                 variants={slideInFromBottom}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.4 }}
               >
-                <div className="absolute inset-0 bg-gray-50 opacity-95"></div>
-                <div className="container relative z-10 px-5 mx-auto text-center md:px-24">
-                  <h2 className="text-3xl font-bold text-[#2f1991] mb-4">Accept All Major Payment Methods</h2>
-                  <p className="max-w-3xl mx-auto mb-12 text-lg text-gray-600">
-                    Integrate once and accept payments from all popular local and international methods your customers prefer.
-                  </p>
-                  <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-6 place-items-center">
-                    {paymentLogos.map((item) => (
-                      <div key={item.name} className="p-4 transition-transform duration-300 grayscale hover:grayscale-0 hover:scale-110">
-                        <Image
-                          src={item.logo}
-                          alt={item.name}
-                          width={120}
-                          height={60}
-                          className="object-contain"
-                        />
-                      </div>
-                    ))}
+
+        <section className="relative py-16">
+          <div className="container px-6 mx-auto text-center max-w-7xl">
+            <h2 className="text-2xl font-bold text-[#2f1991] sm:text-3xl">Accept All Major Payment Methods</h2>
+            <p className="max-w-3xl mx-auto mt-3 text-gray-600">
+              Integrate once and accept payments from all popular local and international methods your customers prefer.
+            </p>
+
+            <div className="mt-10 overflow-hidden border border-gray-200 rounded-2xl bg-purple-50">
+              <div className="flex animate-[marquee_30s_linear_infinite] gap-12 p-6 [--gap:3rem] hover:[animation-play-state:paused]">
+                {[...paymentLogos, ...paymentLogos].map((item, idx) => (
+                  <div key={`${item.name}-${idx}`} className="transition shrink-0">
+                    <Image src={item.logo} alt={item.name} width={120} height={60} className="object-contain w-auto h-12" />
                   </div>
-                </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
               </motion.div>
       </>
     </div>

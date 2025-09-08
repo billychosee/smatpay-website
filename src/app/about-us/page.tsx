@@ -2,10 +2,14 @@
 
 import Head from 'next/head';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { motion, Variants } from 'framer-motion';
+import { FaShieldAlt, FaRocket, FaHandshake, FaGlobeAfrica } from 'react-icons/fa';
+import { useState, useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 // Partners
-const partners = [
+const patnersLogos = [
   { name: "SmatQr", logo: "/smat_qr_logo.svg" },
   { name: "SmatProp", logo: "/smatprop_logo.svg" },
   { name: "AWS", logo: "/aws_logo.png" },
@@ -22,9 +26,9 @@ const organizationSchema = {
   "logo": "https://smatpay.africa/smatpay_logo.svg",
   "contactPoint": {
     "@type": "ContactPoint",
-    "telephone": "+263-78-956-6427",
+    "telephone": "+263-86-8800-8631",
     "contactType": "customer service",
-    "areaServed": ["ZW", "ZA"],
+    "areaServed": ["ZW"],
     "availableLanguage": "en"
   },
   "sameAs": [
@@ -32,33 +36,85 @@ const organizationSchema = {
     "https://twitter.com/smatpay",
     "https://www.linkedin.com/company/smatpay"
   ],
-  "description": "SmatPay specializes in secure and seamless payment solutions for businesses and individuals in Zimbabwe, empowering digital transactions.",
-  "address": [
-    {
-      "@type": "PostalAddress",
-      "streetAddress": "13 Brentwood Avenue",
-      "addressLocality": "Harare",
-      "addressRegion": "Harare Province",
-      "postalCode": "00000",
-      "addressCountry": "ZW"
-    }
-  ],
+  "description": "SmatPay is a secure and seamless payment gateway in Zimbabwe that empowers businesses and individuals with innovative digital payment solutions. We are a product of Smatech Group.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "13 Brentwood Avenue, Groombridge",
+    "addressLocality": "Harare",
+    "addressRegion": "Harare Province",
+    "postalCode": "00000",
+    "addressCountry": "ZW"
+  },
 };
 
 // Framer Motion Variants
-const fadeIn = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
+
+const stagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1 } },
+};
+
+// Props interface for Counter component
+interface CounterProps {
+  from: number;
+  to: number;
+  label: string;
+}
+
+// Counter component for stats
+const Counter: React.FC<CounterProps> = ({ from, to, label }) => {
+  const [count, setCount] = useState(from);
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.5 });
+
+  useEffect(() => {
+    if (inView) {
+      let start = from;
+      const end = to;
+      const duration = 2000;
+      const increment = (end - start) / (duration / 10);
+
+      const timer = setInterval(() => {
+        start += increment;
+        if (start >= end) {
+          start = end;
+          clearInterval(timer);
+        }
+        setCount(Math.round(start));
+      }, 10);
+
+      return () => clearInterval(timer);
+    }
+  }, [inView, from, to]);
+
+  return (
+    <div ref={ref}>
+      <span className="block text-5xl font-extrabold text-[#2f1991] mb-2">{count}{label.includes("Served") ? "+" : ""}</span>
+      <p className="text-xl text-gray-600">{label}</p>
+    </div>
+  );
 };
 
 export default function About() {
+  const services = [
+    { title: "Payment Gateway", desc: "Securely accept payments via mobile money, debit, and credit cards with our flexible gateway.", image: "/aboutus-payment.jpg" },
+    { title: "POS Machines", desc: "Our fiscalization-ready POS terminals accept card, mobile money, and QR code payments in-store.", image: "/pos-machine.jpg" },
+    { title: "Recurring Billing", desc: "Automate subscriptions and regular payments, perfect for services and memberships.", image: "/billing.jpg" },
+    { title: "Fiscalized Invoicing", desc: "Stay compliant with ZIMRA regulations with our automatically fiscalized invoicing system.", image: "/fiscal.jpg" },
+    { title: "Developer APIs", desc: "Easily integrate our platform into your app or website using our comprehensive and well-documented APIs.", image: "/api.jpg" },
+    { title: "Value-Added Services", desc: "Earn additional revenue by selling digital services like airtime and ZESA directly from our platform.", image: "/vas.jpg" }
+  ];
+
   return (
     <>
       <Head>
         <title>About Us | SmatPay</title>
         <meta
           name="description"
-          content="Discover the story behind SmatPay and our mission to shape the future of digital payments in Zimbabwe."
+          content="Discover the story behind SmatPay, our mission to redefine digital payments, and our commitment to empowering businesses in Zimbabwe."
         />
         <script
           type="application/ld+json"
@@ -66,259 +122,216 @@ export default function About() {
         />
       </Head>
 
-      {/* Hero Section (original) */}
-      <div className="relative w-full h-[500px] md:h-[600px] flex flex-col items-center justify-center text-center text-white">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/smatpay - lady on laptop.jpg"
-            alt="About Us Hero"
-            layout="fill"
-            objectFit="cover"
-            quality={100}
-          />
-          <div className="absolute inset-0 bg-blue-900 opacity-70"></div>
-        </div>
-        <div className="relative z-10 max-w-2xl px-4">
-          <h1 className="mb-4 text-4xl font-bold leading-tight sm:text-5xl md:text-4xl">
-            About Us
-          </h1>
-          <p className="text-lg font-light sm:text-xl md:text-base">
-            Join us in shaping the future of payments in Zimbabwe.
-          </p>
-        </div>
-      </div>
+      <main className="relative text-black bg-white">
+        {/* Decorative background */}
+        <div className="pointer-events-none absolute inset-0 -z-10 [background:radial-gradient(1200px_600px_at_50%_-200px,rgba(129,65,213,0.35),transparent_70%),radial-gradient(1200px_600px_at_50%_120%,rgba(47,25,145,0.25),transparent_70%)]" />
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.04)_1px,transparent_1px)] bg-[size:28px_28px]" />
 
-      {/* Who We Are Section */}
-      <motion.section
-        className="py-20 bg-white"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={fadeIn}
-      >
-        <div className="container grid items-center gap-16 px-6 mx-auto lg:grid-cols-2">
-          {/* Text */}
-          <div>
-            <h2 className="mb-6 text-4xl font-bold text-[#2f1991]">Who We Are</h2>
-            <p className="mb-4 text-lg text-gray-600">
-              SmatPay is redefining digital payments in Zimbabwe. We provide a secure,
-              seamless, and innovative platform that empowers both businesses and individuals.
-            </p>
-            <p className="mb-4 text-lg text-gray-600">
-              Our mission is to remove barriers in e-commerce and enable financial inclusion
-              for all through cutting-edge solutions tailored to the local market.
-            </p>
-            <p className="text-lg text-gray-600">
-              With SmatPay, businesses thrive, and customers transact with ease.
-            </p>
+        {/* Hero Section */}
+        <div className="relative w-full h-[500px] md:h-[600px] flex flex-col items-center justify-center text-center text-white overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/smatpay - lady on laptop.jpg"
+              alt="About Us Hero"
+              layout="fill"
+              objectFit="cover"
+              quality={100}
+              priority
+            />
+            <div className="absolute inset-0 bg-blue-900 opacity-70"></div>
           </div>
-
-          {/* Circle Image */}
-          <div className="relative flex items-center justify-center">
-            <div className="absolute bg-blue-100 rounded-full w-72 h-72 -top-10 -left-10"></div>
-            <div className="absolute bg-blue-200 rounded-full w-96 h-96 -bottom-10 -right-10"></div>
-            <div className="relative z-10">
-              <Image
-                src="/man-on-laptop.jpg"
-                alt="Working on laptop"
-                width={500}
-                height={500}
-                className="rounded-full shadow-xl"
-              />
-            </div>
+          <div className="relative z-10 max-w-2xl px-4">
+            <motion.h1
+              className="mb-4 text-4xl font-bold leading-tightsm:text-4xl md:text-5xl"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              About Us
+            </motion.h1>
+            <motion.p
+              className="text-lg font-light sm:text-xl md:text-base"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              Join us in shaping the future of payments in Zimbabwe.
+            </motion.p>
           </div>
         </div>
-      </motion.section>
 
-      {/* Services Section */}
-      <motion.section
-        className="py-20 bg-gray-50"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={fadeIn}
-      >
-        <div className="container px-6 mx-auto text-center">
-          <h2 className="text-3xl font-bold text-[#2f1991] mb-12">Our Services</h2>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            {[
-              { title: "Corporate Solutions", desc: "Tailored payment systems for businesses.", icon: "🏢" },
-              { title: "Mobile Payments", desc: "Fast, secure, and mobile-first transactions.", icon: "📱" },
-              { title: "Cloud Development", desc: "Reliable, scalable, and future-ready.", icon: "☁️" },
-            ].map((service, idx) => (
-              <motion.div
-                key={idx}
-                whileHover={{ scale: 1.05 }}
-                className="p-8 transition bg-white shadow-md rounded-2xl hover:shadow-xl"
-              >
-                <div className="mb-4 text-5xl">{service.icon}</div>
-                <h3 className="mb-2 text-xl font-semibold">{service.title}</h3>
-                <p className="text-gray-600">{service.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
+        {/* Who We Are Section */}
+        <section className="py-20 bg-white">
+          <div className="container grid items-center gap-16 px-6 mx-auto max-w-7xl lg:grid-cols-2">
+            {/* Text */}
+            <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }}>
+              <motion.h2 variants={fadeUp} className="mb-6 text-3xl font-bold text-[#2f1991] md:text-2xl">Who We Are</motion.h2>
+              <motion.p variants={fadeUp} className="mb-4 text-gray-700">
+                SmatPay is more than just a payment gateway; we are the secure bridge between merchants and customers, redefining digital commerce in Zimbabwe. As a proud product of the <strong>Smatech Group</strong>, we are committed to building a robust and flexible payment ecosystem tailored for the future of Africa&apos;s digital economy.
+              </motion.p>
+              <motion.p variants={fadeUp} className="mb-4 text-gray-700">
+                Our mission is to solve the critical payment challenges in the market—such as transaction failures, high fees, and limited options—by providing a modern, fully integrated platform. We empower businesses to grow and enable financial inclusion for all.
+              </motion.p>
+            </motion.div>
 
-      {/* Why Choose Us */}
-      <motion.section
-        className="py-20 bg-white"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={fadeIn}
-      >
-        <div className="container px-6 mx-auto">
-          <h2 className="text-3xl font-bold text-center text-[#2f1991] mb-12">Why Choose Us</h2>
-          <div className="grid gap-8 md:grid-cols-3">
-            {[
-              { num: "01", title: "High Security", desc: "Bank-grade encryption for every transaction." },
-              { num: "02", title: "24/7 Support", desc: "Always available to assist your business." },
-              { num: "03", title: "User Friendly", desc: "Simple interfaces with powerful features." },
-              { num: "04", title: "Scalable", desc: "Solutions that grow with your business." },
-              { num: "05", title: "Affordable", desc: "Competitive pricing tailored to your needs." },
-              { num: "06", title: "Trusted", desc: "Built for trust and reliability." },
-            ].map((reason, idx) => (
-              <motion.div
-                key={idx}
-                whileHover={{ scale: 1.05 }}
-                className="p-6 transition shadow-sm bg-gray-50 rounded-xl hover:shadow-lg"
-              >
-                <h3 className="text-xl font-semibold mb-2 text-[#2f1991]">
-                  {reason.num} — {reason.title}
-                </h3>
-                <p className="text-gray-600">{reason.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* Stats Section */}
-      <motion.section
-        className="py-20 bg-gray-50"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={fadeIn}
-      >
-        <div className="container flex flex-col items-center justify-center px-6 mx-auto md:flex-row md:gap-20">
-          <div className="relative flex items-center justify-center mb-10 md:mb-0">
-            <div className="absolute bg-blue-200 rounded-full w-72 h-72"></div>
-            <div className="absolute bg-blue-100 rounded-full w-96 h-96"></div>
-            <div className="relative z-10 flex items-center justify-center bg-white rounded-full shadow-lg w-60 h-60">
-              <h3 className="text-3xl font-bold text-[#2f1991] text-center">
-                10+ <br /> Years <br /> Experience
-              </h3>
-            </div>
-          </div>
-          <div className="grid gap-6 text-center md:text-left">
-            <div><span className="text-3xl font-bold text-[#2f1991]">2K+</span> Apps Processed</div>
-            <div><span className="text-3xl font-bold text-[#2f1991]">40+</span> Consultants</div>
-            <div><span className="text-3xl font-bold text-[#2f1991]">160+</span> Businesses Served</div>
-          </div>
-        </div>
-      </motion.section>
-
-      {/* Features Section */}
-      <motion.section
-        className="py-20 bg-white"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={fadeIn}
-      >
-        <div className="container px-6 mx-auto text-center">
-          <h2 className="text-3xl font-bold text-[#2f1991] mb-12">Our Edge</h2>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            {[
-              { title: "Intelligent", desc: "Smart automation and secure transactions." },
-              { title: "Flexible", desc: "Customizable and scalable to your needs." },
-              { title: "About You", desc: "Solutions designed around your business." },
-            ].map((f, idx) => (
-              <motion.div
-                key={idx}
-                whileHover={{ scale: 1.05 }}
-                className="p-8 transition shadow bg-gray-50 rounded-xl hover:shadow-lg"
-              >
-                <h3 className="mb-3 text-xl font-bold text-[#2f1991]">{f.title}</h3>
-                <p className="text-gray-600">{f.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* Partners */}
-      <motion.section
-        className="py-20 bg-gray-50"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={fadeIn}
-      >
-        <div className="container px-6 mx-auto text-center">
-          <h2 className="text-3xl font-bold text-[#2f1991] mb-12">Our Partners</h2>
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-5 place-items-center">
-            {partners.map((item) => (
-              <div
-                key={item.name}
-                className="p-4 transition-transform duration-300 grayscale hover:grayscale-0 hover:scale-110"
-              >
+            {/* Circle Image */}
+            <motion.div
+              className="relative flex items-center justify-center"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+            >
+              <div className="absolute bg-[#e0b0ff] rounded-full w-60 h-60 md:w-72 md:h-72 top-4 left-4 md:top-8 md:left-8 opacity-70"></div>
+              <div className="absolute bg-[#9966ff] rounded-full w-80 h-80 md:w-96 md:h-96 bottom-4 right-4 md:bottom-8 md:right-8 opacity-50"></div>
+              <div className="relative z-10">
                 <Image
-                  src={item.logo}
-                  alt={item.name}
-                  width={120}
-                  height={60}
-                  className="object-contain"
+                  src="/man-on-laptop.jpg"
+                  alt="Working on laptop"
+                  width={500}
+                  height={500}
+                  className="rounded-full shadow-2xl"
                 />
               </div>
-            ))}
+            </motion.div>
           </div>
-        </div>
-      </motion.section>
+        </section>
 
-      {/* Testimonials */}
-      <motion.section
-        className="py-20 bg-gradient-to-r from-[#2f1991] via-[#4338ca] to-[#1e3a8a] text-white"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={fadeIn}
-      >
-        <div className="container max-w-3xl px-6 mx-auto text-center">
-          <h2 className="mb-8 text-3xl font-bold">Loved by Customers</h2>
-          <p className="mb-6 text-lg italic">
-            "SmatPay has completely transformed the way we do business. Secure, fast, and user-friendly —
-            we couldn't imagine going back to the old systems."
-          </p>
-          <h4 className="font-semibold">— Andy M., CEO</h4>
-        </div>
-      </motion.section>
+        {/* Our Core Values Section */}
+        <section className="py-20 bg-purple-50">
+          <div className="container px-6 mx-auto text-center max-w-7xl">
+            <h2 className="text-3xl font-bold text-[#1a202c] mb-12 md:text-4xl">Our Core Values</h2>
+            <motion.div
+              className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4"
+              variants={stagger}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              {[
+                { title: "Security", desc: "Bank-grade encryption and real-time fraud detection ensure your data is always safe.", icon: FaShieldAlt },
+                { title: "Innovation", desc: "We continuously evolve to bring you the most advanced payment solutions.", icon: FaRocket },
+                { title: "Trust", desc: "We build long-lasting relationships by providing reliable and transparent services.", icon: FaHandshake },
+                { title: "Local Focus", desc: "Our solutions are specifically tailored to the unique needs of the African market.", icon: FaGlobeAfrica }
+              ].map((value, idx) => (
+                <motion.div
+                  key={idx}
+                  className="flex flex-col items-center p-8 transition bg-white shadow-md rounded-2xl hover:shadow-xl"
+                  variants={fadeUp}
+                >
+                  <div className="mb-4 text-5xl text-[#2f1991]">
+                    <value.icon />
+                  </div>
+                  <h3 className="mb-2 text-xl font-semibold text-[#1a202c]">{value.title}</h3>
+                  <p className="text-gray-800">{value.desc}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
 
-      {/* Call to Action */}
-      <motion.section
-        className="py-20 text-center bg-white"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={fadeIn}
-      >
-        <div className="container px-6 mx-auto">
-          <h2 className="text-3xl font-bold text-[#2f1991] mb-4">
-            Ready to Shape the Future of Payments?
-          </h2>
-          <p className="mb-6 text-gray-600">
-            Partner with us today and experience secure, seamless, and innovative payment solutions.
-          </p>
-          <a
-            href="/contact"
-            className="px-8 py-4 text-lg font-semibold text-white rounded-lg bg-[#2f1991] hover:bg-[#4338ca] transition"
+        <section className="py-20 bg-white">
+  <div className="container px-6 mx-auto max-w-7xl">
+    <h2 className="text-3xl font-bold text-center text-[#2f1991] mb-12 md:text-4xl">What We Offer</h2>
+    <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
+      {services.map((service, idx) => {
+        const [showOverlay, setShowOverlay] = useState(false);
+
+        return (
+          <motion.div
+            key={idx}
+            className="relative overflow-hidden shadow-md cursor-pointer rounded-xl group"
+            whileHover={{ scale: 1.05 }}
+            onClick={() => setShowOverlay(!showOverlay)} // toggles on mobile
           >
-            Get Started →
-          </a>
-        </div>
-      </motion.section>
+            <div className="relative w-full h-64 overflow-hidden rounded-xl">
+              <Image
+                src={service.image}
+                alt={service.title}
+                layout="fill"
+                objectFit="cover"
+                className="transition-transform duration-500 group-hover:scale-110"
+              />
+            </div>
+
+            {/* Overlay */}
+            <div
+              className={`
+                absolute inset-0 bg-black/60 transition-opacity duration-300 flex flex-col justify-center items-center text-center px-6
+                ${showOverlay ? 'opacity-100' : 'opacity-0'}
+                md:group-hover:opacity-100
+              `}
+            >
+              <h3 className="mb-2 text-2xl font-bold text-white">{service.title}</h3>
+              <p className="text-white">{service.desc}</p>
+            </div>
+          </motion.div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+
+        {/* Stats Section */}
+        <section className="py-20 bg-purple-50">
+          <div className="container px-6 mx-auto text-center max-w-7xl">
+            <h2 className="mb-12 text-3xl font-bold text-[#2f1991] md:text-4xl">We Power Success</h2>
+            <motion.div
+              className="grid grid-cols-1 gap-8 md:grid-cols-3"
+              variants={stagger}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              <motion.div variants={fadeUp}><Counter from={0} to={10} label="Years of Experience" /></motion.div>
+              <motion.div variants={fadeUp}><Counter from={0} to={2000} label="Apps Processed" /></motion.div>
+              <motion.div variants={fadeUp}><Counter from={0} to={160} label="Businesses Served" /></motion.div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Partners & Clients Section */}
+        <section className="py-20 bg-white">
+          <div className="container px-6 mx-auto text-center max-w-7xl">
+            <h2 className="text-2xl font-bold text-[#2f1991] sm:text-3xl">Our Trusted Partners</h2>
+            <p className="max-w-3xl mx-auto mt-3 text-gray-600">
+              Trusted by industry leaders worldwide, SmatPay partners with the world's leading financial institutions and technology providers to deliver seamless payment experiences.
+            </p>
+            <div className="mt-10 overflow-hidden border border-gray-200 rounded-2xl bg-purple-50">
+              <div className="flex animate-[marquee_30s_linear_infinite] gap-12 p-6 [--gap:3rem] hover:[animation-play-state:paused]">
+                {[...patnersLogos, ...patnersLogos].map((item, idx) => (
+                  <div key={`${item.name}-${idx}`} className="transition shrink-0">
+                    <Image src={item.logo} alt={item.name} width={120} height={60} className="object-contain w-auto h-12" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Call to Action */}
+        <section className="pb-16">
+          <div
+            className="relative mx-6 overflow-hidden text-white bg-center bg-cover shadow-lg max-w-7xl rounded-3xl sm:mx-auto"
+            style={{ backgroundImage: "url('/holding_payment_card.jpg')" }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#8141D5]/80 to-[#2f1991]/70" />
+            <div className="relative z-10 max-w-4xl px-6 py-20 mx-auto text-center">
+              <p className="text-base font-semibold">Ready to get started?</p>
+              <h3 className="mt-2 text-3xl font-extrabold leading-tight sm:text-4xl">
+                Experience the SmatPay difference for yourself!
+              </h3>
+              <Link
+                href="https://merchant.smatpay.africa/sign-up"
+                className="mt-8 inline-flex rounded-full bg-white px-8 py-3 text-sm font-bold text-[#8141D5] shadow-lg ring-1 ring-white/40 transition hover:bg-[#f3f3f3]"
+              >
+                Get Started →
+              </Link>
+            </div>
+          </div>
+        </section>
+      </main>
     </>
   );
 }

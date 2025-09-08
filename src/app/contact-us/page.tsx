@@ -68,7 +68,7 @@ export default function Contact() {
           {/* Background Image with Overlay */}
           <div className="absolute inset-0 z-0">
             <Image
-              src="/smatpay - lady on laptop.jpg"
+              src="/contact-us-hero.jpg"
               alt="Contact Us Hero"
               fill
               className="object-cover"
