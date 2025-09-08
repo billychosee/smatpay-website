@@ -1,0 +1,52 @@
+// app/sitemap.ts
+import { MetadataRoute } from "next";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  return [
+    {
+      url: "https://smatpay.africa/",
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 1.0,
+      title: "Smatpay | The Future of Payments in Africa",
+      description: "Smatpay is a leading payment solution provider in Africa. We're on a mission to simplify payments and empower businesses across the continent.",
+      keywords: ["smatpay", "payments africa", "online payments", "payment gateway"],
+    },
+    {
+      url: "https://smatpay.africa/about-us",
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+      title: "Smatpay | About Us",
+      description: "Learn about Smatpay's mission to simplify payments in Africa. Find out more about our team, values, and vision for the future.",
+      keywords: ["smatpay", "about us", "company vision", "team"],
+    },
+    {
+      url: "https://smatpay.africa/features",
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+      title: "Smatpay | Features",
+      description: "Discover the powerful features of Smatpay, including secure transactions, multiple payment options, and seamless integration.",
+      keywords: ["smatpay features", "payment features", "payment options", "secure payments"],
+    },
+    {
+      url: "https://smatpay.africa/resources/faqs",
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+      title: "Smatpay | FAQs",
+      description: "Find answers to frequently asked questions about Smatpay's services, pricing, security, and more.",
+      keywords: ["smatpay faqs", "frequently asked questions", "smatpay support"],
+    },
+    {
+      url: "https://smatpay.africa/contact-us",
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.6,
+      title: "Smatpay | Contact Us",
+      description: "Get in touch with the Smatpay team. Contact us for sales inquiries, technical support, or general questions.",
+      keywords: ["smatpay contact", "contact sales", "customer support"],
+    },
+  ];
+}

@@ -1,18 +1,10 @@
 'use client';
 
-import Head from "next/head";
+import { FaMapMarkerAlt, FaEnvelope, FaPhoneAlt, FaFacebookF, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, Variants } from "framer-motion";
-import {
-  FaMapMarkerAlt,
-  FaEnvelope,
-  FaPhoneAlt,
-  FaFacebookF,
-  FaInstagram,
-  FaLinkedin,
-} from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
 
 // Schema.org structured data for SEO
 const contactSchema = {
@@ -50,18 +42,11 @@ const staggerContainer: Variants = {
 export default function Contact() {
   return (
     <>
-      <Head>
-        <title>Contact Us | SmatPay</title>
-        <meta
-          name="description"
-          content="Get in touch with the SmatPay team. Contact us for customer support, sales inquiries, or partnership opportunities."
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(contactSchema) }}
-        />
-      </Head>
-
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactSchema) }}
+      />
+      
       <div>
         {/* Hero Section */}
         <div className="relative w-full h-[500px] md:h-[600px] flex flex-col items-center justify-center text-center text-white overflow-hidden">

@@ -111,11 +111,18 @@ export default function About() {
   return (
     <>
       <Head>
-        <title>About Us | SmatPay</title>
+        <title>About Us | SmatPay - Redefining Digital Payments in Zimbabwe</title>
         <meta
           name="description"
-          content="Discover the story behind SmatPay, our mission to redefine digital payments, and our commitment to empowering businesses in Zimbabwe."
+          content="SmatPay is a secure and seamless payment gateway in Zimbabwe that empowers businesses and individuals with innovative digital payment solutions. We are a product of Smatech Group."
         />
+        {/* Open Graph (OG) meta tags for social media sharing */}
+        <meta property="og:title" content="About SmatPay: Our Mission and Values" />
+        <meta property="og:description" content="Discover the story behind SmatPay, our mission to redefine digital payments, and our commitment to empowering businesses in Zimbabwe." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://smatpay.africa/about-us" />
+        <meta property="og:image" content="https://smatpay.africa/smatpay_logo.png" />
+        <link rel="canonical" href="https://smatpay.africa/about-us" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
