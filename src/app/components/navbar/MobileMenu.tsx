@@ -53,7 +53,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
                   {resourcesOpen && (
                     <div className="flex flex-col gap-2 pl-4 mt-1">
                       <Link
-                        href="https://smatpay.africa/integrations/"
+                        href="/resources/integrations/"
                         className="text-sm text-gray-700 hover:text-[#2f1991]"
                         onClick={onClose}
                       >

@@ -512,7 +512,7 @@ export default function Home() {
   <div className="container items-center gap-12 px-6 mx-auto max-w-7xl lg:grid lg:grid-cols-2">
     {/* Text and button block */}
     <motion.div
-      className="mt-10 lg:mt-0 lg:order-2 text-center lg:text-left"
+      className="mt-10 text-center lg:mt-0 lg:order-2 lg:text-left"
       initial="hidden"
       whileInView="show"
       viewport={{ once: true }}
@@ -616,12 +616,12 @@ export default function Home() {
 
             <motion.div
               variants={fadeUp}
-              className="grid grid-cols-2 gap-6 mt-10 place-items-center sm:grid-cols-3 lg:grid-cols-5"
+              className="grid grid-cols-2 gap-3 mt-10 place-items-center sm:grid-cols-3 lg:grid-cols-5"
             >
               {popularPlatforms.map((item, index) => (
                 <motion.div
                   key={item.name}
-                  className="w-full p-5 transition bg-white border border-gray-200 shadow-sm rounded-2xl"
+                  className="w-full py-1 transition bg-white border border-gray-200 shadow-sm rounded-2xl"
                   initial="hidden"
                   whileInView="show"
                   viewport={{ once: true }}
@@ -633,7 +633,7 @@ export default function Home() {
                   }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
                 >
-                  <Image src={item.logo} alt={item.name} width={140} height={80} className="object-contain w-auto mx-auto h-14" />
+                  <Image src={item.logo} alt={item.name} width={140} height={80} className="object-contain w-auto h-20 mx-auto" />
                 </motion.div>
               ))}
             </motion.div>
