@@ -62,7 +62,7 @@ export const DeskNav: React.FC<DeskNavProps> = ({
                 >
                   <div className="py-2">
                     <Link
-                      href="https://smatpay.africa/integrations/"
+                      href="/"
                       className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#2f1991] rounded-md transition"
                     >
                       Integrations
@@ -74,7 +74,7 @@ export const DeskNav: React.FC<DeskNavProps> = ({
                       Knowledge Base
                     </Link>
                     <Link
-                      href="/resources/faqs"
+                      href="/resources/resources/faqs"
                       className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#2f1991] rounded-md transition"
                     >
                       FAQs
