@@ -274,7 +274,7 @@ export default function Home() {
               <motion.div variants={stagger} initial="hidden" animate="show" className="text-center lg:text-left">
                 <motion.h1
                   variants={fadeUp}
-                  className="text-3xl font-extrabold tracking-tight text-[#1a133d] sm:text-4xl md:text-5xl lg:text-6xl"
+                  className="text-3xl font-extrabold tracking-tight text-[#1a133d] sm:text-4xl md:text-5xl lg:text-4xl xl:text-6xl"
                   whileHover={{
                     scale: 1.02,
                     transition: { duration: 0.3 },
@@ -284,7 +284,7 @@ export default function Home() {
                 </motion.h1>
                 <motion.p
                   variants={fadeUp}
-                  className="mt-5 text-base text-gray-600 sm:text-lg md:text-xl"
+                  className="mt-5 text-base text-gray-600 sm:text-lg md:text-xl lg:text-lg xl:text-xl"
                   animate={{
                     color: ["#6B7280", "#4B5563", "#6B7280"],
                   }}
@@ -300,7 +300,7 @@ export default function Home() {
                   >
                     <Link
                       href="https://merchant.smatpay.africa/sign-up"
-                      className="inline-flex items-center justify-center rounded-full bg-[#2f1991] px-6 sm:px-8 py-3 text-sm sm:text-base font-bold text-white shadow-lg shadow-[#2f1991]/20 transition hover:scale-[1.02] hover:brightness-110"
+                      className="inline-flex items-center justify-center rounded-full bg-[#2f1991] px-6 sm:px-8 py-3 text-sm sm:text-base font-bold text-white shadow-lg shadow-[#2f1991]/20 transition hover:scale-[1.02] hover:brightness-110 xl:text-sm lg:text:xs"
                     >
                       Register
                     </Link>
@@ -371,7 +371,7 @@ export default function Home() {
           >
             <motion.h2
               variants={fadeUp}
-              className="text-2xl font-bold text-[#2f1991] sm:text-3xl"
+              className="text-2xl font-bold text-[#2f1991] sm:text-3xl xl:text-2xl lg:text-xl"
               whileHover={{ scale: 1.02 }}
             >
               Accept All Major Payment Methods
@@ -412,13 +412,13 @@ export default function Home() {
 
         <section id="discover" className="relative py-20">
   <div className="container grid items-center gap-12 px-6 mx-auto max-w-7xl lg:grid-cols-2">
-    {/* This is the text block. We set it to order-1 on mobile and order-2 on desktop. */}
+    {/* Text block */}
     <motion.div
       variants={fadeUp}
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.3 }}
-      className="order-1 lg:order-2"
+      className="text-center lg:text-left lg:order-1"
     >
       <motion.h3
         className="text-2xl font-bold text-[#2f1991] sm:text-3xl"
@@ -459,91 +459,7 @@ export default function Home() {
       </motion.p>
     </motion.div>
 
-    {/* This is the image block. We set it to order-2 on mobile and order-1 on desktop. */}
-    <motion.div
-      initial={{ opacity: 0, y: 24, scale: 0.9 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.6, type: "spring" }}
-      className="order-2 lg:order-1"
-      whileHover={{
-        rotate: 1,
-        transition: { duration: 0.3 },
-      }}
-    >
-      <div className="relative mx-auto h-[28rem] w-full max-w-xl">
-        <Image src="/lady-on-phone.jpg" alt="Lady on phone" fill className="object-cover rounded-3xl" />
-        <motion.div
-          className="pointer-events-none absolute -bottom-6 -left-6 h-24 w-24 rounded-2xl bg-gradient-to-tr from-[#2f1991] to-[#8141D5] opacity-60 blur-2xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            rotate: [0, 90, 180, 270, 360],
-          }}
-          transition={{ duration: 8, repeat: Infinity }}
-        />
-        <motion.div
-          className="pointer-events-none absolute -top-6 -right-6 h-16 w-16 rounded-2xl bg-gradient-to-tr from-[#8141D5] to-[#2f1991] opacity-40 blur-xl"
-          animate={{
-            scale: [1, 1.3, 1],
-            rotate: [0, -90, -180, -270, -360],
-          }}
-          transition={{ duration: 10, repeat: Infinity, delay: 1 }}
-        />
-      </div>
-    </motion.div>
-  </div>
-</section>
-
-        <section id="discover" className="relative py-20">
-  <div className="container grid items-center gap-12 px-6 mx-auto max-w-7xl lg:grid-cols-2">
-    {/* This is the text block. It has no order class on mobile and gets order-1 on lg screens. */}
-    <motion.div
-      variants={fadeUp}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.3 }}
-      className="lg:order-1"
-    >
-      <motion.h3
-        className="text-2xl font-bold text-[#2f1991] sm:text-3xl"
-        whileHover={{
-          color: ["#2f1991", "#8141D5", "#2f1991"],
-          transition: { duration: 1, repeat: Infinity },
-        }}
-      >
-        The Ultimate Payment Gateway for Zimbabwe's Growth
-      </motion.h3>
-      <motion.p
-        className="mt-4 text-gray-700"
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true }}
-        variants={{
-          hidden: { opacity: 0 },
-          show: {
-            opacity: 1,
-            transition: {
-              staggerChildren: 0.05,
-            },
-          },
-        }}
-      >
-        {`Zimbabwe's e-commerce market is on the verge of a significant expansion, projected to reach $1.9 billion USD by 2025. This reflects an impressive annual growth rate of 19.5%. However, one of the critical challenges hindering this growth is the transaction cost and the technological limitations of existing payment gateways, especially in the mobile space. SmatPay addresses this gap by offering a highly versatile and fully integrated payment gateway that caters to the unique needs of the Zimbabwean market.`.split(' ').map((word, i) => (
-          <motion.span
-            key={i}
-            variants={{
-              hidden: { opacity: 0, y: 10 },
-              show: { opacity: 1, y: 0 },
-            }}
-            style={{ display: 'inline-block' }}
-          >
-            {word}&nbsp;
-          </motion.span>
-        ))}
-      </motion.p>
-    </motion.div>
-
-    {/* This is the image block. It has no order class on mobile and gets order-2 on lg screens. */}
+    {/* Image block */}
     <motion.div
       initial={{ opacity: 0, y: 24, scale: 0.9 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -556,7 +472,12 @@ export default function Home() {
       }}
     >
       <div className="relative mx-auto h-[28rem] w-full max-w-xl">
-        <Image src="/lady-on-phone.jpg" alt="Lady on phone" fill className="object-cover rounded-3xl" />
+        <Image
+          src="/lady-on-phone.jpg"
+          alt="Lady on phone"
+          fill
+          className="object-cover rounded-3xl"
+        />
         <motion.div
           className="pointer-events-none absolute -bottom-6 -left-6 h-24 w-24 rounded-2xl bg-gradient-to-tr from-[#2f1991] to-[#8141D5] opacity-60 blur-2xl"
           animate={{
@@ -566,7 +487,7 @@ export default function Home() {
           transition={{ duration: 8, repeat: Infinity }}
         />
         <motion.div
-          className="pointer-events-none absolute -top-6 -right-1 h-16 w-16 rounded-2xl bg-gradient-to-tr from-[#8141D5] to-[#2f1991] opacity-40 blur-xl"
+          className="pointer-events-none absolute -top-6 -right-1sp h-16 w-16 rounded-2xl bg-gradient-to-tr from-[#8141D5] to-[#2f1991] opacity-40 blur-xl"
           animate={{
             scale: [1, 1.3, 1],
             rotate: [0, -90, -180, -270, -360],
@@ -579,6 +500,7 @@ export default function Home() {
 </section>
 
 
+
 <section className="relative py-24 overflow-hidden">
   <motion.div
     className="absolute inset-0 -z-10 bg-[url('/Global-Map.png')] bg-cover bg-center opacity-10"
@@ -588,9 +510,9 @@ export default function Home() {
     transition={{ duration: 20, repeat: Infinity }}
   />
   <div className="container items-center gap-12 px-6 mx-auto max-w-7xl lg:grid lg:grid-cols-2">
-    {/* This is the text and button block. It has no order class on mobile and gets order-2 on lg screens. */}
+    {/* Text and button block */}
     <motion.div
-      className="mt-10 lg:mt-0 lg:order-2"
+      className="mt-10 lg:mt-0 lg:order-2 text-center lg:text-left"
       initial="hidden"
       whileInView="show"
       viewport={{ once: true }}
@@ -615,9 +537,7 @@ export default function Home() {
           hidden: { opacity: 0 },
           show: {
             opacity: 1,
-            transition: {
-              staggerChildren: 0.03,
-            },
+            transition: { staggerChildren: 0.03 },
           },
         }}
       >
@@ -641,15 +561,15 @@ export default function Home() {
         variants={pulse}
       >
         <Link
-          href="[https://merchant.smatpay.africa/sign-up](https://merchant.smatpay.africa/sign-up)"
-          className="inline-flex rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#8141D5] ring-1 ring-[#8141D5] transition hover:bg-[#8141D5] hover:text-white"
+          href="https://merchant.smatpay.africa/sign-up"
+          className="block w-full text-center sm:inline-flex sm:w-auto sm:text-left rounded-full bg-white px-6 py-3 mb-5 text-sm font-semibold text-[#8141D5] ring-1 ring-[#8141D5] transition hover:bg-[#8141D5] hover:text-white"
         >
           Create an Account Now
         </Link>
       </motion.div>
     </motion.div>
-    
-    {/* This is the image block. It has no order class on mobile and gets order-1 on lg screens. */}
+
+    {/* Image block */}
     <motion.div
       className="relative mx-auto h-[28rem] w-full max-w-xl order-2 lg:order-1"
       initial="hidden"
@@ -661,10 +581,16 @@ export default function Home() {
         transition: { duration: 0.3 },
       }}
     >
-      <Image src="/lady-with-shopping-bag.jpg" alt="Lady with purple background" fill className="object-cover rounded-3xl" />
+      <Image
+        src="/lady-with-shopping-bag.jpg"
+        alt="Lady with purple background"
+        fill
+        className="object-cover rounded-3xl"
+      />
     </motion.div>
   </div>
 </section>
+
 
         {/* INTEGRATIONS */}
         <section id="integrations" className="relative py-20 bg-purple-50">
@@ -816,7 +742,6 @@ export default function Home() {
   </motion.div>
 </section>
 
-        <Footer />
       </main>
     </>
   );

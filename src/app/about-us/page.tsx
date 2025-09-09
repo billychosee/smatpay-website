@@ -135,21 +135,26 @@ export default function About() {
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.04)_1px,transparent_1px)] bg-[size:28px_28px]" />
 
         {/* Hero Section */}
-        <div className="relative w-full h-[500px] md:h-[600px] flex flex-col items-center justify-center text-center text-white overflow-hidden">
-          <div className="absolute inset-0 z-0">
+        <div className="relative w-full h-[500px] md:h-[600px] flex flex-col items-center justify-center text-center text-white overflow-hidden group">
+          <motion.div
+            className="absolute inset-0 z-0"
+            initial={{ scale: 1 }}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
             <Image
               src="/smatpay - lady on laptop.jpg"
               alt="About Us Hero"
-              layout="fill"
-              objectFit="cover"
+              fill
+              className="object-cover"
               quality={100}
               priority
             />
-            <div className="absolute inset-0 bg-blue-900 opacity-70"></div>
-          </div>
+            <div className="absolute inset-0 bg-blue-900 opacity-70" />
+          </motion.div>
           <div className="relative z-10 max-w-2xl px-4">
             <motion.h1
-              className="mb-4 text-4xl font-bold leading-tightsm:text-4xl md:text-5xl"
+              className="mb-4 text-4xl font-bold leading-tight sm:text-4xl md:text-5xl"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}

@@ -67,7 +67,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
                         Knowledge Base
                       </Link>
                       <a
-                        href="/faqs"
+                        href="/resources/faqs"
                         className="text-sm text-gray-700 hover:text-[#2f1991]"
                         onClick={onClose}
                       >

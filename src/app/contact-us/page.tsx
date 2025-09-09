@@ -1,6 +1,13 @@
 'use client';
 
-import { FaMapMarkerAlt, FaEnvelope, FaPhoneAlt, FaFacebookF, FaInstagram, FaLinkedin } from "react-icons/fa";
+import {
+  FaMapMarkerAlt,
+  FaEnvelope,
+  FaPhoneAlt,
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedin,
+} from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,13 +19,14 @@ const contactSchema = {
   "@type": "ContactPage",
   "url": "https://smatpay.africa/contact",
   "name": "Contact SmatPay",
-  "description": "Get in touch with the SmatPay team. Contact us for customer support, sales inquiries, or partnership opportunities.",
+  "description":
+    "Get in touch with the SmatPay team. Contact us for customer support, sales inquiries, or partnership opportunities.",
   "contactPoint": {
     "@type": "ContactPoint",
     "telephone": "+263-78-956-6427",
     "contactType": "customer service",
     "areaServed": ["ZW", "ZA"],
-    "availableLanguage": "en"
+    "availableLanguage": "en",
   },
 };
 
@@ -29,6 +37,15 @@ const fadeInUp: Variants = {
     opacity: 1,
     y: 0,
     transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] },
+  },
+};
+
+const slideInFromBottom: Variants = {
+  hidden: { opacity: 0, y: 80 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: "easeOut" },
   },
 };
 
@@ -46,12 +63,17 @@ export default function Contact() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(contactSchema) }}
       />
-      
+
       <div>
         {/* Hero Section */}
         <div className="relative w-full h-[500px] md:h-[600px] flex flex-col items-center justify-center text-center text-white overflow-hidden">
-          {/* Background Image with Overlay */}
-          <div className="absolute inset-0 z-0">
+          {/* Background Image with Overlay + Zoom on Hover */}
+          <motion.div
+            className="absolute inset-0 z-0"
+            initial={{ scale: 1 }}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+          >
             <Image
               src="/contact-us-hero.jpg"
               alt="Contact Us Hero"
@@ -61,14 +83,14 @@ export default function Contact() {
               priority
             />
             <div className="absolute inset-0 bg-blue-900 opacity-70"></div>
-          </div>
+          </motion.div>
 
           {/* Content */}
           <motion.div
             className="relative z-10 max-w-2xl px-4"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            variants={fadeInUp}
+            initial="hidden"
+            animate="visible"
           >
             <h1 className="mb-4 text-4xl font-bold leading-tight sm:text-5xl md:text-4xl">
               Contact Us
@@ -93,7 +115,10 @@ export default function Contact() {
               <h2 className="text-2xl font-bold text-[#2f1991] mb-8">
                 Contact Us
               </h2>
-              <div className="flex items-center mb-4">
+              <motion.div
+                className="flex items-center mb-4"
+                whileHover={{ scale: 1.02 }}
+              >
                 <div className="p-3 mr-4 bg-gray-300 rounded-full">
                   <FaMapMarkerAlt className="text-xl text-gray-700" />
                 </div>
@@ -103,8 +128,11 @@ export default function Contact() {
                     13 Brentwood Avenue, Mount Pleasant, Harare, Zimbabwe
                   </p>
                 </div>
-              </div>
-              <div className="flex items-center mb-4">
+              </motion.div>
+              <motion.div
+                className="flex items-center mb-4"
+                whileHover={{ scale: 1.02 }}
+              >
                 <div className="p-3 mr-4 bg-gray-300 rounded-full">
                   <FaEnvelope className="text-xl text-gray-700" />
                 </div>
@@ -112,8 +140,11 @@ export default function Contact() {
                   <h3 className="font-semibold text-gray-700">Email Us</h3>
                   <p className="text-sm text-gray-600">info@smatpay.africa</p>
                 </div>
-              </div>
-              <div className="flex items-center mb-6">
+              </motion.div>
+              <motion.div
+                className="flex items-center mb-6"
+                whileHover={{ scale: 1.02 }}
+              >
                 <div className="p-3 mr-4 bg-gray-300 rounded-full">
                   <FaPhoneAlt className="text-xl text-gray-700" />
                 </div>
@@ -123,36 +154,43 @@ export default function Contact() {
                     Phone: +263 789 566 427
                   </p>
                 </div>
-              </div>
+              </motion.div>
               <div>
                 <h3 className="font-semibold text-[#2f1991] mb-4">
                   Follow our social media
                 </h3>
                 <div className="flex gap-4">
-                  <Link
-                    href="https://www.facebook.com/people/Smatpay/61563697798654/?rdid=50bxiSV1lOzF5f2r&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F17FR9odziS%2F"
-                    className="bg-[#2f1991] hover:bg-[#830bc9] text-white rounded-full p-2"
-                  >
-                    <FaFacebookF className="text-xl" />
-                  </Link>
-                  <Link
-                    href="https://www.instagram.com/smat_pay?igsh=NTc4MTIwNjQ2YQ=="
-                    className="bg-[#2f1991] hover:bg-[#830bc9] text-white rounded-full p-2"
-                  >
-                    <FaInstagram className="text-xl" />
-                  </Link>
-                  <Link
-                    href="#"
-                    className="bg-[#2f1991] hover:bg-[#830bc9] text-white rounded-full p-2"
-                  >
-                    <FaXTwitter className="text-xl" />
-                  </Link>
-                  <Link
-                    href="https://www.linkedin.com/company/smatpay-africa/"
-                    className="bg-[#2f1991] hover:bg-[#830bc9] text-white rounded-full p-2"
-                  >
-                    <FaLinkedin className="text-xl" />
-                  </Link>
+                  {[
+                    {
+                      href: "https://www.facebook.com/people/Smatpay/61563697798654/?rdid=50bxiSV1lOzF5f2r&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F17FR9odziS%2F",
+                      icon: <FaFacebookF className="text-xl" />,
+                    },
+                    {
+                      href: "https://www.instagram.com/smat_pay?igsh=NTc4MTIwNjQ2YQ==",
+                      icon: <FaInstagram className="text-xl" />,
+                    },
+                    {
+                      href: "#",
+                      icon: <FaXTwitter className="text-xl" />,
+                    },
+                    {
+                      href: "https://www.linkedin.com/company/smatpay-africa/",
+                      icon: <FaLinkedin className="text-xl" />,
+                    },
+                  ].map((item, i) => (
+                    <motion.div
+                      key={i}
+                      whileHover={{ scale: 1.15, rotate: 5 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Link
+                        href={item.href}
+                        className="bg-[#2f1991] hover:bg-[#830bc9] text-white rounded-full p-2 flex items-center justify-center"
+                      >
+                        {item.icon}
+                      </Link>
+                    </motion.div>
+                  ))}
                 </div>
               </div>
             </motion.div>
@@ -163,58 +201,27 @@ export default function Contact() {
                 Send us a message
               </h2>
               <form className="grid grid-cols-1 gap-2 md:grid-cols-2">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block mb-0 text-sm text-gray-700"
-                  >
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    className="w-full px-3 py-2 leading-tight text-gray-700 border shadow appearance-none rounded-xl focus:outline-none focus:shadow-outline"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="company"
-                    className="block mb-0 text-sm text-gray-700"
-                  >
-                    Company
-                  </label>
-                  <input
-                    type="text"
-                    id="company"
-                    className="w-full px-3 py-2 leading-tight text-gray-700 border shadow appearance-none rounded-xl focus:outline-none focus:shadow-outline"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="phone"
-                    className="block mb-0 text-sm text-gray-700"
-                  >
-                    Phone
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    className="w-full px-3 py-2 leading-tight text-gray-700 border shadow appearance-none rounded-xl focus:outline-none focus:shadow-outline"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block mb-0 text-sm text-gray-700"
-                  >
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    className="w-full px-3 py-2 leading-tight text-gray-700 border shadow appearance-none rounded-xl focus:outline-none focus:shadow-outline"
-                  />
-                </div>
+                {[
+                  { id: "name", label: "Name", type: "text" },
+                  { id: "company", label: "Company", type: "text" },
+                  { id: "phone", label: "Phone", type: "tel" },
+                  { id: "email", label: "Email", type: "email" },
+                ].map((field) => (
+                  <div key={field.id}>
+                    <label
+                      htmlFor={field.id}
+                      className="block mb-0 text-sm text-gray-700"
+                    >
+                      {field.label}
+                    </label>
+                    <motion.input
+                      type={field.type}
+                      id={field.id}
+                      className="w-full px-3 py-2 leading-tight text-gray-700 border shadow appearance-none rounded-xl focus:outline-none focus:shadow-outline"
+                      whileFocus={{ scale: 1.02 }}
+                    />
+                  </div>
+                ))}
                 <div className="col-span-2">
                   <label
                     htmlFor="subject"
@@ -222,10 +229,11 @@ export default function Contact() {
                   >
                     Subject
                   </label>
-                  <input
+                  <motion.input
                     type="text"
                     id="subject"
                     className="w-full px-3 py-2 leading-tight text-gray-700 border shadow appearance-none rounded-xl focus:outline-none focus:shadow-outline"
+                    whileFocus={{ scale: 1.02 }}
                   />
                 </div>
                 <div className="col-span-2">
@@ -235,19 +243,25 @@ export default function Contact() {
                   >
                     Message
                   </label>
-                  <textarea
+                  <motion.textarea
                     id="message"
                     rows={4}
                     className="w-full px-3 py-2 leading-tight text-gray-700 border shadow appearance-none rounded-xl focus:outline-none focus:shadow-outline"
-                  ></textarea>
+                    whileFocus={{ scale: 1.02 }}
+                  />
                 </div>
                 <div className="col-span-2">
-                  <button
+                  <motion.button
                     type="submit"
                     className="bg-[#830bc9] hover:bg-[#6d09a8] text-white font-bold py-3 px-6 rounded-full focus:outline-none focus:shadow-outline w-full"
+                    whileHover={{
+                      scale: 1.05,
+                      boxShadow: "0px 0px 12px rgba(131,11,201,0.6)",
+                    }}
+                    whileTap={{ scale: 0.95 }}
                   >
                     Send
-                  </button>
+                  </motion.button>
                 </div>
               </form>
             </motion.div>
