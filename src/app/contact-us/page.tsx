@@ -328,7 +328,7 @@ export default function Contact() {
                 <div className="col-span-2">
                   <motion.button
                     type="submit"
-                    className="bg-[#830bc9] hover:bg-[#6d09a8] text-white font-bold py-3 px-6 rounded-full focus:outline-none focus:shadow-outline w-full"
+                    className="bg-[#830bc9] hover:bg-[#6d09a8] text-white font-bold py-3 px-6 rounded-full focus:outline-none focus:shadow-outline w-full cursor-pointer"
                     whileHover={{
                       scale: 1.05,
                       boxShadow: "0px 0px 12px rgba(131,11,201,0.6)",
