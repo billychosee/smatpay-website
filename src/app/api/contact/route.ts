@@ -1,20 +1,21 @@
+// app/api/contact/route.ts
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
+export const runtime = "nodejs"; // ✅ tells Next.js to run this API in Node runtime
+
 export async function POST(req: Request) {
   try {
-    // ✅ Initialize Resend inside the handler (safe for Netlify)
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    const body = await req.json();
-    const { name, company, phone, email, subject, message } = body;
+    const { name, company, phone, email, subject, message } = await req.json();
 
     if (!email || !message) {
       return NextResponse.json({ message: "Missing fields" }, { status: 400 });
     }
 
     const data = await resend.emails.send({
-      from: "Website Contact <onboarding@resend.dev>", // ⚡ use a domain you’ll verify in Resend
+      from: "Website Contact <onboarding@resend.dev>", // use verified domain in production
       to: "billy@smatechgroup.com",
       subject: subject || `New contact form submission from ${name || email}`,
       html: `
