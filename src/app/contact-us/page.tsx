@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import {
   FaMapMarkerAlt,
   FaEnvelope,
@@ -30,6 +31,16 @@ const contactSchema = {
   },
 };
 
+// Form data interface
+interface FormData {
+  name: string;
+  company: string;
+  phone: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
 // ✅ Framer Motion Variants (TypeScript safe)
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
@@ -57,6 +68,61 @@ const staggerContainer: Variants = {
 };
 
 export default function Contact() {
+  // Initialize form data state
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    company: "",
+    phone: "",
+    email: "",
+    subject: "",
+    message: ""
+  });
+
+  // Handle form input changes
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { id, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [id]: value
+    }));
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          // Add your API key header here
+          "X-API-Key": process.env.NEXT_PUBLIC_CONTACT_API_KEY || "your-api-key"
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert("Your message was sent successfully!");
+        // Reset form
+        setFormData({
+          name: "",
+          company: "",
+          phone: "",
+          email: "",
+          subject: "",
+          message: ""
+        });
+      } else {
+        const errorData = await response.json();
+        alert(`There was a problem sending your message: ${errorData.message || response.statusText}`);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("There was a network problem sending your message.");
+    }
+  };
+
   return (
     <>
       <script
@@ -200,7 +266,7 @@ export default function Contact() {
               <h2 className="text-2xl font-bold text-[#2f1991] mb-8">
                 Send us a message
               </h2>
-              <form className="grid grid-cols-1 gap-2 md:grid-cols-2">
+              <form className="grid grid-cols-1 gap-2 md:grid-cols-2" onSubmit={handleSubmit}>
                 {[
                   { id: "name", label: "Name", type: "text" },
                   { id: "company", label: "Company", type: "text" },
@@ -217,8 +283,11 @@ export default function Contact() {
                     <motion.input
                       type={field.type}
                       id={field.id}
+                      value={formData[field.id as keyof FormData]}
+                      onChange={handleInputChange}
                       className="w-full px-3 py-2 leading-tight text-gray-700 border shadow appearance-none rounded-xl focus:outline-none focus:shadow-outline"
                       whileFocus={{ scale: 1.02 }}
+                      required
                     />
                   </div>
                 ))}
@@ -232,8 +301,11 @@ export default function Contact() {
                   <motion.input
                     type="text"
                     id="subject"
+                    value={formData.subject}
+                    onChange={handleInputChange}
                     className="w-full px-3 py-2 leading-tight text-gray-700 border shadow appearance-none rounded-xl focus:outline-none focus:shadow-outline"
                     whileFocus={{ scale: 1.02 }}
+                    required
                   />
                 </div>
                 <div className="col-span-2">
@@ -246,8 +318,11 @@ export default function Contact() {
                   <motion.textarea
                     id="message"
                     rows={4}
+                    value={formData.message}
+                    onChange={handleInputChange}
                     className="w-full px-3 py-2 leading-tight text-gray-700 border shadow appearance-none rounded-xl focus:outline-none focus:shadow-outline"
                     whileFocus={{ scale: 1.02 }}
+                    required
                   />
                 </div>
                 <div className="col-span-2">
