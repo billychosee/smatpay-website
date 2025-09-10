@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(req: Request) {
   try {
+    // ✅ Initialize Resend inside the handler (safe for Netlify)
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
     const body = await req.json();
     const { name, company, phone, email, subject, message } = body;
 
@@ -13,9 +14,9 @@ export async function POST(req: Request) {
     }
 
     const data = await resend.emails.send({
-      from: "Website Contact <onboarding@resend.dev>", // make sure domain is verified in Resend
+      from: "Website Contact <noreply@smatpay.africa>", // ⚡ use a domain you’ll verify in Resend
       to: "billy@smatechgroup.com",
-      subject: subject || `Contact Form Email ${name || email}`,
+      subject: subject || `New contact form submission from ${name || email}`,
       html: `
         <h2>New Contact Form Submission</h2>
         <p><strong>Name:</strong> ${name || "N/A"}</p>
@@ -27,10 +28,9 @@ export async function POST(req: Request) {
       `,
     });
 
-    console.log("Resend response:", data);
-    return NextResponse.json({ message: "Message sent successfully." });
+    return NextResponse.json({ message: "Message sent successfully.", data });
   } catch (error) {
-    console.error(error);
+    console.error("Contact form error:", error);
     return NextResponse.json({ message: "Error sending message." }, { status: 500 });
   }
 }
