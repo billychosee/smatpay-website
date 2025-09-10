@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     }
 
     const data = await resend.emails.send({
-      from: "Website Contact <noreply@smatpay.africa>", // ⚡ use a domain you’ll verify in Resend
+      from: "Website Contact <onboarding@resend.dev>", // ⚡ use a domain you’ll verify in Resend
       to: "billy@smatechgroup.com",
       subject: subject || `New contact form submission from ${name || email}`,
       html: `
