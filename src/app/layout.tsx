@@ -3,6 +3,7 @@ import { Be_Vietnam_Pro } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/Footer";
+import CookieConsent from "./components/CookieConsent"; // 👈 import
 
 const vietnamPro = Be_Vietnam_Pro({
   subsets: ["latin"],
@@ -27,10 +28,12 @@ export default function RootLayout({
         <link rel="icon" href="/smatpay_p_logo.svg" type="image/svg+xml" />
       </head>
       <body
-        className={`${vietnamPro.variable} antialiased text-black font-sans bg-white`} >
+        className={`${vietnamPro.variable} antialiased text-black font-sans bg-white`}
+      >
         <Navbar />
         {children}
         <Footer />
+        <CookieConsent />
       </body>
     </html>
   );

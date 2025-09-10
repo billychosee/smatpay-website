@@ -17,14 +17,14 @@ import {
   FaSms,
   FaMoneyCheckAlt,
   FaHandshake,
-  FaTimes, // Import a close icon for the modal
+  FaTimes,
 } from 'react-icons/fa';
 
 // --- Type Definition ---
 interface Feature {
   title: string;
   description: string;
-  icon: any; // Using `any` for the icon component from react-icons
+  icon: any;
   image: string;
   longDescription: string;
 }
@@ -45,75 +45,87 @@ const coreFeatures: Feature[] = [
     description: 'Accept payments via debit/credit cards, mobile money, QR codes, and more.',
     icon: FaCreditCard,
     image: '/multichannel-payments.jpg',
-    longDescription: 'SmatPay empowers you to accept a wide range of payment methods, from traditional credit/debit cards to modern mobile money wallets like EcoCash, and QR code payments. This flexibility ensures your customers can pay however they prefer, increasing your conversion rates.',
+    longDescription:
+      'SmatPay empowers you to accept a wide range of payment methods, from traditional credit/debit cards to modern mobile money wallets like EcoCash, and QR code payments. This flexibility ensures your customers can pay however they prefer, increasing your conversion rates.',
   },
   {
     title: 'Recurring Billing',
     description: 'Automate subscriptions and recurring payments with ease.',
     icon: FaSyncAlt,
-    image: '/recurring-billing.jpg',
-    longDescription: 'Manage subscriptions effortlessly. Our recurring billing feature automates payments for services, memberships, and digital products, reducing churn and saving you time. Set up flexible billing cycles, send automated reminders, and provide a seamless experience for your subscribers.',
+    image: '/billing.jpg',
+    longDescription:
+      'Manage subscriptions effortlessly. Our recurring billing feature automates payments for services, memberships, and digital products, reducing churn and saving you time. Set up flexible billing cycles, send automated reminders, and provide a seamless experience for your subscribers.',
   },
   {
     title: 'Secure Tokenization',
     description: 'Store card details securely for one-click purchases and subscriptions.',
     icon: FaGlobe,
     image: '/secure-tokenization.jpg',
-    longDescription: 'Protect your customers and your business with advanced tokenization. Instead of storing sensitive card data, SmatPay replaces it with a unique token. This enables secure one-click checkouts and subscriptions without compromising security or PCI compliance.',
+    longDescription:
+      'Protect your customers and your business with advanced tokenization. Instead of storing sensitive card data, SmatPay replaces it with a unique token. This enables secure one-click checkouts and subscriptions without compromising security or PCI compliance.',
   },
   {
     title: 'Fiscalized Invoicing',
     description: 'Stay compliant with automatic, ZIMRA-ready invoice generation.',
     icon: FaRegListAlt,
     image: '/fiscalized-invoicing.jpg',
-    longDescription: 'Our fiscalized invoicing tool automatically generates ZIMRA-compliant invoices for every transaction. This feature integrates seamlessly into your workflow, ensuring you remain compliant with local tax regulations without manual effort.',
+    longDescription:
+      'Our fiscalized invoicing tool automatically generates ZIMRA-compliant invoices for every transaction. This feature integrates seamlessly into your workflow, ensuring you remain compliant with local tax regulations without manual effort.',
   },
   {
     title: 'Dynamic Payment Links',
-    description: 'Generate and share secure links for one-off or bulk payments via SMS, email, or social media.',
+    description:
+      'Generate and share secure links for one-off or bulk payments via SMS, email, or social media.',
     icon: FaLink,
     image: '/payment-links.jpg',
-    longDescription: 'Create and send secure payment links in seconds. This is perfect for invoicing, social commerce, or collecting one-off payments without a full e-commerce setup. Customers can pay with a single click from any device.',
+    longDescription:
+      'Create and send secure payment links in seconds. This is perfect for invoicing, social commerce, or collecting one-off payments without a full e-commerce setup. Customers can pay with a single click from any device.',
   },
   {
     title: 'Split Payments',
     description: 'Automatically route a single payment to multiple bank accounts or vendors.',
     icon: FaMoneyCheckAlt,
     image: '/split-payments.jpg',
-    longDescription: 'Simplify complex payment flows with split payments. Automatically divide a single transaction among multiple recipients, such as vendors, partners, or different departments. This is ideal for marketplaces, franchises, and platforms that need to distribute funds efficiently.',
+    longDescription:
+      'Simplify complex payment flows with split payments. Automatically divide a single transaction among multiple recipients, such as vendors, partners, or different departments. This is ideal for marketplaces, franchises, and platforms that need to distribute funds efficiently.',
   },
   {
     title: 'Real-time Refunds',
     description: 'Process customer refunds and manage disputes directly from your dashboard.',
     icon: FaHandHoldingUsd,
     image: '/realtime-refunds.jpg',
-    longDescription: 'Handle refunds and disputes with speed and transparency. Our real-time refund feature allows you to process returns directly from your SmatPay dashboard, improving customer satisfaction and streamlining your operations.',
+    longDescription:
+      'Handle refunds and disputes with speed and transparency. Our real-time refund feature allows you to process returns directly from your SmatPay dashboard, improving customer satisfaction and streamlining your operations.',
   },
   {
     title: 'Multicurrency Support',
     description: 'Effortlessly accept and manage payments in multiple local and foreign currencies.',
     icon: FaHandshake,
     image: '/multicurrency-support.jpg',
-    longDescription: 'Expand your business globally with multicurrency support. SmatPay allows you to accept and process payments in various local and foreign currencies, providing a smooth and localized checkout experience for your international customers.',
+    longDescription:
+      'Expand your business globally with multicurrency support. SmatPay allows you to accept and process payments in various local and foreign currencies, providing a smooth and localized checkout experience for your international customers.',
   },
 ];
 
 const products = [
   {
     title: 'E-commerce & Web Integration',
-    description: 'Connect SmatPay to your online store with our easy plugins and APIs for a seamless checkout experience.',
+    description:
+      'Connect SmatPay to your online store with our easy plugins and APIs for a seamless checkout experience.',
     image: '/ecommerce.jpg',
-    features: ['WooCommerce & Shopify Plugins', 'REST APIs & SDKs', 'Secure Checkout'],
+    features: ['WooCommerce & Shopify Plugins', 'REST APIs & SDKs', 'R-Code Integration'],
   },
   {
     title: 'Smart POS Terminals',
-    description: 'Accept in-person payments with our sleek, fiscalization-ready POS devices that support cards, mobile money, and QR codes.',
+    description:
+      'Accept in-person payments with our sleek, fiscalization-ready POS devices that support cards, mobile money, and QR codes.',
     image: '/smatpay-pos.png',
     features: ['Accepts All Payment Methods', 'Fiscalization Ready', 'Real-Time Reporting'],
   },
   {
     title: 'Value-Added Services (VAS)',
-    description: 'Turn your business into a hub for essential services. Earn commissions by selling airtime, ZESA tokens, and bill payments.',
+    description:
+      'Turn your business into a hub for essential services. Earn commissions by selling airtime, ZESA tokens, and bill payments.',
     image: '/vas-services.jpg',
     features: ['Airtime & Data Top-ups', 'ZESA & Utility Payments', 'Earn Commissions'],
   },
@@ -137,12 +149,12 @@ export default function FeaturesPage() {
 
   const openModal = (feature: Feature) => {
     setModalData(feature);
-    document.body.style.overflow = 'hidden'; // Prevent scrolling
+    document.body.style.overflow = 'hidden';
   };
 
   const closeModal = () => {
     setModalData(null);
-    document.body.style.overflow = 'unset'; // Re-enable scrolling
+    document.body.style.overflow = 'unset';
   };
 
   return (
@@ -178,143 +190,19 @@ export default function FeaturesPage() {
           >
             <motion.h1
               variants={fadeInUp}
-              className="mb-4 text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl"
+              className="mb-4 text-4xl font-extrabold leading-tight sm:text-5xl md:text-4xl"
             >
               Powerful Features. Effortless Payments.
             </motion.h1>
             <motion.p
               variants={fadeInUp}
-              className="text-lg font-light sm:text-xl md:text-2xl opacity-90"
+              className="text-lg font-light sm:text-xl md:text-base opacity-90"
             >
-              Discover the full suite of tools that make SmatPay the ultimate payment gateway for businesses in Africa.
+              Discover the full suite of tools that make SmatPay the ultimate payment gateway for
+              businesses in Africa.
             </motion.p>
           </motion.div>
         </div>
-        <style jsx>{`
-          @keyframes bg-move {
-            0% {
-              transform: translate(0, 0);
-            }
-            25% {
-              transform: translate(15%, -15%);
-            }
-            50% {
-              transform: translate(-15%, 15%);
-            }
-            75% {
-              transform: translate(15%, 15%);
-            }
-            100% {
-              transform: translate(0, 0);
-            }
-          }
-        `}</style>
-        {/* Core Features Grid */}
-        <motion.section
-  className="relative px-4 py-20 sm:px-6 lg:px-8"
-  variants={staggeredContainer}
-  initial="hidden"
-  whileInView="visible"
-  viewport={{ once: false, amount: 0.1 }} // 👈 triggers faster & works on mobile
->
-
-          <div className="container mx-auto text-center max-w-7xl">
-            <h2 className="text-3xl font-bold text-[#2f1991] mb-12 md:text-4xl">Everything You Need to Get Paid</h2>
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-              {coreFeatures.map((feature, index) => (
-                <motion.div
-                  key={index}
-                  variants={fadeInUp}
-                  className="relative flex flex-col items-center p-8 overflow-hidden text-center transition-transform duration-300 ease-in-out cursor-pointer rounded-2xl group hover:scale-105 hover:shadow-2xl"
-                  onClick={() => openModal(feature)}
-                  style={{
-                    transformStyle: 'preserve-3d',
-                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
-                  }}
-                >
-                  <div
-                    className="absolute inset-0 z-0 opacity-50 transition-all duration-500 ease-in-out group-hover:scale-[1.5]"
-                    style={{
-                      background: 'radial-gradient(circle at center, #E6E0F9, #F8F4FD, #E6E0F9)',
-                      animation: 'bg-move 20s infinite alternate',
-                    }}
-                  ></div>
-                  <div className="relative z-10 flex flex-col items-center justify-center w-full h-full p-4 border bg-purple-100/30 backdrop-filter backdrop-blur-sm rounded-2xl border-white/20">
-                    <div className="flex items-center justify-center w-20 h-20 mb-4 bg-purple-100 rounded-full">
-                      <feature.icon className="w-10 h-10 text-[#2f1991]" />
-                    </div>
-                    <h3 className="text-xl font-bold text-[#2f1991] mb-2">{feature.title}</h3>
-                    <p className="text-sm text-gray-600">{feature.description}</p>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation(); // Prevents the parent div's onClick from firing
-                        openModal(feature);
-                      }}
-                      className="mt-4 text-[#2f1991] font-semibold flex items-center gap-2 hover:text-purple-600 transition-colors"
-                    >
-                      Learn More
-                      <span className="text-sm transition-transform group-hover:translate-x-1">→</span>
-                    </button>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </motion.section>
-
-        {/* Product Showcase */}
-        {products.map((product, index) => (
-          <motion.section
-            key={index}
-            className={`py-20 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}
-            variants={fadeInUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <div className="container px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
-              <div className={`flex flex-col lg:flex-row items-center gap-12 ${index % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
-                <div className="lg:w-1/2">
-                  <motion.div
-                    className="relative w-full h-[450px] rounded-3xl shadow-2xl overflow-hidden"
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <Image
-                      src={product.image}
-                      alt={product.title}
-                      fill
-                      className="object-cover"
-                      quality={90}
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                    />
-                  </motion.div>
-                </div>
-                <div className="text-center lg:w-1/2 lg:text-left">
-                  <h2 className="text-3xl font-bold text-[#2f1991] mb-4 md:text-4xl">{product.title}</h2>
-                  <p className="mb-6 text-lg text-gray-600">{product.description}</p>
-                  <ul className="space-y-3 text-gray-700">
-                    {product.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center justify-center lg:justify-start">
-                        <span className="mr-3 text-xl text-purple-600">•</span>
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <Link href="/contact-us" className="inline-block mt-8">
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="bg-[#2f1991] text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-purple-800 transition-colors"
-                    >
-                      Learn More
-                    </motion.button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </motion.section>
-        ))}
 
         {/* Payment Methods Marquee */}
         <section className="relative py-16 bg-white">
@@ -344,6 +232,179 @@ export default function FeaturesPage() {
           </div>
         </section>
 
+        {/* Core Features Grid */}
+        <motion.section
+          className="relative px-4 py-20 sm:px-6 lg:px-8"
+          variants={staggeredContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.1 }}
+        >
+          <div className="container mx-auto text-center max-w-7xl">
+            <h2 className="text-3xl font-bold text-[#2f1991] mb-12 md:text-4xl">
+              Everything You Need to Get Paid
+            </h2>
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+              {coreFeatures.map((feature, index) => (
+                <motion.div
+                  key={index}
+                  variants={fadeInUp}
+                  className="relative flex flex-col items-center p-8 overflow-hidden text-center transition-transform duration-300 ease-in-out cursor-pointer rounded-2xl group hover:scale-105 hover:shadow-2xl"
+                  onClick={() => openModal(feature)}
+                  style={{
+                    transformStyle: 'preserve-3d',
+                    boxShadow:
+                      '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                  }}
+                >
+                  <div
+                    className="absolute inset-0 z-0 opacity-50 transition-all duration-500 ease-in-out group-hover:scale-[1.5]"
+                    style={{
+                      background:
+                        'radial-gradient(circle at center, #E6E0F9, #F8F4FD, #E6E0F9)',
+                      animation: 'bg-move 20s infinite alternate',
+                    }}
+                  ></div>
+                  <div className="relative z-10 flex flex-col items-center justify-center w-full h-full p-4 border bg-purple-100/30 backdrop-filter backdrop-blur-sm rounded-2xl border-white/20">
+                    <div className="flex items-center justify-center w-20 h-20 mb-4 bg-purple-100 rounded-full">
+                      <feature.icon className="w-10 h-10 text-[#2f1991]" />
+                    </div>
+                    <h3 className="text-xl font-bold text-[#2f1991] mb-2">{feature.title}</h3>
+                    <p className="text-sm text-gray-600">{feature.description}</p>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openModal(feature);
+                      }}
+                      className="mt-4 text-[#2f1991] font-semibold flex items-center gap-2 hover:text-purple-600 transition-colors"
+                    >
+                      Learn More
+                      <span className="text-sm transition-transform group-hover:translate-x-1">
+                        →
+                      </span>
+                    </button>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.section>
+
+        {/* Product Showcase */}
+        {products.map((product, index) => (
+          <motion.section
+            key={index}
+            className={`py-20 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            <div className="container px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+              <div
+                className={`flex flex-col lg:flex-row items-center gap-12 ${
+                  index % 2 !== 0 ? 'lg:flex-row-reverse' : ''
+                }`}
+              >
+                {/* Fixed image container with aspect ratio */}
+                <div className="w-full lg:w-1/2">
+                  <motion.div
+                    className="relative w-full aspect-[4/3] rounded-3xl shadow-2xl overflow-hidden"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Image
+                      src={product.image}
+                      alt={product.title}
+                      fill
+                      className="object-cover"
+                      quality={90}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
+                    />
+                  </motion.div>
+                </div>
+
+                <div className="text-center lg:w-1/2 lg:text-left">
+                  <h2 className="text-3xl font-bold text-[#2f1991] mb-4 md:text-4xl">
+                    {product.title}
+                  </h2>
+                  <p className="mb-6 text-lg text-gray-600">{product.description}</p>
+                  <ul className="space-y-3 text-gray-700">
+                    {product.features.map((feature, idx) => (
+                      <li
+                        key={idx}
+                        className="flex items-center justify-center lg:justify-start"
+                      >
+                        <span className="mr-3 text-xl text-purple-600">•</span>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link href="/contact-us" className="inline-block mt-8">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="bg-[#2f1991] text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-purple-800 transition-colors"
+                    >
+                      Learn More
+                    </motion.button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </motion.section>
+        ))}
+
+        {/* CTA Section - Glassmorphism style */}
+        <section className="relative py-20 overflow-hidden bg-[#2f1991]">
+          <div className="absolute inset-0 z-0">
+            {/* Animated blurred circles */}
+            <motion.div
+              className="absolute w-64 h-64 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-70"
+              animate={{ x: ['-20%', '100%'], y: ['-20%', '100%'], rotate: 360 }}
+              transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+              style={{ top: '10%', left: '10%' }}
+            ></motion.div>
+            <motion.div
+              className="absolute bg-blue-400 rounded-full w-80 h-80 mix-blend-multiply filter blur-xl opacity-70"
+              animate={{ x: ['100%', '-20%'], y: ['100%', '-20%'], rotate: -360 }}
+              transition={{ duration: 30, repeat: Infinity, ease: 'linear', delay: 5 }}
+              style={{ bottom: '10%', right: '10%' }}
+            ></motion.div>
+             <motion.div
+              className="absolute bg-pink-400 rounded-full w-72 h-72 mix-blend-multiply filter blur-xl opacity-70"
+              animate={{ x: ['-50%', '50%'], y: ['50%', '-50%'], rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: 'linear', delay: 10 }}
+              style={{ top: '40%', left: '40%' }}
+            ></motion.div>
+          </div>
+          <div className="container relative z-10 px-4 mx-auto text-center sm:px-6 lg:px-8 max-w-7xl">
+            <motion.div
+              className="p-10 border shadow-2xl bg-white/10 backdrop-filter backdrop-blur-lg border-white/20 rounded-3xl md:p-16"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
+            >
+              <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">
+                Ready to Simplify Your Payments?
+              </h2>
+              <p className="mb-8 text-lg text-white opacity-90">
+                Join thousands of businesses already growing with SmatPay.
+              </p>
+              <Link href="/contact-us" className="inline-block">
+                <motion.button
+                  whileHover={{ scale: 1.05, boxShadow: '0 10px 15px -3px rgba(255, 255, 255, 0.3)' }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-white text-[#2f1991] font-semibold py-4 px-10 rounded-full shadow-lg transition-all cursor-pointer hover:bg-purple-50"
+                >
+                  Get Started Today
+                </motion.button>
+              </Link>
+            </motion.div>
+          </div>
+        </section>
+
         {/* Modal for Feature Details */}
         {modalData && (
           <motion.div
@@ -357,8 +418,8 @@ export default function FeaturesPage() {
               initial={{ scale: 0.9, y: 50 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 50 }}
-              className="relative w-full max-w-xl p-6 bg-white shadow-2xl rounded-3xl overflow-y-auto max-h-[90vh]"
-              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+              className="relative w-full max-w-md p-6 bg-white shadow-2xl rounded-3xl overflow-y-auto max-h-[90vh] mx-auto md:max-w-2xl lg:max-w-lg"
+              onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={closeModal}
@@ -367,20 +428,22 @@ export default function FeaturesPage() {
                 <FaTimes size={24} />
               </button>
               <div className="flex flex-col items-center text-center">
-                <div className="flex items-center justify-center w-24 h-24 mb-6 bg-purple-100 rounded-full">
-                  <modalData.icon className="w-12 h-12 text-[#2f1991]" />
+                <div className="flex items-center justify-center w-12 h-12 mb-3 bg-purple-100 rounded-full md:w-16 md:h-16 md:mb-4">
+                  <modalData.icon className="w-6 h-6 text-[#2f1991] md:w-8 md:h-8" />
                 </div>
-                <h3 className="text-2xl font-bold text-[#2f1991] mb-4">{modalData.title}</h3>
-                <div className="relative w-full h-48 mb-6 overflow-hidden rounded-2xl">
+                <h3 className="text-lg font-bold text-[#2f1991] mb-2 md:text-2xl md:mb-3">
+                  {modalData.title}
+                </h3>
+                <div className="relative w-full mb-4 aspect-[16/9] overflow-hidden rounded-2xl md:mb-6">
                   <Image
                     src={modalData.image}
                     alt={modalData.title}
                     fill
                     className="object-cover"
-                    sizes="100vw"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 </div>
-                <p className="text-base text-gray-700">{modalData.longDescription}</p>
+                <p className="text-xs text-gray-700 md:text-base">{modalData.longDescription}</p>
               </div>
             </motion.div>
           </motion.div>
